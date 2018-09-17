@@ -24,7 +24,7 @@ public class g4_input extends AppCompatActivity implements View.OnClickListener 
     LinearLayout eraseBtn;
     EditText syohou,hospital;
 
-    user_profile up;
+    UserProfile up;
     Global_Util gu;
 
     syohou_rireki sr;
@@ -34,7 +34,7 @@ public class g4_input extends AppCompatActivity implements View.OnClickListener 
 
         setContentView(R.layout.g4_input);
 
-        up=new user_profile();
+        up=new UserProfile();
         gu=new Global_Util();
 
         backBtnHeader = findViewById(R.id.backG4);

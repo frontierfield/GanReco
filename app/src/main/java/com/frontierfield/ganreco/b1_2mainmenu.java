@@ -10,9 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 public class b1_2mainmenu extends AppCompatActivity implements View.OnClickListener {
     SharedPreferences cache;
     LinearLayout gotoMypage;
@@ -55,12 +52,12 @@ public class b1_2mainmenu extends AppCompatActivity implements View.OnClickListe
         cache = this.getSharedPreferences("GanReco",this.MODE_PRIVATE);
         //FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         //String name = firebaseUser.getDisplayName();
-        //String name = user_profile.lastName;
+        //String name = UserProfile.lastName;
 
         ViewGroup.LayoutParams gotoMypageParam = gotoMypage.getLayoutParams();
         //もしもUserDataにデータが入っていた場合
         //if(RegiUsrdata != -1) {
-        if (user_profile.isSave) {
+        if (UserProfile.isSave) {
             gotoMypageParam.height = 0;
             gotoMypage.setLayoutParams(gotoMypageParam);
         }
@@ -124,7 +121,7 @@ public class b1_2mainmenu extends AppCompatActivity implements View.OnClickListe
         }
         // 「ユーザー情報が未登録です」ボタン
         else if(i == R.id.btnUserInfoRedArrow){
-            startActivity(new Intent(this,c3_edituser.class));
+            startActivity(new Intent(this, C3_UserInfo.class));
         }
     }
 }

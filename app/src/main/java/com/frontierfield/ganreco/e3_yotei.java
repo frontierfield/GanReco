@@ -29,7 +29,7 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
     LinearLayout eraseBtn;
     EditText shinsatsu,hospital;
 
-    user_profile up;
+    UserProfile up;
     Global_Util gu;
 
     tsuin_yotei ty;
@@ -41,7 +41,7 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
 
         setContentView(R.layout.e3_input);
 
-        up=new user_profile();
+        up=new UserProfile();
         gu=new Global_Util();
 
         backBtnHeader = findViewById(R.id.backE3);

@@ -90,41 +90,4 @@ public class tsuin_rireki {
         return r;
     }
 
-    public void tsuin_rireki_add() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-        FirebaseUser mAuthUser;
-        mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (ID != null) {
-            myRef.child("tsuin_rireki").
-                    child(mAuthUser.getUid()).
-                    child(ID).
-                    setValue(this);
-        } else {
-            DatabaseReference newtr =
-                    myRef.child("tsuin_rireki").
-                            child(mAuthUser.getUid()).
-                            push();
-            this.ID = newtr.getKey();
-            newtr.setValue(this);
-        }
-    }
-
-    public void tsuin_rireki_delete() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-        FirebaseUser mAuthUser;
-        mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        myRef.child("tsuin_rireki").
-                child(mAuthUser.getUid()).
-                child(ID).removeValue();
-        user_profile up = new user_profile();
-        for (int i = 0; i < up.List_tsuin_rireki.size(); i++) {
-            if (up.List_tsuin_rireki.get(i).ID.equals(this.ID)) {
-                up.List_tsuin_rireki.remove(i);
-            }
-        }
-    }
 }

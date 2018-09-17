@@ -252,7 +252,7 @@ public class tsuin_yotei {
 
         return t_unixtime;
     }
-
+/*
     public void tsuinData_delete(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
@@ -298,17 +298,17 @@ public class tsuin_yotei {
             //listener実装してもいいが、このクラスに実装するといろんなところでリスナーが呼ばれておかしくなる可能性大
             //関数を引数にする方法もあるが、それだと、thisが呼べない
             //task awaitをやりたいが、メインスレッドでawaitを使うのは禁止されている
-            user_profile up = new user_profile();
+            UserProfile up = new UserProfile();
             int addIndex = 0;
-            for(int i = 0;i < up.List_tsuin_yotei.size();i++){
-                if(this.unixtime > up.List_tsuin_yotei.get(i).unixtime){
+            for(int i = 0;i < up.tsuinYoteiList.size();i++){
+                if(this.unixtime > up.tsuinYoteiList.get(i).unixtime){
                     addIndex = i + 1;
-                }else if(i == up.List_tsuin_yotei.size()-1 && this.unixtime > up.List_tsuin_yotei.get(i).unixtime){
-                    addIndex = up.List_tsuin_yotei.size();
+                }else if(i == up.tsuinYoteiList.size()-1 && this.unixtime > up.tsuinYoteiList.get(i).unixtime){
+                    addIndex = up.tsuinYoteiList.size();
                 }
             }
 
-            up.List_tsuin_yotei.add(addIndex, this);
+            up.tsuinYoteiList.add(addIndex, this);
         }
     }
     public void get_tsuinData_and_input_static(){
@@ -359,7 +359,7 @@ public class tsuin_yotei {
                                     i_d,
                                     i_t
                             );
-                            up.List_tsuin_yotei.add(temp);
+                           // up.tsuinYoteiList.add(temp);
                         }
                     }
 
@@ -369,5 +369,5 @@ public class tsuin_yotei {
                     }
                 }
         );
-    }
+    }*/
 }

@@ -24,7 +24,7 @@ public class h6_input extends AppCompatActivity implements View.OnClickListener 
     LinearLayout eraseBtn;
     EditText kensa,shisetsu;
 
-    user_profile up;
+    UserProfile up;
     Global_Util gu;
 
     kensa_rireki kr;
@@ -33,7 +33,7 @@ public class h6_input extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.h6_input);
 
-        up=new user_profile();
+        up=new UserProfile();
         gu=new Global_Util();
 
         backBtnHeader = findViewById(R.id.backH6);
