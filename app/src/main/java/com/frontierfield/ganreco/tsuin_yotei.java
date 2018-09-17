@@ -21,7 +21,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-
 /**
  * Created by kkarimu on 2018/07/07.
  */
@@ -312,7 +311,6 @@ public class tsuin_yotei {
             up.List_tsuin_yotei.add(addIndex, this);
         }
     }
-
     public void get_tsuinData_and_input_static(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
@@ -320,32 +318,33 @@ public class tsuin_yotei {
         mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
 
         myRef.child("tsuin_yotei").child(mAuthUser.getUid()).orderByChild("unixtime").addListenerForSingleValueEvent(
-                new ValueEventListener(){
+                new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         user_profile up = new user_profile();
-                        up.List_tsuin_yotei = new ArrayList<tsuin_yotei>(){};
+                        up.List_tsuin_yotei = new ArrayList<tsuin_yotei>() {
+                        };
                         Iterable<DataSnapshot> snapshot_children = dataSnapshot.getChildren();
-                        for(DataSnapshot t:snapshot_children){
-                            String t_y,t_m,t_d,t_t;
+                        for (DataSnapshot t : snapshot_children) {
+                            String t_y, t_m, t_d, t_t;
 
-                            int i_y = -1,i_m= -1,i_d=-1,i_t=-1;
+                            int i_y = -1, i_m = -1, i_d = -1, i_t = -1;
 
                             t_y = t.child("y_index").getValue(true).toString();
                             t_m = t.child("m_index").getValue(true).toString();
                             t_d = t.child("d_index").getValue(true).toString();
                             t_t = t.child("time").getValue(true).toString();
 
-                            if(t_y != null){
+                            if (t_y != null) {
                                 i_y = Integer.parseInt(t_y);
                             }
-                            if(t_m != null){
+                            if (t_m != null) {
                                 i_m = Integer.parseInt(t_m);
                             }
-                            if(t_d != null){
+                            if (t_d != null) {
                                 i_d = Integer.parseInt(t_d);
                             }
-                            if(t_t != null){
+                            if (t_t != null) {
                                 i_t = Integer.parseInt(t_t);
                             }
 

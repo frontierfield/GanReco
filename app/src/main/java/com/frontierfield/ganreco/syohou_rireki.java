@@ -4,7 +4,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -42,11 +41,11 @@ public class syohou_rireki {
         return SyohouRirekiList;  //singleton
     }
 
-    public String getWeek(){
+    public String getWeek() {
         Calendar cal = Calendar.getInstance();
         Global_Util gu = new Global_Util();
         Integer year = gu.aYotei.get(y_index);
-        Integer month = gu.aMonth[m_index] -1;
+        Integer month = gu.aMonth[m_index] - 1;
         Integer day = gu.aDay[d_index];
         cal.set(year, month, day);
         String r = "";

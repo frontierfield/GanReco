@@ -27,6 +27,7 @@ class HistoryFragmentAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position){
         return tabTitle[position];
     }
+
 /*
     // 自分のコードから Fragment の初期化に使うメソッド
     public static HistoryFragmentAdapter newInstance(FragmentManager fm) {
@@ -49,7 +50,6 @@ class HistoryFragmentAdapter extends FragmentPagerAdapter {
         return tabTitle.length;
     }
 }
-
 //通院予定リスト表示用アダプター
 class ListViewTsuinYotei extends BaseAdapter {
     private static ListViewTsuinYotei instance=new ListViewTsuinYotei();
@@ -93,7 +93,6 @@ class ListViewTsuinYotei extends BaseAdapter {
                     year.toString() + "年" +
                             month.toString()+"月"+day.toString()+"日"+ty.get(position).getWeek());
         }else {
-
             String start_t = gu.aStartTime[ty.get(position).time];
 
             convertView = layoutInflater.inflate(R.layout.listelement_e, parent, false);
@@ -207,7 +206,6 @@ class ListViewOkusuriRireki extends BaseAdapter {
             ((TextView) convertView.findViewById(R.id.hospnameE)).setText(ty.get(position).s_detail);
             //((ImageView) convertView.findViewById(R.id.photoImageG)).setImage();
         }
-
         return convertView;
     }
 }

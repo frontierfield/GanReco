@@ -125,7 +125,6 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
                }
             }
         }
-
     }
 
     private void checkPermission() {

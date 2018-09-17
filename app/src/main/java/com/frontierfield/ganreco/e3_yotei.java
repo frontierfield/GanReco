@@ -16,7 +16,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import static com.frontierfield.ganreco.tsuin_yotei.getInstance;
-
 /**
  * Created by kkarimu on 2018/07/09.
  */
@@ -138,7 +137,6 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
     }
 
     private void RegistryData() {
-
         if(ty == null) {
             //new add
             //この時点で保存するデータを、spinnerでの場所の番号にしとくからややこしいことになってる
