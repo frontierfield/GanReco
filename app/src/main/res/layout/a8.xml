@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF0CBBB6">
+    <ImageView
+        android:src="@drawable/logo_large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageLogoLargeBG"
+        android:layout_marginTop="20dp" />
+    <EditText
+        android:inputType="textEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editEmailB1"
+        android:layout_marginRight="37.0dp"
+        android:layout_marginLeft="37.0dp"
+        android:background="#21000000"
+        android:hint="メールアドレス"
+        android:layout_marginTop="20dp" />
+    <EditText
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editPasswordB1"
+        android:layout_marginRight="37.0dp"
+        android:layout_marginLeft="37.0dp"
+        android:background="#21000000"
+        android:layout_marginTop="20.0dp"
+        android:hint="パスワード" />
+    <TextView
+        android:gravity="center"
+        android:height="12pt"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:lineSpacingMultiplier="1.50"
+        android:text="パスワードを忘れた方"
+        android:width="120pt"
+        android:textColor="#FFFFFFFF"
+        android:clickable="true"
+        android:id="@+id/forgotPass"
+        android:layout_marginTop="20dp" />
+    <TextView
+        android:text="ログイン"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonLogin"
+        android:background="@drawable/button_round_white"
+        android:gravity="center_horizontal"
+        android:clickable="true"
+        android:textSize="20dp"
+        android:layout_marginRight="37.0dp"
+        android:layout_marginLeft="37dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#0CBBB6" />
+    <TextView
+        android:gravity="center"
+        android:height="12pt"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:lineSpacingMultiplier="1.50"
+        android:text="新規会員登録"
+        android:width="72pt"
+        android:textColor="#FFFFFFFF"
+        android:clickable="true"
+        android:id="@+id/signUP"
+        android:layout_marginTop="20dp" />
+
+</LinearLayout>

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ganreco</string>
+    <string name="action_settings">Settings</string>
+    <string name="activity_e8アバターイラストは続柄情報によって自label_text">
+    アバターイラストは
+    続柄情報によって
+    自動で選択されます。
+  </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_e_f_g_h_mainmenu">e_f_g_h_mainmenu</string>
+</resources>

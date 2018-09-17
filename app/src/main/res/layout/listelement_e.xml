@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:clickable="false">
+
+    <TextView
+        android:id="@+id/watchE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="14dp"
+        android:layout_weight="0.1"
+        android:text="watch"
+        android:textColor="#FFFA0E74" />
+
+    <TextView
+        android:id="@+id/timeE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="14dp"
+        android:layout_toRightOf="@+id/watchE"
+        android:layout_weight="0.1"
+        android:text="time"
+        android:textColor="#FFFA0E74" />
+
+    <TextView
+        android:id="@+id/hospnameE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="14dp"
+        android:layout_toRightOf="@+id/timeE"
+        android:layout_weight="0.2"
+        android:text="hospname"
+        android:textColor="#FF0CBBB6" />
+
+    <TextView
+        android:id="@+id/hospDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_toRightOf="@+id/hospnameE"
+        android:layout_weight="0.1"
+        android:text="detail" />
+
+    <ImageView
+        android:id="@+id/editBtnE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="false"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_weight="0.1"
+        app:srcCompat="@drawable/button_edit" />
+</RelativeLayout>

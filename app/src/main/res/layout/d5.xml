@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/f4main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    >
+    <RelativeLayout
+        android:id="@+id/fotter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#666666"
+        android:gravity="center">
+        <LinearLayout
+            android:id="@+id/homesetFotterD5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:clickable="true"
+            android:orientation="vertical">
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="#666666"
+                app:srcCompat="@drawable/icon_tab_bar_home" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/inputsetFotterD5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/yoyakusetFotterD5"
+            android:layout_toRightOf="@+id/homesetFotterD5"
+            android:clickable="true"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="#666666"
+                app:srcCompat="@drawable/icon_tab_bar_input" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="入力"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/yoyakusetFotterD5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:orientation="vertical">
+            <ImageButton
+                android:id="@+id/imageButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="#666666"
+                app:srcCompat="@drawable/icon_tab_bar_view" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="予定／履歴"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/hospitalSetFotterD5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/mypagesetFotterD5"
+            android:layout_toRightOf="@+id/yoyakusetFotterD5"
+            android:clickable="true"
+            android:orientation="vertical">
+            <ImageButton
+                android:id="@+id/imageButton4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="#666666"
+                app:srcCompat="@drawable/icon_tab_bar_search" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoText="false"
+                android:gravity="center_horizontal"
+                android:text="病院検索"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/mypagesetFotterD5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:clickable="true"
+            android:orientation="vertical">
+            <ImageButton
+                android:id="@+id/imageButton5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="#666666"
+                app:srcCompat="@drawable/icon_tab_bar_mypage" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="マイページ"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/header_home"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/shape_ivD5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20sp"
+            android:clickable="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/shape"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="16dp"
+            tools:name="Shape" />
+        <TextView
+            android:id="@+id/通院予定label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="退会"
+            android:textColor="#666666"
+            android:textSize="16dp"
+            tools:name="退会" />
+
+        <ImageView
+            android:id="@+id/button_bell_ivD5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15sp"
+            android:clickable="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/button_bell"
+            tools:layout_editor_absoluteX="280dp"
+            tools:layout_editor_absoluteY="10dp"
+            tools:name="Button/ButtonHelp" />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/本アプリでは画像解析等に時間が掛かる場合label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginTop="10sp"
+        android:gravity="left"
+        android:text="こちらから退会のためのメール送信が可能です。退会すると、あなたの情報にはアクセスできなくなります。よろしいですか？"
+        android:textColor="#666666"
+        android:textSize="16dp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="63dp"
+        tools:name="本アプリでは画像解析等に時間が掛かる場合" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/本アプリでは画像解析等に時間が掛かる場合label"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/taikaiD5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:layout_marginTop="10sp"
+            android:layout_weight="1"
+            android:background="@drawable/button_round"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="了承のうえ退会する"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+</RelativeLayout>
+

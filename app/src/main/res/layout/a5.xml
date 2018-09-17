@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF0CBBB6">
+    <ImageView
+        android:src="@drawable/text_pre_signin_done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/TextPreSignInDone"
+        android:layout_marginTop="20dp" />
+    <FrameLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/frameLayout1">
+        <TextView
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:lineSpacingMultiplier="1.50"
+            android:text="会員登録はまだ完了していません"
+            android:width="288dp"
+            android:textColor="#FFFA0E74"
+            android:layout_marginTop="20dp" />
+    </FrameLayout>
+    <TextView
+        android:gravity="center"
+        android:height="72dp"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:lineSpacingMultiplier="1.50"
+        android:text="ご入力メールアドレスにメールを送信しました。"
+        android:width="264dp"
+        android:textColor="#FFFFFFFF"
+        android:textSize="12sp"
+        android:singleLine="true"
+        android:layout_marginTop="20dp" />
+    <TextView
+        android:gravity="center"
+        android:height="72dp"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:lineSpacingMultiplier="1.50"
+        android:text="メールをご確認のうえ、認証リンクを押して本登録を完了してください。"
+        android:width="264dp"
+        android:textColor="#FFFFFFFF"
+        android:textSize="12sp"
+        android:singleLine="false"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp" />
+</LinearLayout>
