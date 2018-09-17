@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 public class user_profile {
-
+/*
     public void DebugOutput(){
         Global_Util GU = new Global_Util();
 
@@ -44,7 +44,7 @@ public class user_profile {
         }
 
     }
-
+*/
     public static String UID = null;
     public static String lastName = null;
     public static String firstName = null;
