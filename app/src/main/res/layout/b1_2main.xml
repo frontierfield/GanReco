@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/d1main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFEFEFEF">
+    <!--tools:context="com.example.project.d1import">-->
+    <RelativeLayout
+        android:id="@+id/fotter"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#666666"
+        android:gravity="center">
+
+        <LinearLayout
+            android:id="@+id/homesetFotterD1_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:clickable="true"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="#666666"
+                app:srcCompat="@drawable/icon_tab_bar_home" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/inputsetFotterD1_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/yoyakusetFotterD1_2"
+            android:layout_toRightOf="@+id/homesetFotterD1_2"
+            android:clickable="true"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="#666666"
+                app:srcCompat="@drawable/icon_tab_bar_input" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="入力"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/yoyakusetFotterD1_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/imageButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="#666666"
+                app:srcCompat="@drawable/icon_tab_bar_view" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="予定／履歴"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/hospitalSetFotterD1_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/mypagesetFotterD1_2"
+            android:layout_toRightOf="@+id/yoyakusetFotterD1_2"
+            android:clickable="true"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/imageButton4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="#666666"
+                app:srcCompat="@drawable/icon_tab_bar_search" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoText="false"
+                android:gravity="center_horizontal"
+                android:text="病院検索"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mypagesetFotterD1_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:clickable="true"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/imageButton5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="#666666"
+                app:srcCompat="@drawable/icon_tab_bar_mypage" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="マイページ"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/header_home"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/button_bell_ivD1_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15sp"
+            android:clickable="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/button_bell"
+            tools:layout_editor_absoluteX="280dp"
+            tools:layout_editor_absoluteY="10dp"
+            tools:name="Button/ButtonHelp" />
+
+        <ImageView
+            android:id="@+id/image_title_b12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/logo_small" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="461dp"
+        android:layout_above="@+id/fotter"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/header"
+        android:layout_marginBottom="24dp">
+
+
+        <LinearLayout
+            android:id="@+id/gotomypage_b1_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="15dp"
+
+            android:background="@drawable/rectangle_border_red"
+            android:clickable="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/btnUserInfoRed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="20dp"
+                    android:text="ユーザー情報が未登録です。"
+                    android:textColor="#FFFA0E74"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="15dp"
+                    android:text="本アプリの一部の機能を除き、利用にはユーザー情報の登録が必要となります。予め登録しておくとスムーズです。"
+                    android:textColor="#FFFA0E74" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/btnUserInfoRedArrow"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1.0"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="≫"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="36sp"
+                tools:layout_weight="@sample/tools:us_phones" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dpc_b1_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gotomypage_b1_2"
+            android:layout_centerHorizontal="false"
+            android:layout_centerInParent="false"
+            android:layout_centerVertical="false"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="9dp"
+            android:background="#FFFFFF">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/icon_coming_badge" />
+
+            <ImageView
+                android:id="@+id/icon_home_search_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_home_search"
+                tools:layout_editor_absoluteX="30dp"
+                tools:layout_editor_absoluteY="19dp"
+                tools:name="Icon/Home/Camera" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/信頼のおける病院探しDPC病院検索label"
+                    style="@style/dpc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="18.76dp"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="信頼のおける病院探し"
+                    android:textColor="#0CBBB6"
+                    tools:name="信頼のおける病院探し" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    style="@style/dpc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="18.76dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+
+                    android:text="DPC分析"
+                    android:textColor="#0CBBB6"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/dpc_b1_2"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3dp">
+
+
+                <LinearLayout
+                    android:id="@+id/scheduleset"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentRight="false"
+                    android:layout_marginRight="3dp"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    android:clickable="true"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/icon_home_schedule_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="14.32dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/icon_home_schedule"
+                        tools:name="Icon/Home/Schedule" />
+
+                    <TextView
+                        android:id="@+id/通院予定label"
+                        style="@style/dpc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="12.24dp"
+                        android:gravity="center"
+                        android:text="通院予定"
+                        android:textColor="#0CBBB6"
+                        android:textSize="12dp"
+                        tools:layout_editor_absoluteX="21dp"
+                        tools:layout_editor_absoluteY="45dp"
+                        tools:name="通院予定" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/okusuri"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentRight="false"
+                    android:layout_centerHorizontal="false"
+                    android:layout_centerVertical="false"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    android:clickable="true"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/icon_home_medicine_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="14.32dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/icon_home_medicine"
+                        tools:name="Icon/Home/Medicine" />
+
+                    <TextView
+                        android:id="@+id/お薬履歴label"
+                        style="@style/dpc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="12.24dp"
+                        android:text="お薬履歴"
+                        android:textColor="#0CBBB6"
+                        android:textSize="12dp"
+                        tools:name="お薬履歴" />
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3dp">
+
+                <LinearLayout
+                    android:id="@+id/kensaset"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentLeft="false"
+                    android:layout_marginRight="3dp"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    android:clickable="true"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/icon_home_inspection_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="14.73dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/icon_home_inspection"
+                        tools:name="Icon/Home/Inspection" />
+
+                    <TextView
+                        android:id="@+id/検査履歴label"
+                        style="@style/dpc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="10.75dp"
+                        android:gravity="center"
+                        android:text="検査履歴"
+                        android:textColor="#0CBBB6"
+                        android:textSize="12dp"
+                        tools:name="検査履歴" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tsuinset"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentRight="false"
+                    android:layout_centerHorizontal="true"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    android:clickable="true"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/icon_home_hospital_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="14.77dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/icon_home_hospital"
+                        tools:name="Icon/Home/Hospital" />
+
+                    <TextView
+                        android:id="@+id/通院履歴label"
+                        style="@style/dpc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center"
+                        android:text="通院履歴"
+                        android:textColor="#0CBBB6"
+                        android:textSize="12dp"
+                        tools:name="通院履歴" />
+                </LinearLayout>
+
+            </TableRow>
+
+        </TableLayout>
+    </RelativeLayout>
+</RelativeLayout>
+

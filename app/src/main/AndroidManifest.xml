@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.frontierfield.ganreco">
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="がんレコ"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".a1_sokyuFragment" />
+        <activity android:name=".a2_sokyuFragment" />
+        <activity android:name=".a3_sokyuFragment" />
+        <activity android:name=".a4_registry_user" />
+        <activity android:name=".a5_registry_precomp" />
+        <activity android:name=".a7_registry_comp" />
+        <activity android:name=".a9_forgotpassword" />
+        <activity android:name=".b1_2mainmenu" />
+        <activity android:name=".b3_input"></activity>
+        <activity android:name=".c1_2mypage" />
+        <activity android:name=".c3_edituser" />
+        <activity android:name=".d1help" />
+        <activity android:name=".d5taikai" />
+        <activity
+            android:name=".e_f_g_h_mainmenu"
+            android:label="@string/title_activity_e_f_g_h_mainmenu"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".e3_yotei"></activity>
+        <activity android:name=".f4_input"></activity>
+        <activity android:name=".g4_input"></activity>
+    </application>
+
+</manifest>

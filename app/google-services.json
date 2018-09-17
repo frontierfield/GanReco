@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "411925908867",
+    "firebase_url": "https://ganreco-ea9fc.firebaseio.com",
+    "project_id": "ganreco-ea9fc",
+    "storage_bucket": "ganreco-ea9fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411925908867:android:083382d6a9959cac",
+        "android_client_info": {
+          "package_name": "com.frontierfield.ganreco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "411925908867-gabfd072o8rocsa84cfvl0utftka5aot.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.frontierfield.ganreco",
+            "certificate_hash": "e124ae874c2c4b103a00a78c67c76939ab88742b"
+          }
+        },
+        {
+          "client_id": "411925908867-quvcq8u0iuu1emearhsh5qd4re1ur8s4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPS0-7cBKfKs2UjY75vZ6C7qfVskNSrZE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "411925908867-quvcq8u0iuu1emearhsh5qd4re1ur8s4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

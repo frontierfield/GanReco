@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="1dp"
+    android:layout_marginLeft="1dp"
+    android:layout_marginRight="1dp"
+    android:background="#FFF4F4F4" >
+
+
+    <RelativeLayout
+        android:id="@+id/btnEFGH1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#FFFFFFFF"
+        android:minHeight="56dp">
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="13dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/rectangle"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/listviewButtonH1_2"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="false"
+                android:layout_alignParentTop="true"
+                android:layout_weight="0.5"
+                android:background="@drawable/rectangle"
+                android:clickable="true"
+                android:text="一覧表示"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/calenderviewButtonH1_2"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_weight="0.5"
+                android:background="@drawable/rectangle_border_white"
+                android:clickable="true"
+                android:text="カレンダー表示"
+                android:textAlignment="center"
+                android:textColor="#0CBBB6" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/ListDetailEFGH_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/btnEFGH1"
+        android:layout_marginBottom="39dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="14dp"
+        android:clickable="true" />
+
+
+</RelativeLayout>
