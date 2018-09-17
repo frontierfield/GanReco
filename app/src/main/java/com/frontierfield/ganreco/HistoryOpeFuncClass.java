@@ -59,9 +59,8 @@ class HistoryOpeFuncClass extends android.support.v4.app.Fragment implements Ada
     @Override
     public void onResume() {
         super.onResume();
-        user_profile up = new user_profile();
-        up.DebugOutput();
-        if(current_view_ty_size != up.List_tsuin_yotei.size()) {
+        UserProfile up = new UserProfile();
+        if(current_view_ty_size != up.tsuinYoteiList.size()) {
         init_view_tsuin_yotei(this.getContext());
         adapter.notifyDataSetChanged();
         }
@@ -70,20 +69,20 @@ class HistoryOpeFuncClass extends android.support.v4.app.Fragment implements Ada
     public void init_view_tsuin_yotei(Context c) {
         view_tsuin_yoteis = new ArrayList<tsuin_yotei>(){};
         current_view_ty_size = 0;
-        user_profile up = new user_profile();
+        UserProfile up = new UserProfile();
         tsuin_yotei prev_ty;
 
-        if(up.List_tsuin_yotei != null && up.List_tsuin_yotei.size() > 0) {
+        if(up.tsuinYoteiList != null && up.tsuinYoteiList.size() > 0) {
             prev_ty = new tsuin_yotei(
-                    up.List_tsuin_yotei.get(0).ID,
+                    up.tsuinYoteiList.get(0).ID,
                     false,
-                    up.List_tsuin_yotei.get(0).hospital,
-                    up.List_tsuin_yotei.get(0).s_detail,
+                    up.tsuinYoteiList.get(0).hospital,
+                    up.tsuinYoteiList.get(0).s_detail,
                     "",
-                    up.List_tsuin_yotei.get(0).y_index,
-                    up.List_tsuin_yotei.get(0).m_index,
-                    up.List_tsuin_yotei.get(0).d_index,
-                    up.List_tsuin_yotei.get(0).time);
+                    up.tsuinYoteiList.get(0).y_index,
+                    up.tsuinYoteiList.get(0).m_index,
+                    up.tsuinYoteiList.get(0).d_index,
+                    up.tsuinYoteiList.get(0).time);
             tsuin_yotei firstHeader = new tsuin_yotei(
                     "",
                     true,
@@ -97,43 +96,43 @@ class HistoryOpeFuncClass extends android.support.v4.app.Fragment implements Ada
             );
             view_tsuin_yoteis.add(firstHeader);
             view_tsuin_yoteis.add(new tsuin_yotei(
-                    up.List_tsuin_yotei.get(0).ID,
+                    up.tsuinYoteiList.get(0).ID,
                     false,
-                    up.List_tsuin_yotei.get(0).hospital,
-                    up.List_tsuin_yotei.get(0).s_detail,
+                    up.tsuinYoteiList.get(0).hospital,
+                    up.tsuinYoteiList.get(0).s_detail,
                     "",
-                    up.List_tsuin_yotei.get(0).y_index,
-                    up.List_tsuin_yotei.get(0).m_index,
-                    up.List_tsuin_yotei.get(0).d_index,
-                    up.List_tsuin_yotei.get(0).time));
+                    up.tsuinYoteiList.get(0).y_index,
+                    up.tsuinYoteiList.get(0).m_index,
+                    up.tsuinYoteiList.get(0).d_index,
+                    up.tsuinYoteiList.get(0).time));
             current_view_ty_size++;
 
-            for (int i = 1; i < up.List_tsuin_yotei.size(); i++) {
-                if (prev_ty.calc_unixtime_day() != up.List_tsuin_yotei.get(i).calc_unixtime_day()) {
+            for (int i = 1; i < up.tsuinYoteiList.size(); i++) {
+                if (prev_ty.calc_unixtime_day() != up.tsuinYoteiList.get(i).calc_unixtime_day()) {
                     tsuin_yotei header = new tsuin_yotei(
                             "",
                             true,
                             "",
                             "",
                             "",
-                            up.List_tsuin_yotei.get(i).y_index,
-                            up.List_tsuin_yotei.get(i).m_index,
-                            up.List_tsuin_yotei.get(i).d_index,
-                            up.List_tsuin_yotei.get(i).time
+                            up.tsuinYoteiList.get(i).y_index,
+                            up.tsuinYoteiList.get(i).m_index,
+                            up.tsuinYoteiList.get(i).d_index,
+                            up.tsuinYoteiList.get(i).time
                     );
                     view_tsuin_yoteis.add(header);
                 }
-                prev_ty = up.List_tsuin_yotei.get(i);
+                prev_ty = up.tsuinYoteiList.get(i);
                 view_tsuin_yoteis.add(new tsuin_yotei(
-                        up.List_tsuin_yotei.get(i).ID,
+                        up.tsuinYoteiList.get(i).ID,
                         false,
-                        up.List_tsuin_yotei.get(i).hospital,
-                        up.List_tsuin_yotei.get(i).s_detail,
+                        up.tsuinYoteiList.get(i).hospital,
+                        up.tsuinYoteiList.get(i).s_detail,
                         "",
-                        up.List_tsuin_yotei.get(i).y_index,
-                        up.List_tsuin_yotei.get(i).m_index,
-                        up.List_tsuin_yotei.get(i).d_index,
-                        up.List_tsuin_yotei.get(i).time));
+                        up.tsuinYoteiList.get(i).y_index,
+                        up.tsuinYoteiList.get(i).m_index,
+                        up.tsuinYoteiList.get(i).d_index,
+                        up.tsuinYoteiList.get(i).time));
 
                 current_view_ty_size++;
             }

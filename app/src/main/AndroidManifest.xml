@@ -36,7 +36,7 @@
         <activity android:name=".b1_2mainmenu" />
         <activity android:name=".b3_input"></activity>
         <activity android:name=".c1_2mypage" />
-        <activity android:name=".c3_edituser" />
+        <activity android:name=".C3_UserInfo" />
         <activity android:name=".d1help" />
         <activity android:name=".d5taikai" />
         <activity

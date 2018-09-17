@@ -27,7 +27,7 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
     LinearLayout eraseBtn;
     EditText shinsatsu,hospital;
 
-    user_profile up;
+    UserProfile up;
     Global_Util gu;
 
     tsuin_yotei ty;
@@ -39,7 +39,7 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
 
         setContentView(R.layout.e3_input);
 
-        up=new user_profile();
+        up=new UserProfile();
         gu=new Global_Util();
 
         backBtnHeader = findViewById(R.id.backE3);
@@ -97,17 +97,17 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
 
 
         }else{
-            for(int i =0;i < up.List_tsuin_yotei.size();i++){
-                if(up.List_tsuin_yotei.get(i).ID.equals(yoteiID)){
-                    ty = new tsuin_yotei(up.List_tsuin_yotei.get(i).ID,
+            for(int i =0;i < up.tsuinYoteiList.size();i++){
+                if(up.tsuinYoteiList.get(i).ID.equals(yoteiID)){
+                    ty = new tsuin_yotei(up.tsuinYoteiList.get(i).ID,
                             false,
-                            up.List_tsuin_yotei.get(i).hospital,
-                            up.List_tsuin_yotei.get(i).s_detail,
-                            up.List_tsuin_yotei.get(i).detail,
-                            up.List_tsuin_yotei.get(i).y_index,
-                            up.List_tsuin_yotei.get(i).m_index,
-                            up.List_tsuin_yotei.get(i).d_index,
-                            up.List_tsuin_yotei.get(i).time);
+                            up.tsuinYoteiList.get(i).hospital,
+                            up.tsuinYoteiList.get(i).s_detail,
+                            up.tsuinYoteiList.get(i).detail,
+                            up.tsuinYoteiList.get(i).y_index,
+                            up.tsuinYoteiList.get(i).m_index,
+                            up.tsuinYoteiList.get(i).d_index,
+                            up.tsuinYoteiList.get(i).time);
 
                 }
             }

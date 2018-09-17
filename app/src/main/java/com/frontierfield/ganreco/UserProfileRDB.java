@@ -11,13 +11,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;
 
-/**
- * Created by kkarimu on 2018/06/18.
- * rdb用構造体
- */
-
 @IgnoreExtraProperties
-public class user_profile_realtimedatabase{
+public class UserProfileRDB {
     public String UID = null;
     public String lastName = null;
     public String firstName = null;
@@ -27,10 +22,12 @@ public class user_profile_realtimedatabase{
     public String zipfront = null;
     public String ziprear = null;
     public String address = null;
-    public user_profile_realtimedatabase(){
+
+    public UserProfileRDB(){
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
-    public user_profile_realtimedatabase(user_profile up){
+
+    public UserProfileRDB(UserProfile up){
         this.UID = up.UID;
         this.lastName = up.lastName;
         this.firstName = up.firstName;
@@ -43,11 +40,13 @@ public class user_profile_realtimedatabase{
         this.ziprear = up.ziprear;
         this.address = up.address;
     }
+
     public void user_profile_add(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
         myRef.child("users").child(this.UID).setValue(this);
     }
+
     public void get_user_profile_and_input_static(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
@@ -59,7 +58,7 @@ public class user_profile_realtimedatabase{
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 String t_y,t_m,t_d,t_s;
-                user_profile up = new user_profile();
+                UserProfile up = new UserProfile();
                 up.UID = dataSnapshot.child("UID").getValue(String.class);
                 up.lastName = dataSnapshot.child("lastName").getValue(String.class);
                 up.firstName = dataSnapshot.child("firstName").getValue(String.class);
@@ -95,6 +94,4 @@ public class user_profile_realtimedatabase{
             }
         });
     }
-
-
 }

@@ -30,7 +30,6 @@ public class a4_registry_user extends AppCompatActivity implements View.OnClickL
     private FirebaseUser firebaseUser;
     private EditText inputEmail;
     private EditText inputPassword;
-    private int newUserflag = 0;
     private SharedPreferences cache;
 
     @Override
@@ -39,7 +38,6 @@ public class a4_registry_user extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.a4);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        newUserflag = 0;
         cache = this.getSharedPreferences("GanReco", this.MODE_PRIVATE);
         inputEmail = findViewById(R.id.editEmailB2);
         inputPassword = findViewById(R.id.editPasswordB2);

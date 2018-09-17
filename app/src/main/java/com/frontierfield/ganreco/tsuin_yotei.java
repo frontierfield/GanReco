@@ -1,12 +1,8 @@
 package com.frontierfield.ganreco;
 
-import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -20,7 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by kkarimu on 2018/07/07.
@@ -234,10 +229,10 @@ public class tsuin_yotei {
         myRef.child("tsuin_yotei").
                 child(mAuthUser.getUid()).
                 child(ID).removeValue();
-        user_profile up = new user_profile();
-        for(int i = 0;i < up.List_tsuin_yotei.size();i++){
-            if(up.List_tsuin_yotei.get(i).ID.equals(this.ID)) {
-                up.List_tsuin_yotei.remove(i);
+        UserProfile up = new UserProfile();
+        for(int i = 0;i < up.tsuinYoteiList.size();i++){
+            if(up.tsuinYoteiList.get(i).ID.equals(this.ID)) {
+                up.tsuinYoteiList.remove(i);
             }
         }
     }
@@ -253,17 +248,17 @@ public class tsuin_yotei {
                     child(mAuthUser.getUid()).
                     child(ID).
                     setValue(this);
-            user_profile up = new user_profile();
-            for(int i = 0;i < up.List_tsuin_yotei.size();i++){
-                if(up.List_tsuin_yotei.get(i).ID.equals(this.ID)){
-                    up.List_tsuin_yotei.get(i).hospital = this.hospital;
-                    up.List_tsuin_yotei.get(i).s_detail = this.s_detail;
-                    up.List_tsuin_yotei.get(i).detail = this.detail;
-                    up.List_tsuin_yotei.get(i).y_index = this.y_index;
-                    up.List_tsuin_yotei.get(i).m_index = this.m_index;
-                    up.List_tsuin_yotei.get(i).d_index = this.d_index;
-                    up.List_tsuin_yotei.get(i).time = this.time;
-                    up.List_tsuin_yotei.get(i).unixtime = this.unixtime;
+            UserProfile up = new UserProfile();
+            for(int i = 0;i < up.tsuinYoteiList.size();i++){
+                if(up.tsuinYoteiList.get(i).ID.equals(this.ID)){
+                    up.tsuinYoteiList.get(i).hospital = this.hospital;
+                    up.tsuinYoteiList.get(i).s_detail = this.s_detail;
+                    up.tsuinYoteiList.get(i).detail = this.detail;
+                    up.tsuinYoteiList.get(i).y_index = this.y_index;
+                    up.tsuinYoteiList.get(i).m_index = this.m_index;
+                    up.tsuinYoteiList.get(i).d_index = this.d_index;
+                    up.tsuinYoteiList.get(i).time = this.time;
+                    up.tsuinYoteiList.get(i).unixtime = this.unixtime;
                 }
             }
 
@@ -279,17 +274,17 @@ public class tsuin_yotei {
             //listener実装してもいいが、このクラスに実装するといろんなところでリスナーが呼ばれておかしくなる可能性大
             //関数を引数にする方法もあるが、それだと、thisが呼べない
             //task awaitをやりたいが、メインスレッドでawaitを使うのは禁止されている
-            user_profile up = new user_profile();
+            UserProfile up = new UserProfile();
             int addIndex = 0;
-            for(int i = 0;i < up.List_tsuin_yotei.size();i++){
-                if(this.unixtime > up.List_tsuin_yotei.get(i).unixtime){
+            for(int i = 0;i < up.tsuinYoteiList.size();i++){
+                if(this.unixtime > up.tsuinYoteiList.get(i).unixtime){
                     addIndex = i + 1;
-                }else if(i == up.List_tsuin_yotei.size()-1 && this.unixtime > up.List_tsuin_yotei.get(i).unixtime){
-                    addIndex = up.List_tsuin_yotei.size();
+                }else if(i == up.tsuinYoteiList.size()-1 && this.unixtime > up.tsuinYoteiList.get(i).unixtime){
+                    addIndex = up.tsuinYoteiList.size();
                 }
             }
 
-            up.List_tsuin_yotei.add(addIndex, this);
+            up.tsuinYoteiList.add(addIndex, this);
         }
     }
     public void get_tsuinData_and_input_static(){
@@ -302,8 +297,8 @@ public class tsuin_yotei {
                 new ValueEventListener(){
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        user_profile up = new user_profile();
-                        up.List_tsuin_yotei = new ArrayList<tsuin_yotei>(){};
+                        UserProfile up = new UserProfile();
+                        up.tsuinYoteiList = new ArrayList<tsuin_yotei>(){};
                         Iterable<DataSnapshot> snapshot_children = dataSnapshot.getChildren();
                         for(DataSnapshot t:snapshot_children){
                             String t_y,t_m,t_d,t_t;
@@ -339,7 +334,7 @@ public class tsuin_yotei {
                                     i_d,
                                     i_t
                             );
-                            up.List_tsuin_yotei.add(temp);
+                            up.tsuinYoteiList.add(temp);
                         }
                     }
 

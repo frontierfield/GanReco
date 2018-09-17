@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -33,7 +32,7 @@ public class f4_input extends AppCompatActivity implements  View.OnClickListener
     LinearLayout eraseBtn;
     EditText shinsatsu,hospital;
 
-    user_profile up;
+    UserProfile up;
     Global_Util gu;
 
     tsuin_rireki tr;
@@ -47,7 +46,7 @@ public class f4_input extends AppCompatActivity implements  View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.f4_input);
 
-        up=new user_profile();
+        up=new UserProfile();
         gu=new Global_Util();
 
         backBtnHeader = findViewById(R.id.backF4);

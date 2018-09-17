@@ -2,9 +2,7 @@ package com.frontierfield.ganreco;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.wifi.hotspot2.pps.Credential;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
@@ -16,14 +14,8 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.auth.AdditionalUserInfo;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthRegistrar;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.Map;
 
 // エントリーポイント
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnCompleteListener {
@@ -139,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             editor.commit();
 
             //userProfileの初期化
-            user_profile_realtimedatabase upr = new user_profile_realtimedatabase();
+            UserProfileRDB upr = new UserProfileRDB();
             upr.get_user_profile_and_input_static();
             //shinsatsu
             tsuin_yotei ty = new tsuin_yotei();

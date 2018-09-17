@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -68,7 +67,7 @@ public class c1_2mypage extends AppCompatActivity implements View.OnClickListene
     protected void onResume() {
         super.onResume();
         //User profile Update
-        user_profile up = new user_profile();
+        UserProfile up = new UserProfile();
         if(up.lastName != null && up.firstName != null && up.year_Index != -1 && up.month_Index != -1 && up.day_Index != -1) {
             Global_Util gu = new Global_Util();
             username.setText(up.lastName + " " + up.firstName);
@@ -104,7 +103,7 @@ public class c1_2mypage extends AppCompatActivity implements View.OnClickListene
             //startActivity(new Intent(this,c1_2mypage.class));
             //finish();
         }else if(i == R.id.button_edit_userE1_2_3_4){
-            startActivity(new Intent(this,c3_edituser.class));
+            startActivity(new Intent(this,C3_UserInfo.class));
         }else if(i == R.id.shape_ivE1_2_3_4) {
             startActivity(new Intent(this, b1_2mainmenu.class));
             finish();

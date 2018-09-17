@@ -3,9 +3,7 @@ package com.frontierfield.ganreco;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,16 +15,8 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Calendar;
-
-/**
- * Created by kkarimu on 2018/06/16.
- */
-
-public class c3_edituser extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class C3_UserInfo extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     ImageView backBtnHeader;
     TextView helpBtn;
     ImageView avater;
@@ -39,17 +29,17 @@ public class c3_edituser extends AppCompatActivity implements View.OnClickListen
     TextView btnCancel;
     TextView btnAdd;
 
-    user_profile up;
+    UserProfile up;
     Global_Util gu;
-
     int y = -1 ,m = -1, d = -1,sexid = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.c3);
 
-        up = new user_profile();
+        up = new UserProfile();
         gu = new Global_Util();
 
         backBtnHeader = findViewById(R.id.backE10N1);
@@ -109,8 +99,6 @@ public class c3_edituser extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-
-
     @Override
     public void onClick(View v) {
         int i = v.getId();
@@ -123,7 +111,7 @@ public class c3_edituser extends AppCompatActivity implements View.OnClickListen
             finish();
         }else if(i == R.id.addE10_N1){
             RegistryUserData();
-            user_profile.isSave = true;
+            UserProfile.isSave = true;
         }
     }
 
@@ -147,7 +135,7 @@ public class c3_edituser extends AppCompatActivity implements View.OnClickListen
         up.address = address.getText().toString();
 
         if(up.lastName == null || up.firstName == null || y == -1 || m == -1 || d == -1 || sexid == -1){
-            Toast.makeText(c3_edituser.this, "未入力の項目があります",
+            Toast.makeText(C3_UserInfo.this, "未入力の項目があります",
                     Toast.LENGTH_SHORT).show();
         }else {
             SharedPreferences cache = this.getSharedPreferences("GanReco",this.MODE_PRIVATE);
@@ -155,7 +143,7 @@ public class c3_edituser extends AppCompatActivity implements View.OnClickListen
             editor.putInt("regiUser",1);
             editor.commit();
 
-            user_profile_realtimedatabase upr = new user_profile_realtimedatabase(up);
+            UserProfileRDB upr = new UserProfileRDB(up);
             upr.user_profile_add();
             finish();
         }
