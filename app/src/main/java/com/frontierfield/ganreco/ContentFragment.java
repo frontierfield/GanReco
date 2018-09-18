@@ -40,25 +40,25 @@ public class ContentFragment extends Fragment {
         listView=(ListView) view.findViewById(R.id.ListDetailEFGH_1);
         switch (tab){
             case 0://通院予定
-                ListViewTsuinYotei listViewTsuinYotei=ListViewTsuinYotei.getInstance();//アダプターに通院予定送る処理
-                listViewTsuinYotei.layoutInflater=getLayoutInflater();//.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                listViewTsuinYotei.ty=TsuinYoteiList.getInstance();
-                listView.setAdapter(listViewTsuinYotei);
+                ListViewTsuinYoteiAdapter listViewTsuinYoteiAdapter=ListViewTsuinYoteiAdapter.getInstance();//アダプターに通院予定送る処理
+                listViewTsuinYoteiAdapter.layoutInflater=getLayoutInflater();//.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                listViewTsuinYoteiAdapter.ty=TsuinYoteiList.getInstance();
+                listView.setAdapter(listViewTsuinYoteiAdapter);
                 break;
             case 1://通院履歴
                 //***保存されてる通院履歴取得
-                ListViewTsuinRireki listViewTsuinRireki=ListViewTsuinRireki.getInstance();//アダプターに通院予定送る
-                listView.setAdapter(listViewTsuinRireki);
+                ListViewTsuinRirekiAdapter listViewTsuinRirekiAdapter=ListViewTsuinRirekiAdapter.getInstance();//アダプターに通院予定送る
+                listView.setAdapter(listViewTsuinRirekiAdapter);
                 break;
             case 2://お薬履歴
                 //***保存されてるお薬履歴取得
-                ListViewOkusuriRireki listViewOkusuriRireki=ListViewOkusuriRireki.getInstance();//アダプターに通院予定送る
-                listView.setAdapter(listViewOkusuriRireki);
+                ListViewSyohouRirekiAdapter listViewSyohouRirekiAdapter=ListViewSyohouRirekiAdapter.getInstance();//アダプターに通院予定送る
+                listView.setAdapter(listViewSyohouRirekiAdapter);
                 break;
             case 3:
                 //***保存されてる検査履歴取得
-                ListViewKensaRireki listViewKensaRireki=ListViewKensaRireki.getInstance();//アダプターに通院予定送る
-                listView.setAdapter(listViewKensaRireki);
+                ListViewKensaRirekiAdapter listViewKensaRirekiAdapter=ListViewKensaRirekiAdapter.getInstance();//アダプターに通院予定送る
+                listView.setAdapter(listViewKensaRirekiAdapter);
                 break;
         }
 
