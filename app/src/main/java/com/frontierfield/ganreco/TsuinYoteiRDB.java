@@ -37,6 +37,7 @@ public class TsuinYoteiRDB {
         FirebaseUser mAuthUser;
         mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
         myRef.child("users").child(mAuthUser.getUid()).child("TsuinYotei").child(String.valueOf(position)).removeValue();
+        //このやり方だと、listを使ってる意味がない
     }
     /*
     public void tsuinData_delete(){

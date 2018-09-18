@@ -200,11 +200,11 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
     }
     private void DeleteTag(){
         //最後に残ったタグ消えない問題
-        if(TsuinYoteiList.getInstance().get(TsuinYoteiList.getInstance().size()-1).t==true)
+        if(TsuinYoteiList.getInstance().get(TsuinYoteiList.getInstance().size()-1).t)
             TsuinYoteiList.deleteTsuinYotei(TsuinYoteiList.getInstance().size()-1);
 
         for(int i=0;i<TsuinYoteiList.getInstance().size()-1;i++){
-            if(TsuinYoteiList.getSavedTsuinYotei(i).t==true&&TsuinYoteiList.getSavedTsuinYotei(i+1).t==true){
+            if(TsuinYoteiList.getSavedTsuinYotei(i).t&&TsuinYoteiList.getSavedTsuinYotei(i+1).t){
                 TsuinYoteiList.deleteTsuinYotei(i);
             }
         }
