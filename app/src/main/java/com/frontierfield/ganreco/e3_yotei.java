@@ -181,6 +181,7 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
             finish();
         }
     }
+
     private void DateTag(tsuin_yotei ty){//同じ年月日のデータがないかどうかチェック
         //一番最初のタグが付かない問題
         //値渡し参照渡しの沼
@@ -204,7 +205,7 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
             TsuinYoteiList.deleteTsuinYotei(TsuinYoteiList.getInstance().size()-1);
 
         for(int i=0;i<TsuinYoteiList.getInstance().size()-1;i++){
-            if(TsuinYoteiList.getSavedTsuinYotei(i).t&&TsuinYoteiList.getSavedTsuinYotei(i+1).t){
+            if(TsuinYoteiList.getSavedTsuinYotei(i).t==true&&TsuinYoteiList.getSavedTsuinYotei(i+1).t){
                 TsuinYoteiList.deleteTsuinYotei(i);
             }
         }
