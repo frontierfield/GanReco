@@ -57,7 +57,7 @@ class ListViewTsuinYotei extends BaseAdapter {
         return instance;
     }
 
-    List<tsuin_yotei> ty=tsuin_yotei.getInstance();
+    List<tsuin_yotei> ty=TsuinYoteiList.getInstance();
     LayoutInflater layoutInflater = null;
     public ListViewTsuinYotei(){
     }
