@@ -28,7 +28,15 @@ public class TsuinYoteiRDB {
         mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
         List<tsuin_yotei> tsuinYoteiListRDB=new ArrayList<tsuin_yotei>();
         tsuinYoteiListRDB=TsuinYoteiList.getInstance();
-        myRef.child("users").child(mAuthUser.getUid()).child("TsuinYotei").setValue(tsuinYoteiListRDB);
+        myRef.child("users").child(mAuthUser.getUid()).child("TsuinYotei").setValue(TsuinYoteiList.getInstance());
+        //↑これ可能ってどういうこと？インスタンスstaticのはず
+    }
+    public static void deleteTsuinYoteiRDB(int position){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+        FirebaseUser mAuthUser;
+        mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
+        myRef.child("users").child(mAuthUser.getUid()).child("TsuinYotei").child(String.valueOf(position)).removeValue();
     }
     /*
     public void tsuinData_delete(){
