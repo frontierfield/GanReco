@@ -12,12 +12,12 @@ public class TsuinYoteiComparator implements Comparator<tsuin_yotei> {
             if(temp==0){
                 temp=ty2.getDayIndex()-ty1.getDayIndex();
                 if(temp==0){
-                    temp=ty1.getTime()-ty2.getTime();
+                    if (!ty2.getHead() && ty1.getHead())
+                        temp = -1;
+                    if (ty2.getHead() && !ty1.getHead())
+                        temp = 1;
                     if(temp==0) {
-                        if (!ty2.getHead() && ty1.getHead())
-                            temp = -1;
-                        if (ty2.getHead() && !ty1.getHead())
-                            temp = 1;
+                        temp=ty1.getTime()-ty2.getTime();
                     }
                 }
             }
