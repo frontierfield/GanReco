@@ -57,6 +57,7 @@ public class b3_input extends AppCompatActivity implements View.OnClickListener 
         }else if(i == R.id.button_bell_ivB3){
             //d3 help
         }else if(i == R.id.schedulesetB3){
+            startActivity(new Intent(this,e_f_g_h_mainmenu.class));
             startActivity(new Intent(this,e3_yotei.class));
             finish();
         }

@@ -18,6 +18,7 @@ public class TsuinYoteiList {
     }
     public static void addTsuinYotei(tsuin_yotei ty){
         TsuinYoteiList.add(ty);
+        SetTag(ty);
         //ソートの処理
         Collections.sort(TsuinYoteiList,new TsuinYoteiComparator());
         /*
@@ -29,22 +30,41 @@ public class TsuinYoteiList {
     }
     public static void deleteTsuinYotei(int position){
         TsuinYoteiList.remove(position);
+        DeleteTag();
         //databaseとの連携処理
         TsuinYoteiRDB.saveTsuinYoteiRDB();
-    }
-    public List<tsuin_yotei> getSavedTsuinYoteiList(){
-        List<tsuin_yotei> ty=null;
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-        FirebaseUser mAuthUser;
-        mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
-        //databaseから保存されてるリストとってくる処理？
-
-        return TsuinYoteiList;
     }
     public static tsuin_yotei getSavedTsuinYotei(int position){
         tsuin_yotei ty;
         ty=TsuinYoteiList.get(position);
         return ty;
+    }
+    private static void SetTag(tsuin_yotei ty){//list内に年月日が一致するtrueがないとき
+        tsuin_yotei tyTag=new tsuin_yotei(null,true,ty.getHospital(),ty.getSDetail(),
+                ty.getDetail(), ty.getYearIndex(), ty.getManthIndex(), ty.getDayIndex(), ty.getTime());
+        int i;
+        for(i=0;i<TsuinYoteiList.size();i++) {
+            if (TsuinYoteiList.get(i).getYearIndex()==ty.getYearIndex()&&
+                    TsuinYoteiList.get(i).getManthIndex()==ty.getManthIndex()&&
+                    TsuinYoteiList.get(i).getDayIndex()==ty.getDayIndex()&&
+                    TsuinYoteiList.get(i).getHead()){
+                break;
+            }
+        }
+        if(i==TsuinYoteiList.size()){
+            TsuinYoteiList.add(tyTag);
+        }
+    }
+    private static void DeleteTag(){//tag消してほしいとき->①listの最後がtag ②tagが連続してる
+        if(TsuinYoteiList.size()>0){
+            if(TsuinYoteiList.get(TsuinYoteiList.size()-1).t) //①
+                TsuinYoteiList.remove(TsuinYoteiList.size()-1);
+
+            for(int i=0;i<TsuinYoteiList.size()-1;i++) {//②
+                if (TsuinYoteiList.get(i).t && TsuinYoteiList.get(i + 1).t) {
+                    TsuinYoteiList.remove(i);
+                }
+            }
+        }
     }
 }
