@@ -10,15 +10,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.List;
-
 public class ContentFragment extends Fragment {
     int tab=0;
     ListView listView;
-    List<TsuinYotei> listty=TsuinYoteiList.getInstance();
-    List<TsuinRireki> viewTsuinRireki;
-    List<syohou_rireki> viewSyohouRireki;
-    List<kensa_rireki> viewKensaRireki;
 
     public ContentFragment(){
     }
@@ -39,28 +33,26 @@ public class ContentFragment extends Fragment {
 
         switch (tab){
             case 0://通院予定
-                //databaseに保存されてるデータを取ってくる
-                ListViewTsuinYoteiAdapter listViewTsuinYoteiAdapter=ListViewTsuinYoteiAdapter.getInstance();//アダプターに通院予定送る処理
-                listViewTsuinYoteiAdapter.layoutInflater=getLayoutInflater();//.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                listViewTsuinYoteiAdapter.tsuinYotei=TsuinYoteiList.getInstance();
-                listView.setAdapter(listViewTsuinYoteiAdapter);
+                TsuinYoteiListViewAdapter tsuinYoteiListViewAdapter = TsuinYoteiListViewAdapter.getInstance();
+                tsuinYoteiListViewAdapter.layoutInflater=getLayoutInflater();//.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                listView.setAdapter(tsuinYoteiListViewAdapter);
                 break;
             case 1://通院履歴
-                //***保存されてる通院履歴取得
-                ListViewTsuinRirekiAdapter listViewTsuinRirekiAdapter=ListViewTsuinRirekiAdapter.getInstance();
-                listViewTsuinRirekiAdapter.layoutInflater=getLayoutInflater();//.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                listViewTsuinRirekiAdapter.tsuinRireki=TsuinRirekiList.getInstance();//アダプターに通院予定送る
-                listView.setAdapter(listViewTsuinRirekiAdapter);
+                TsuinRirekiListViewAdapter tsuinRirekiListViewAdapter = TsuinRirekiListViewAdapter.getInstance();
+                tsuinRirekiListViewAdapter.layoutInflater=getLayoutInflater();//.getSystemService(Context.LAYOUT_INFLATER_SERVICE);//アダプターに通院予定送る
+                listView.setAdapter(tsuinRirekiListViewAdapter);
                 break;
             case 2://お薬履歴
                 //***保存されてるお薬履歴取得
-                ListViewSyohouRirekiAdapter listViewSyohouRirekiAdapter=ListViewSyohouRirekiAdapter.getInstance();//アダプターに通院予定送る
-                listView.setAdapter(listViewSyohouRirekiAdapter);
+                OkusuriRirekiListViewAdapter okusuriRirekiListViewAdapter = OkusuriRirekiListViewAdapter.getInstance();
+                okusuriRirekiListViewAdapter.layoutInflater=getLayoutInflater();//.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                listView.setAdapter(okusuriRirekiListViewAdapter);
                 break;
             case 3:
                 //***保存されてる検査履歴取得
-                ListViewKensaRirekiAdapter listViewKensaRirekiAdapter=ListViewKensaRirekiAdapter.getInstance();//アダプターに通院予定送る
-                listView.setAdapter(listViewKensaRirekiAdapter);
+                KensaRirekiListViewAdapter kensaRirekiListViewAdapter = KensaRirekiListViewAdapter.getInstance();
+                kensaRirekiListViewAdapter.layoutInflater=getLayoutInflater();//.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                listView.setAdapter(kensaRirekiListViewAdapter);
                 break;
         }
 
@@ -84,15 +76,15 @@ public class ContentFragment extends Fragment {
                         }
                         break;
                     case 2:
-                        if (TsuinYoteiList.getInstance().get(position).t == false) {
-                            Intent intent = new Intent(view.getContext(), g4_input.class);
+                        if (OkusuriRirekiList.getInstance().get(position).t == false) {
+                            Intent intent = new Intent(view.getContext(), G4_Input.class);
                             intent.putExtra("OkusuriRirekiID", position);
                             startActivity(intent);
                         }
                         break;
                     case 3:
-                        if (TsuinYoteiList.getInstance().get(position).t == false) {
-                            Intent intent = new Intent(view.getContext(), h6_input.class);
+                        if (KensaRirekiList.getInstance().get(position).t == false) {
+                            Intent intent = new Intent(view.getContext(), H6_Input.class);
                             intent.putExtra("KensaRirekiID", position);
                             startActivity(intent);
                         }

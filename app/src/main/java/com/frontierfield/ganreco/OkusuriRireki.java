@@ -1,49 +1,37 @@
 package com.frontierfield.ganreco;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-/**
- * Created by kkarimu on 2018/07/12.
- */
-
-public class kensa_rireki {
-    String ID; /*RDB kensarireki key*/
+public class OkusuriRireki {
+    String ID; /*RDB syohou key*/
     Boolean t; /*true head*/
-    int y_index,m_index,d_index;
-    String hospital;
+    int y_index,m_index,d_index;//
+    String drugstore;//
+    String s_detail;
     String detail;
 
     String uripath;
     String storagepath;
     String thum_path;
-    private static List<kensa_rireki> KensaRirekiList= new ArrayList<kensa_rireki>();
 
-    public kensa_rireki(){
+    public OkusuriRireki(){
     }
-    public kensa_rireki(String ID,Boolean t,String hospital,String detail,int y_index,int m_index,int d_index,int time) {
+    public OkusuriRireki(String ID,Boolean t,String drugstore,String detail,int y_index,int m_index,int d_index) {
         this.ID = ID;
         this.t = t;
         this.y_index = y_index;
         this.m_index = m_index;
         this.d_index = d_index;
-        this.hospital = hospital;
+        this.drugstore = drugstore;
         this.detail = detail;
     }
-    public static List<kensa_rireki> getInstance(){
-        return KensaRirekiList;  //singleton
-    }
-    public String getWeek(){
+    public String getWeek() {
         Calendar cal = Calendar.getInstance();
         Global_Util gu = new Global_Util();
         Integer year = gu.aYotei.get(y_index);
-        Integer month = gu.aMonth[m_index] -1;
+        Integer month = gu.aMonth[m_index] - 1;
         Integer day = gu.aDay[d_index];
         cal.set(year, month, day);
         String r = "";
@@ -80,24 +68,53 @@ public class kensa_rireki {
         return r;
     }
 
-    public void kensa_rireki_add(){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-        FirebaseUser mAuthUser;
-        mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        if(ID != null) {
-            myRef.child("kensa_rireki").
-                    child(mAuthUser.getUid()).
-                    child(ID).
-                    setValue(this);
-        }else{
-            DatabaseReference newkr =
-                    myRef.child("kensa_rireki").
-                            child(mAuthUser.getUid()).
-                            push();
-            this.ID = newkr.getKey();
-            newkr.setValue(this);
-        }
+    public String getID() {
+        return ID;
     }
+    public void setID(String id){
+        this.ID=id;
+    }
+
+    public Boolean getHead() {
+        return t;
+    }
+    public void setHead(Boolean t){
+        this.t=t;
+    }
+
+    public int getYearIndex() {
+        return y_index;
+    }
+    public void setYearIndex(int yearIndex){
+        this.y_index=yearIndex;
+    }
+
+    public int getMonthIndex() {
+        return m_index;
+    }
+    public void setMonthIndex(int monthIndex){
+        this.m_index=monthIndex;
+    }
+
+    public int getDayIndex() {
+        return d_index;
+    }
+    public void setDayIndex(int dayIndex){
+        this.d_index=dayIndex;
+    }
+
+    public String getDrugstore() {
+        return drugstore;
+    }
+    public void setDrugstore(String drugstore){
+        this.drugstore=drugstore;
+    }
+
+    public String getDetail(){
+        return detail;
+    }
+    public void setDetail(String detail){
+        this.detail=detail;
+    }
+
 }

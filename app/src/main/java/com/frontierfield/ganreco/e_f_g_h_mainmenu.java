@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -48,6 +49,7 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
         LinearLayout fotterMypage = findViewById(R.id.mypagesetFotterHIJK);
         ImageView bell = findViewById(R.id.button_SelectedUserHIJK);
         ImageView backBtn = findViewById(R.id.shape_ivHIJK);
+        TextView title=findViewById(R.id.titleH_I_J_K1_2);
 
         fotterHome.setOnClickListener(this);
         fotterInput.setOnClickListener(this);
@@ -180,6 +182,7 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
                 filePath = String.format("%s/okusuri_%s.jpg", gu.photoDir.getPath(),fileName);
                 break;
             case 3:
+                filePath = String.format("%s/kensa_%s.jpg", gu.photoDir.getPath(),fileName);
                 //filePath = "kensa_" + filePath;//腫瘍マーカーとその他で分けるかも
                 break;
         }
@@ -212,11 +215,15 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
                         startActivity(nextIntent);
                         break;
                     case 2:
-                        nextIntent = new Intent(this,g4_input.class);
+                        nextIntent = new Intent(this,G4_Input.class);
                         nextIntent.putExtra("filePath",filePath);
                         startActivity(nextIntent);
                         break;
                     case 3:
+                        nextIntent = new Intent(this,H6_Input.class);
+                        nextIntent.putExtra("filePath",filePath);
+                        startActivity(nextIntent);
+                        break;
                        // filePath = "kensa" + filePath;//腫瘍マーカーとその他で分けるかも
                 }
             }

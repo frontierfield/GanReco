@@ -138,9 +138,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //userProfileの初期化
             UserProfileRDB upr = new UserProfileRDB();
             upr.get_user_profile_and_input_static();
-            //保存されてる診察履歴もってくる
+            //保存されてるデータもってくる
             TsuinYoteiRDB.getSavedTsuinYoteiRDB();
             TsuinRirekiRDB.getSavedTsuinRirekiRDB();
+            OkusuriRirekiRDB.getSavedOkusuriRirekiRDB();
+            KensaRirekiRDB.getSavedKensaRirekiRDB();
 
             // がんレコ　メイン画面　B1B2
             startActivity(new Intent(this,b1_2mainmenu.class));

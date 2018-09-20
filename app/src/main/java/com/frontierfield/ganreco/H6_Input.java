@@ -11,23 +11,26 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 /**
  * Created by kkarimu on 2018/07/12.
  */
 
-public class h6_input extends AppCompatActivity implements View.OnClickListener {
+public class H6_Input extends AppCompatActivity implements View.OnClickListener {
     ImageView backBtnHeader , ImageViewKensa;
     TextView helpBtn;
     Spinner year, month, day;
     TextView btnCancel;
     TextView btnAdd;
     LinearLayout eraseBtn;
-    EditText kensa,shisetsu;
+    EditText kensa,hospital;
 
     UserProfile up;
     Global_Util gu;
 
-    kensa_rireki kr;
+    KensaRireki kensaRireki;
+    int position=-1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +47,11 @@ public class h6_input extends AppCompatActivity implements View.OnClickListener 
         eraseBtn = findViewById(R.id.eraseDataH6);
         btnCancel = findViewById(R.id.cancelH6);
         btnAdd = findViewById(R.id.addH6);
-        shisetsu = findViewById(R.id.editTextKensaNameH6);
+        hospital = findViewById(R.id.editTextKensaNameH6);
         kensa = findViewById(R.id.editTextKensaH6);
         ImageViewKensa = findViewById(R.id.imageViewKensaH6);
 
-        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aYear);
+        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aYotei);
         ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aMonth);
         ArrayAdapter<Integer> adapterDay = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aDay);
 
@@ -66,14 +69,25 @@ public class h6_input extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void LoadKensaData() {
-         /*upからkensa load*/
         Intent intent = getIntent();
-        String kensa_id = intent.getStringExtra("kensa_id");
+        position = intent.getIntExtra("KensaRirekiID",-1);
 
-        if(kensa_id == null){
-
-        }else{
-
+        if(position == -1){//新規追加
+            year.setSelection(0);
+            Calendar now = Calendar.getInstance();
+            int nowY = now.get(Calendar.YEAR);
+            for(int i = 0;i < gu.aYotei.size();i++){//????
+                if(nowY == i){
+                    year.setSelection(i);
+                }
+            }
+        }else{//通院予定変更したいとき//もともと入ってたデータ表示させる
+            kensaRireki=KensaRirekiList.getSavedKensaRireki(position);
+            year.setSelection(kensaRireki.y_index);
+            month.setSelection(kensaRireki.m_index);
+            day.setSelection(kensaRireki.d_index);
+            hospital.setText(kensaRireki.hospital);
+            kensa.setText(kensaRireki.detail);
         }
     }
 
@@ -95,11 +109,31 @@ public class h6_input extends AppCompatActivity implements View.OnClickListener 
         }
     }
 
-    private void EraseData() {
+    private void RegistryData() {
+        if(position == -1) {//新しく追加
+            //この時点で保存するデータを、spinnerでの場所の番号にしとくからややこしいことになってる
+            kensaRireki = new KensaRireki(null,false,hospital.getText().toString(),
+                    kensa.getText().toString(), year.getSelectedItemPosition(), month.getSelectedItemPosition(),
+                    day.getSelectedItemPosition());
+        }else{//すでにあるデータ変更
+            kensaRireki.detail = kensa.getText().toString();
+            kensaRireki.hospital = hospital.getText().toString();
+            kensaRireki.y_index = year.getSelectedItemPosition();
+            kensaRireki.m_index = month.getSelectedItemPosition();
+            kensaRireki.d_index = day.getSelectedItemPosition();
+            KensaRirekiList.deleteKensaRireki(position);
+        }
+        KensaRirekiList.addKensaRireki(kensaRireki);
         finish();
     }
-
-    private void RegistryData() {
-        finish();
+    private void EraseData(){
+        if(position == -1){
+            /*新規なら特になにもなし*/
+            finish();
+        }else {
+            KensaRirekiList.deleteKensaRireki(position);
+            //年月日で最後の一つなら、タグも消す
+            finish();
+        }
     }
 }

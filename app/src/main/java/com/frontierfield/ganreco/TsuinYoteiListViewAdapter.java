@@ -10,17 +10,17 @@ import android.widget.TextView;
 import java.util.List;
 
 //通院予定リスト表示用アダプター
-class ListViewTsuinYoteiAdapter extends BaseAdapter {
-    private static ListViewTsuinYoteiAdapter instance=new ListViewTsuinYoteiAdapter();
-    public static ListViewTsuinYoteiAdapter getInstance(){
+class TsuinYoteiListViewAdapter extends BaseAdapter {
+    private static TsuinYoteiListViewAdapter instance=new TsuinYoteiListViewAdapter();
+    public static TsuinYoteiListViewAdapter getInstance(){
         return instance;
     }
 
     List<TsuinYotei> tsuinYotei=TsuinYoteiList.getInstance();
     LayoutInflater layoutInflater = null;
-    public ListViewTsuinYoteiAdapter(){
+    public TsuinYoteiListViewAdapter(){
     }
-    public ListViewTsuinYoteiAdapter(Context context) {
+    public TsuinYoteiListViewAdapter(Context context) {
         this.layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
