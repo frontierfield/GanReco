@@ -28,7 +28,7 @@ public class TsuinYoteiRDB {
         mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
         List<tsuin_yotei> tsuinYoteiListRDB=new ArrayList<tsuin_yotei>();
         tsuinYoteiListRDB=TsuinYoteiList.getInstance();
-        myRef.child("users").child(mAuthUser.getUid()).child("TsuinYotei").setValue(TsuinYoteiList.getInstance());
+        myRef.child("users").child(mAuthUser.getUid()).child("TsuinYotei").setValue(tsuinYoteiListRDB);
         //↑これ可能ってどういうこと？インスタンスstaticのはず
     }
     public static void deleteTsuinYoteiRDB(int position){
@@ -39,5 +39,23 @@ public class TsuinYoteiRDB {
         myRef.child("users").child(mAuthUser.getUid()).child("TsuinYotei").child(String.valueOf(position)).removeValue();
         //このやり方だと、listを使ってる意味がない
         //データベース上で抜けが出ても、番号が詰まるわけではない
+    }
+    public static void getSavedTsuinYoteiRDB(){
+        DatabaseReference myref= FirebaseDatabase.getInstance().getReference();
+        FirebaseUser mAuthUser=FirebaseAuth.getInstance().getCurrentUser();
+        myref.child("users").child(mAuthUser.getUid()).child("TsuinYotei").addListenerForSingleValueEvent(
+                new ValueEventListener() {//最初に一回だけ呼ばれるメソッド
+                    // @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                            tsuin_yotei ty=dataSnapshot.getValue(tsuin_yotei.class);
+                            TsuinYoteiList.getInstance().add(ty);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
     }
 }

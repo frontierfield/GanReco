@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,25 +50,7 @@ public class ContentFragment extends Fragment {
 
         switch (tab){
             case 0://通院予定
-
-                /*databaseに保存されてるデータを取ってくる
-                DatabaseReference myref= FirebaseDatabase.getInstance().getReference("TsuinYotei");
-                myref.addListenerForSingleValueEvent(new ValueEventListener() {//最初に一回だけ呼ばれるメソッド
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                            tsuin_yotei ty=new tsuin_yotei(null,(Boolean)snapshot.child("head").getValue(),(String)snapshot.child("hospital").getValue(),
-                                    (String)snapshot.child("sdetail").getValue(),(String)snapshot.child("detail").getValue(),(int)snapshot.child("yearIndex").getValue(),
-                                    (int)snapshot.child("manthIndex").getValue(),(int)snapshot.child("dayIndex").getValue(),(int)snapshot.child("time").getValue());
-                            TsuinYoteiList.getInstance().add(ty);
-                        }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-                */
+                //databaseに保存されてるデータを取ってくる
                 ListViewTsuinYoteiAdapter listViewTsuinYoteiAdapter=ListViewTsuinYoteiAdapter.getInstance();//アダプターに通院予定送る処理
                 listViewTsuinYoteiAdapter.layoutInflater=getLayoutInflater();//.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 listViewTsuinYoteiAdapter.ty=TsuinYoteiList.getInstance();

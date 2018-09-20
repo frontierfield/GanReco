@@ -16,6 +16,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 // エントリーポイント
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnCompleteListener {
@@ -120,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             firebaseUser.delete();
             return;
         }
-
+        //ログイン成功時
         if (task.isSuccessful()) {
             verification = cache.getInt("verification",-1);
             SharedPreferences.Editor editor = cache.edit();
@@ -133,9 +138,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //userProfileの初期化
             UserProfileRDB upr = new UserProfileRDB();
             upr.get_user_profile_and_input_static();
-            //shinsatsu
-            //tsuin_yotei ty = new tsuin_yotei();
-            //ty.get_tsuinData_and_input_static();
+            //保存されてる診察履歴もってくる
+            TsuinYoteiRDB.getSavedTsuinYoteiRDB();
 
             // がんレコ　メイン画面　B1B2
             startActivity(new Intent(this,b1_2mainmenu.class));
