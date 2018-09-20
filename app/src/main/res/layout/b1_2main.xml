@@ -10,8 +10,9 @@
     <RelativeLayout
         android:id="@+id/fotter"
         android:layout_width="match_parent"
-        android:layout_height="59dp"
+        android:layout_height="58dp"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
         android:background="#666666"
         android:gravity="center">
 
@@ -36,6 +37,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="Home"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
@@ -76,7 +78,7 @@
 
             <ImageButton
                 android:id="@+id/imageButton3"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="#666666"
@@ -100,7 +102,7 @@
 
             <ImageButton
                 android:id="@+id/imageButton4"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="#666666"
@@ -125,7 +127,7 @@
 
             <ImageButton
                 android:id="@+id/imageButton5"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="#666666"
@@ -175,11 +177,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="461dp"
-        android:layout_above="@+id/fotter"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="false"
-        android:layout_below="@+id/header"
-        android:layout_marginBottom="24dp">
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true">
 
 
         <LinearLayout
@@ -227,7 +226,7 @@
 
             <TextView
                 android:id="@+id/btnUserInfoRedArrow"
-                android:layout_width="80dp"
+                android:layout_width="75dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1.0"
@@ -263,7 +262,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:layout_marginLeft="30dp"
                 android:layout_marginTop="20dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/icon_home_search"
@@ -285,7 +283,7 @@
                     android:layout_marginTop="18.76dp"
                     android:clickable="true"
                     android:gravity="center"
-                    android:text="信頼のおける病院探し"
+                    android:text="信頼のおけるデータに基づく"
                     android:textColor="#0CBBB6"
                     tools:name="信頼のおける病院探し" />
 
@@ -299,7 +297,7 @@
                     android:layout_marginTop="5dp"
                     android:gravity="center"
 
-                    android:text="DPC分析"
+                    android:text="病院検索"
                     android:textColor="#0CBBB6"
                     android:textSize="24sp"
                     android:textStyle="bold" />

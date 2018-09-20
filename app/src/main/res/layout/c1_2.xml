@@ -7,13 +7,15 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     >
+
     <RelativeLayout
         android:id="@+id/fotter"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="58dp"
         android:layout_alignParentBottom="true"
         android:background="#666666"
         android:gravity="center">
+
         <LinearLayout
             android:id="@+id/homesetFotterE1_2_3_4"
             android:layout_width="wrap_content"
@@ -23,6 +25,7 @@
             android:layout_alignParentTop="true"
             android:clickable="true"
             android:orientation="vertical">
+
             <ImageButton
                 android:id="@+id/imageButton"
                 android:layout_width="match_parent"
@@ -30,12 +33,15 @@
                 android:layout_gravity="center_horizontal"
                 android:background="#666666"
                 app:srcCompat="@drawable/icon_tab_bar_home" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="Home"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/inputsetFotterE1_2_3_4"
             android:layout_width="wrap_content"
@@ -44,6 +50,7 @@
             android:layout_toRightOf="@+id/homesetFotterE1_2_3_4"
             android:clickable="true"
             android:orientation="vertical">
+
             <ImageButton
                 android:id="@+id/imageButton2"
                 android:layout_width="match_parent"
@@ -51,6 +58,7 @@
                 android:layout_gravity="center_horizontal"
                 android:background="#666666"
                 app:srcCompat="@drawable/icon_tab_bar_input" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,6 +67,7 @@
                 android:text="入力"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/yoyakusetFotterE1_2_3_4"
             android:layout_width="wrap_content"
@@ -66,19 +75,22 @@
             android:layout_centerHorizontal="true"
             android:clickable="true"
             android:orientation="vertical">
+
             <ImageButton
                 android:id="@+id/imageButton3"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="#666666"
                 app:srcCompat="@drawable/icon_tab_bar_view" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="予定／履歴"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/hospitalSetFotterE1_2_3_4"
             android:layout_width="wrap_content"
@@ -87,13 +99,15 @@
             android:layout_toRightOf="@+id/yoyakusetFotterE1_2_3_4"
             android:clickable="true"
             android:orientation="vertical">
+
             <ImageButton
                 android:id="@+id/imageButton4"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="#666666"
                 app:srcCompat="@drawable/icon_tab_bar_search" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -102,6 +116,7 @@
                 android:text="病院検索"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/mypagesetFotterE1_2_3_4"
             android:layout_width="wrap_content"
@@ -109,13 +124,15 @@
             android:layout_alignParentRight="true"
             android:clickable="true"
             android:orientation="vertical">
+
             <ImageButton
                 android:id="@+id/imageButton5"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="#666666"
                 app:srcCompat="@drawable/icon_tab_bar_mypage" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -132,10 +149,11 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/header_home"
         android:orientation="vertical">
+
         <ImageView
             android:id="@+id/shape_ivE1_2_3_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="18dp"
+            android:layout_height="25dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20sp"
             android:clickable="true"

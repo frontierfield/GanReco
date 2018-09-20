@@ -94,11 +94,13 @@ public class c1_2mypage extends AppCompatActivity implements View.OnClickListene
             startActivity(new Intent(this,b1_2mainmenu.class));
             finish();
         }else if(i == R.id.inputsetFotterE1_2_3_4){
-
+            startActivity(new Intent(this,b3_input.class));
+            finish();
         }else if (i == R.id.yoyakusetFotterE1_2_3_4){
-
+            startActivity(new Intent(this,e_f_g_h_mainmenu.class));
+            finish();
         }else if(i == R.id.hospitalSetFotterE1_2_3_4){
-
+            //かみんぐすーん
         }else if(i == R.id.mypagesetFotterE1_2_3_4){
             //startActivity(new Intent(this,c1_2mypage.class));
             //finish();

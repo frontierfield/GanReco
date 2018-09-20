@@ -6,61 +6,63 @@
     android:layout_height="match_parent"
     tools:context="com.frontierfield.ganreco.e_f_g_h_mainmenu"
     >
+
     <RelativeLayout
         android:id="@+id/h_i_j_k_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF">
-    <RelativeLayout
-        android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/header_home"
-        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/shape_ivHIJK"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20sp"
-            android:clickable="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/shape"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="16dp"
-            tools:name="Shape" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/header_home"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/titleH_I_J_K1_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:text="通院予定"
-            android:textColor="#666666"
-            android:textSize="16dp"
-            tools:name="通院予定" />
+            <ImageView
+                android:id="@+id/shape_ivHIJK"
+                android:layout_width="18dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20sp"
+                android:clickable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/shape"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp"
+                tools:name="Shape" />
 
-        <ImageView
-            android:id="@+id/button_SelectedUserHIJK"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15sp"
-            android:clickable="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/button_bell"
-            tools:layout_editor_absoluteX="280dp"
-            tools:layout_editor_absoluteY="10dp"
-            tools:name="Button/ButtonHelp" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/titleH_I_J_K1_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="通院予定"
+                android:textColor="#666666"
+                android:textSize="16dp"
+                tools:name="通院予定" />
+
+            <ImageView
+                android:id="@+id/button_SelectedUserHIJK"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15sp"
+                android:clickable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/button_bell"
+                tools:layout_editor_absoluteX="280dp"
+                tools:layout_editor_absoluteY="10dp"
+                tools:name="Button/ButtonHelp" />
+        </RelativeLayout>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabHIJKMain"
@@ -92,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:text="お薬履歴" />
 
-             <android.support.design.widget.TabItem
+            <android.support.design.widget.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="検査履歴" />
@@ -109,138 +111,138 @@
             app:layout_anchorGravity="bottom" />
 
 
-    <RelativeLayout
-        android:id="@+id/fotter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:background="#666666"
-        android:gravity="center">
+        <RelativeLayout
+            android:id="@+id/fotter"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:background="#666666"
+            android:gravity="center">
 
-        <LinearLayout
-            android:id="@+id/homesetFotterHIJK"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:clickable="true"
-            android:orientation="vertical">
-
-            <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="#666666"
-                app:srcCompat="@drawable/icon_tab_bar_home" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Home"
-                android:textColor="#FFFFFF" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/inputsetFotterHIKJ"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/yoyakusetFotterHIJK"
-            android:layout_toRightOf="@+id/homesetFotterHIJK"
-            android:clickable="true"
-            android:orientation="vertical">
-
-            <ImageButton
-                android:id="@+id/imageButton2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="#666666"
-                app:srcCompat="@drawable/icon_tab_bar_input" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:text="入力"
-                android:textColor="#FFFFFF" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/yoyakusetFotterHIJK"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:clickable="true"
-            android:orientation="vertical">
-
-            <ImageButton
-                android:id="@+id/imageButton3"
+            <LinearLayout
+                android:id="@+id/homesetFotterHIJK"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="#666666"
-                app:srcCompat="@drawable/icon_tab_bar_view" />
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:clickable="true"
+                android:orientation="vertical">
 
-            <TextView
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="#666666"
+                    app:srcCompat="@drawable/icon_tab_bar_home" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Home"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/inputsetFotterHIKJ"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="予定／履歴"
-                android:textColor="#FFFFFF" />
-        </LinearLayout>
+                android:layout_toLeftOf="@+id/yoyakusetFotterHIJK"
+                android:layout_toRightOf="@+id/homesetFotterHIJK"
+                android:clickable="true"
+                android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/hospitalSetFotterHIJK"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/mypagesetFotterHIJK"
-            android:layout_toRightOf="@+id/yoyakusetFotterHIJK"
-            android:clickable="true"
-            android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/imageButton2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:background="#666666"
+                    app:srcCompat="@drawable/icon_tab_bar_input" />
 
-            <ImageButton
-                android:id="@+id/imageButton4"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:text="入力"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/yoyakusetFotterHIJK"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="#666666"
-                app:srcCompat="@drawable/icon_tab_bar_search" />
+                android:layout_centerHorizontal="true"
+                android:clickable="true"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autoText="false"
-                android:gravity="center_horizontal"
-                android:text="病院検索"
-                android:textColor="#FFFFFF" />
-        </LinearLayout>
+                <ImageButton
+                    android:id="@+id/imageButton3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="#666666"
+                    app:srcCompat="@drawable/icon_tab_bar_view" />
 
-        <LinearLayout
-            android:id="@+id/mypagesetFotterHIJK"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:clickable="true"
-            android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="予定／履歴"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/imageButton5"
+            <LinearLayout
+                android:id="@+id/hospitalSetFotterHIJK"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="#666666"
-                app:srcCompat="@drawable/icon_tab_bar_mypage" />
+                android:layout_toLeftOf="@+id/mypagesetFotterHIJK"
+                android:layout_toRightOf="@+id/yoyakusetFotterHIJK"
+                android:clickable="true"
+                android:orientation="vertical">
 
-            <TextView
+                <ImageButton
+                    android:id="@+id/imageButton4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="#666666"
+                    app:srcCompat="@drawable/icon_tab_bar_search" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoText="false"
+                    android:gravity="center_horizontal"
+                    android:text="病院検索"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mypagesetFotterHIJK"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="マイページ"
-                android:textColor="#FFFFFF" />
-        </LinearLayout>
-    </RelativeLayout>
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/imageButton5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="#666666"
+                    app:srcCompat="@drawable/icon_tab_bar_mypage" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="マイページ"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
