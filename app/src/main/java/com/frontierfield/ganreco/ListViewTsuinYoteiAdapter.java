@@ -16,7 +16,7 @@ class ListViewTsuinYoteiAdapter extends BaseAdapter {
         return instance;
     }
 
-    List<tsuin_yotei> ty=TsuinYoteiList.getInstance();
+    List<TsuinYotei> tsuinYotei=TsuinYoteiList.getInstance();
     LayoutInflater layoutInflater = null;
     public ListViewTsuinYoteiAdapter(){
     }
@@ -26,12 +26,12 @@ class ListViewTsuinYoteiAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return ty.size();
+        return tsuinYotei.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return ty.get(position);
+        return tsuinYotei.get(position);
     }
 
     @Override
@@ -42,23 +42,23 @@ class ListViewTsuinYoteiAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Global_Util gu = new Global_Util();
-        Integer year = gu.aYotei.get(ty.get(position).y_index);
-        Integer month = gu.aMonth[ty.get(position).m_index];
-        Integer day = gu.aDay[ty.get(position).d_index];
+        Integer year = gu.aYotei.get(tsuinYotei.get(position).y_index);
+        Integer month = gu.aMonth[tsuinYotei.get(position).m_index];
+        Integer day = gu.aDay[tsuinYotei.get(position).d_index];
 
-        if(ty.get(position).t == true) {
+        if(tsuinYotei.get(position).t == true) {
             convertView = layoutInflater.inflate(R.layout.list_header_efgh, parent, false);
             ((TextView) convertView.findViewById(R.id.textView15Listheader)).setText(
                     year.toString() + "年" +
-                            month.toString()+"月"+day.toString()+"日"+ty.get(position).getWeek());
+                            month.toString()+"月"+day.toString()+"日"+tsuinYotei.get(position).getWeek());
         }else {
-            String start_t = gu.aStartTime[ty.get(position).time];
+            String start_t = gu.aStartTime[tsuinYotei.get(position).time];
 
             convertView = layoutInflater.inflate(R.layout.listelement_e, parent, false);
-            ((TextView) convertView.findViewById(R.id.watchE)).setText(ty.get(position).emoji_watch);
+            ((TextView) convertView.findViewById(R.id.watchE)).setText(tsuinYotei.get(position).emoji_watch);
             ((TextView) convertView.findViewById(R.id.timeE)).setText(start_t);
-            ((TextView) convertView.findViewById(R.id.hospnameE)).setText(ty.get(position).hospital);
-            ((TextView) convertView.findViewById(R.id.hospDetail)).setText(ty.get(position).s_detail);
+            ((TextView) convertView.findViewById(R.id.hospnameE)).setText(tsuinYotei.get(position).hospital);
+            ((TextView) convertView.findViewById(R.id.hospDetail)).setText(tsuinYotei.get(position).s_detail);
         }
         return convertView;
     }

@@ -3,12 +3,6 @@ package com.frontierfield.ganreco;
 
 import android.util.Log;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,7 +14,7 @@ import java.util.List;
  * Created by kkarimu on 2018/07/12.
  */
 
-public class tsuin_rireki {
+public class TsuinRireki {
     String ID; /*RDB tsuinrireki key*/
     Boolean t; /*true head*/
     int y_index, m_index, d_index;    //日にち
@@ -30,12 +24,11 @@ public class tsuin_rireki {
     String uripath; //写した写真のローカルpath
     String storagepath;     //firebasestrageのpath
     String thum_path;   //サムネイル画像のpath
-    private static List<tsuin_rireki> TsuinRirekiList = new ArrayList<tsuin_rireki>();
 
-    public tsuin_rireki() {
+    public TsuinRireki() {
     }
 
-    public tsuin_rireki(String ID, Boolean t, String hospital, String detail, int y_index, int m_index, int d_index, int time) {
+    public TsuinRireki(String ID, Boolean t, String hospital, String detail, int y_index, int m_index, int d_index) {
         this.ID = ID;
         this.t = t;
         this.y_index = y_index;
@@ -43,10 +36,6 @@ public class tsuin_rireki {
         this.d_index = d_index;
         this.hospital = hospital;
         this.detail = detail;
-    }
-
-    public static List<tsuin_rireki> getInstance() {
-        return TsuinRirekiList;  //singleton
     }
 
     public String getWeek() {
@@ -88,6 +77,55 @@ public class tsuin_rireki {
                 break;
         }
         return r;
+    }
+
+    public String getID() {
+        return ID;
+    }
+    public void setID(String id){
+        this.ID=id;
+    }
+
+    public Boolean getHead() {
+        return t;
+    }
+    public void setHead(Boolean t){
+        this.t=t;
+    }
+
+    public int getYearIndex() {
+        return y_index;
+    }
+    public void setYearIndex(int yearIndex){
+        this.y_index=yearIndex;
+    }
+
+    public int getMonthIndex() {
+        return m_index;
+    }
+    public void setMonthIndex(int monthIndex){
+        this.m_index=monthIndex;
+    }
+
+    public int getDayIndex() {
+        return d_index;
+    }
+    public void setDayIndex(int dayIndex){
+        this.d_index=dayIndex;
+    }
+
+    public String getHospital() {
+        return hospital;
+    }
+    public void setHospital(String hospital){
+        this.hospital=hospital;
+    }
+
+    public String getDetail(){
+        return detail;
+    }
+    public void setDetail(String detail){
+        this.detail=detail;
     }
 
 }

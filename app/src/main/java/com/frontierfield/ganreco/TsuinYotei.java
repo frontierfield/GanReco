@@ -27,7 +27,7 @@ import java.util.ListIterator;
 /*
 通院予定リストの管理
  */
-public class tsuin_yotei {
+public class TsuinYotei {
     String ID; /*RDB tsuinyotei key*/
     Boolean t; /*true head*/
     int y_index,m_index,d_index; //日付
@@ -38,9 +38,9 @@ public class tsuin_yotei {
     String emoji_watch; //時計の絵文字(ネーミングセンス
     long unixtime;  //システム時間
 
-    public tsuin_yotei(){
+    public TsuinYotei(){
     }
-    public tsuin_yotei(String ID,Boolean t,String hospital,String s_detail,String detail,int y_index,int m_index,int d_index,int time) {
+    public TsuinYotei(String ID, Boolean t, String hospital, String s_detail, String detail, int y_index, int m_index, int d_index, int time) {
         int unicode = 0x1F551;
         this.emoji_watch = new String(Character.toChars(unicode));
 
@@ -245,11 +245,11 @@ public class tsuin_yotei {
         this.y_index=yearIndex;
     }
 
-    public int getManthIndex() {
+    public int getMonthIndex() {
         return m_index;
     }
-    public void setManthIndex(int manthIndex){
-        this.m_index=manthIndex;
+    public void setMonthIndex(int monthIndex){
+        this.m_index=monthIndex;
     }
 
     public int getDayIndex() {
@@ -286,6 +286,7 @@ public class tsuin_yotei {
     public void setDetail(String detail){
         this.detail=detail;
     }
+
     public String getEmojiWatch(){
         return emoji_watch;
     }
@@ -299,124 +300,4 @@ public class tsuin_yotei {
     public void setUnixtime(long unixtime){
         this.unixtime=unixtime;
     }
-
-
-/*
-    public void tsuinData_delete(){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-        FirebaseUser mAuthUser;
-        mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        myRef.child("tsuin_yotei").child(mAuthUser.getUid()).child(ID).removeValue();
-        user_profile up = new user_profile();
-        for(int i = 0;i < up.List_tsuin_yotei.size();i++){
-            if(up.List_tsuin_yotei.get(i).ID.equals(this.ID)) {
-                up.List_tsuin_yotei.remove(i);
-            }
-        }
-    }
-
-    public void tusinData_add(){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-        FirebaseUser mAuthUser;
-        mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        if(ID != null) {
-            myRef.child("tsuin_yotei").child(mAuthUser.getUid()).child(ID).setValue(this);
-            user_profile up = new user_profile();
-            for(int i = 0;i < up.List_tsuin_yotei.size();i++){
-                if(up.List_tsuin_yotei.get(i).ID.equals(this.ID)){
-                    up.List_tsuin_yotei.get(i).hospital = this.hospital;
-                    up.List_tsuin_yotei.get(i).s_detail = this.s_detail;
-                    up.List_tsuin_yotei.get(i).detail = this.detail;
-                    up.List_tsuin_yotei.get(i).y_index = this.y_index;
-                    up.List_tsuin_yotei.get(i).m_index = this.m_index;
-                    up.List_tsuin_yotei.get(i).d_index = this.d_index;
-                    up.List_tsuin_yotei.get(i).time = this.time;
-                    up.List_tsuin_yotei.get(i).unixtime = this.unixtime;
-                }
-            }
-        }else{
-            DatabaseReference newty = myRef.child("tsuin_yotei").child(mAuthUser.getUid()).push();
-            this.ID = newty.getKey();
-            Task task = newty.setValue(this);
-
-            //taskが完了次第upに入れたいが、どうやるのかわからない
-            //listener実装してもいいが、このクラスに実装するといろんなところでリスナーが呼ばれておかしくなる可能性大
-            //関数を引数にする方法もあるが、それだと、thisが呼べない
-            //task awaitをやりたいが、メインスレッドでawaitを使うのは禁止されている
-            UserProfile up = new UserProfile();
-            int addIndex = 0;
-            for(int i = 0;i < up.tsuinYoteiList.size();i++){
-                if(this.unixtime > up.tsuinYoteiList.get(i).unixtime){
-                    addIndex = i + 1;
-                }else if(i == up.tsuinYoteiList.size()-1 && this.unixtime > up.tsuinYoteiList.get(i).unixtime){
-                    addIndex = up.tsuinYoteiList.size();
-                }
-            }
-
-            up.tsuinYoteiList.add(addIndex, this);
-        }
-    }
-    public void get_tsuinData_and_input_static(){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-        FirebaseUser mAuthUser;
-        mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        myRef.child("tsuin_yotei").child(mAuthUser.getUid()).orderByChild("unixtime").addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        user_profile up = new user_profile();
-                        up.List_tsuin_yotei = new ArrayList<tsuin_yotei>() {
-                        };
-                        Iterable<DataSnapshot> snapshot_children = dataSnapshot.getChildren();
-                        for (DataSnapshot t : snapshot_children) {
-                            String t_y, t_m, t_d, t_t;
-
-                            int i_y = -1, i_m = -1, i_d = -1, i_t = -1;
-
-                            t_y = t.child("y_index").getValue(true).toString();
-                            t_m = t.child("m_index").getValue(true).toString();
-                            t_d = t.child("d_index").getValue(true).toString();
-                            t_t = t.child("time").getValue(true).toString();
-
-                            if (t_y != null) {
-                                i_y = Integer.parseInt(t_y);
-                            }
-                            if (t_m != null) {
-                                i_m = Integer.parseInt(t_m);
-                            }
-                            if (t_d != null) {
-                                i_d = Integer.parseInt(t_d);
-                            }
-                            if (t_t != null) {
-                                i_t = Integer.parseInt(t_t);
-                            }
-
-                            tsuin_yotei temp = new tsuin_yotei(
-                                    t.getKey(),
-                                    false,
-                                    t.child("hospital").getValue(true).toString(),
-                                    t.child("s_detail").getValue().toString(),
-                                    t.child("detail").getValue(true).toString(),
-                                    i_y,
-                                    i_m,
-                                    i_d,
-                                    i_t
-                            );
-                           // up.tsuinYoteiList.add(temp);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                }
-        );
-    }*/
 }

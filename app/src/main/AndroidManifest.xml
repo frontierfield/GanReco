@@ -43,8 +43,8 @@
             android:name=".e_f_g_h_mainmenu"
             android:label="@string/title_activity_e_f_g_h_mainmenu"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".e3_yotei"></activity>
-        <activity android:name=".f4_input"></activity>
+        <activity android:name=".E3_Input"></activity>
+        <activity android:name=".F4_Input"></activity>
         <activity android:name=".g4_input"></activity>
     </application>
 

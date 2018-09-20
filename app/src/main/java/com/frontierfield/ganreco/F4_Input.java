@@ -18,12 +18,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.File;
+import java.util.Calendar;
 
 /**
  * Created by kkarimu on 2018/07/12.
  */
 
-public class f4_input extends AppCompatActivity implements  View.OnClickListener {
+public class F4_Input extends AppCompatActivity implements  View.OnClickListener {
     ImageView backBtnHeader,ImageViewShinryo;
     TextView helpBtn;
     Spinner year, month, day;
@@ -35,7 +36,9 @@ public class f4_input extends AppCompatActivity implements  View.OnClickListener
     UserProfile up;
     Global_Util gu;
 
-    tsuin_rireki tr;
+    TsuinRireki tsuinRireki;
+
+    int position=-1;
 
     String filePath;
     private Uri cameraUri;
@@ -76,15 +79,32 @@ public class f4_input extends AppCompatActivity implements  View.OnClickListener
         eraseBtn.setOnClickListener(this);
         ImageViewShinryo.setOnClickListener(this);
 
-        LoadShinryoData();
+        LoadTsuinRirekiData();
     }
 
-    private void LoadShinryoData() {
-         /*upからyotei load*/
+    private void LoadTsuinRirekiData() {
         Intent intent = getIntent();
-        String shinryo_id = intent.getStringExtra("shinryo_id");
-        filePath = intent.getStringExtra("filePath");
+        position = intent.getIntExtra("TsuinRirekiID",-1);
 
+        if(position == -1){//新規追加
+            year.setSelection(0);
+            Calendar now = Calendar.getInstance();
+            int nowY = now.get(Calendar.YEAR);
+            for(int i = 0;i < gu.aYotei.size();i++){//????
+                if(nowY == i){
+                    year.setSelection(i);
+                }
+            }
+        }else{//通院予定変更したいとき//もともと入ってたデータ表示させる
+            tsuinRireki=TsuinRirekiList.getSavedTsuinRireki(position);
+            year.setSelection(tsuinRireki.y_index);
+            month.setSelection(tsuinRireki.m_index);
+            day.setSelection(tsuinRireki.d_index);
+            hospital.setText(tsuinRireki.hospital);
+            shinsatsu.setText(tsuinRireki.detail);
+        }
+
+        //画像関連のところ
         if(filePath != null){
             // capture画像のファイルパス
             cameraFile = new File(filePath);
@@ -98,14 +118,6 @@ public class f4_input extends AppCompatActivity implements  View.OnClickListener
             Global_Util gu = new Global_Util();
 
             Log.d("",gu.rotationPhoto(cameraUri,this).toString());
-
-
-
-        }
-        if(shinryo_id == null){
-            //new
-        }else{
-            //edit
         }
 
     }
@@ -128,13 +140,32 @@ public class f4_input extends AppCompatActivity implements  View.OnClickListener
         }
     }
 
-    private void EraseData() {
+    private void RegistryData() {
+        if(position == -1) {//新しく追加
+            //この時点で保存するデータを、spinnerでの場所の番号にしとくからややこしいことになってる
+            tsuinRireki = new TsuinRireki(null,false,hospital.getText().toString(),
+                    shinsatsu.getText().toString(), year.getSelectedItemPosition(), month.getSelectedItemPosition(),
+                    day.getSelectedItemPosition());
+        }else{//すでにあるデータ変更
+            tsuinRireki.detail = shinsatsu.getText().toString();
+            tsuinRireki.hospital = hospital.getText().toString();
+            tsuinRireki.y_index = year.getSelectedItemPosition();
+            tsuinRireki.m_index = month.getSelectedItemPosition();
+            tsuinRireki.d_index = day.getSelectedItemPosition();
+            TsuinRirekiList.deleteTsuinRireki(position);
+        }
+        TsuinRirekiList.addTsuinRireki(tsuinRireki);
         finish();
     }
-
-    private void RegistryData() {
-        registerDatabase(filePath);
-        finish();
+    private void EraseData(){
+        if(position == -1){
+            /*新規なら特になにもなし*/
+            finish();
+        }else {
+            TsuinRirekiList.deleteTsuinRireki(position);
+            //年月日で最後の一つなら、タグも消す
+            finish();
+        }
     }
 
     // アンドロイドのデータベースへ登録する

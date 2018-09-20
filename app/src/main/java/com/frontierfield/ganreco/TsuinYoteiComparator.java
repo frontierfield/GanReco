@@ -3,12 +3,12 @@ package com.frontierfield.ganreco;
 import java.util.Comparator;
 
 //listソートする人
-public class TsuinYoteiComparator implements Comparator<tsuin_yotei> {
+public class TsuinYoteiComparator implements Comparator<TsuinYotei> {
     @Override
-    public int compare(tsuin_yotei ty1,tsuin_yotei ty2){
+    public int compare(TsuinYotei ty1, TsuinYotei ty2){
         int temp=ty2.getYearIndex()-ty1.getYearIndex();
         if(temp==0){
-            temp=ty2.getManthIndex()-ty1.getManthIndex();
+            temp=ty2.getMonthIndex()-ty1.getMonthIndex();
             if(temp==0){
                 temp=ty2.getDayIndex()-ty1.getDayIndex();
                 if(temp==0){

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -58,7 +57,7 @@ public class b3_input extends AppCompatActivity implements View.OnClickListener 
             //d3 help
         }else if(i == R.id.schedulesetB3){
             startActivity(new Intent(this,e_f_g_h_mainmenu.class));
-            startActivity(new Intent(this,e3_yotei.class));
+            startActivity(new Intent(this,E3_Input.class));
             finish();
         }
     }

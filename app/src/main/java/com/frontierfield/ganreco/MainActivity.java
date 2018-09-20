@@ -140,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             upr.get_user_profile_and_input_static();
             //保存されてる診察履歴もってくる
             TsuinYoteiRDB.getSavedTsuinYoteiRDB();
+            TsuinRirekiRDB.getSavedTsuinRirekiRDB();
 
             // がんレコ　メイン画面　B1B2
             startActivity(new Intent(this,b1_2mainmenu.class));

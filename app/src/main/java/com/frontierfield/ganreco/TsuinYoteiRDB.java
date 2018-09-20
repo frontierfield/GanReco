@@ -11,10 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 /*
 通院予定をRDBと共有処理するためのやつ
@@ -26,7 +23,7 @@ public class TsuinYoteiRDB {
         DatabaseReference myRef = database.getReference();
         FirebaseUser mAuthUser;
         mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
-        List<tsuin_yotei> tsuinYoteiListRDB=new ArrayList<tsuin_yotei>();
+        List<TsuinYotei> tsuinYoteiListRDB=new ArrayList<TsuinYotei>();
         tsuinYoteiListRDB=TsuinYoteiList.getInstance();
         myRef.child("users").child(mAuthUser.getUid()).child("TsuinYotei").setValue(tsuinYoteiListRDB);
         //↑これ可能ってどういうこと？インスタンスstaticのはず
@@ -48,7 +45,7 @@ public class TsuinYoteiRDB {
                     // @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                            tsuin_yotei ty=dataSnapshot.getValue(tsuin_yotei.class);
+                            TsuinYotei ty=dataSnapshot.getValue(TsuinYotei.class);
                             TsuinYoteiList.getInstance().add(ty);
                         }
                     }

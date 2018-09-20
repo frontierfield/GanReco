@@ -15,7 +15,7 @@ public class UserProfile {
     public static String address = null;
     public static boolean isSave = false;
 
-    public static List<tsuin_yotei> tsuinYoteiList;
+    public static List<TsuinYotei> tsuinYoteiList;
 
     public UserProfile(){
     }

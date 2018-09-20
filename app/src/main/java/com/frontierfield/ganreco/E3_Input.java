@@ -13,17 +13,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.Calendar;
-import java.util.List;
-import java.util.Set;
-
-import static com.frontierfield.ganreco.TsuinYoteiList.getInstance;
-import static com.frontierfield.ganreco.TsuinYoteiList.getSavedTsuinYotei;
 
 /**
  * Created by kkarimu on 2018/07/09.
  */
 
-public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class E3_Input extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     ImageView backBtnHeader;
     TextView helpBtn;
     Spinner year, month, day, time;
@@ -35,10 +30,9 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
     UserProfile up;
     Global_Util gu;
 
-    tsuin_yotei ty;
+    TsuinYotei tsuinYotei;
 
     int position=-1;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,14 +76,13 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
         month.setOnItemSelectedListener(this);
         day.setOnItemSelectedListener(this);
 
-        LoadYoteiData();
+        LoadTsuinYoteiData();
 
     }
 //e_mainでタップされたとき用
-    private void LoadYoteiData() {
-        /*upからyotei load*/
+    private void LoadTsuinYoteiData() {
         Intent intent = getIntent();
-        position = intent.getIntExtra("yotei_id",-1);
+        position = intent.getIntExtra("TsuinYoteiID",-1);
 
         if(position == -1){//新規追加
             year.setSelection(0);
@@ -102,13 +95,13 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
             }
 
         }else{//通院予定変更したいとき//もともと入ってたデータ表示させる
-            ty=TsuinYoteiList.getSavedTsuinYotei(position);
-            year.setSelection(ty.y_index);
-            month.setSelection(ty.m_index);
-            day.setSelection(ty.d_index);
-            time.setSelection(ty.time);
-            hospital.setText(ty.hospital);
-            shinsatsu.setText(ty.detail);
+            tsuinYotei=TsuinYoteiList.getSavedTsuinYotei(position);
+            year.setSelection(tsuinYotei.y_index);
+            month.setSelection(tsuinYotei.m_index);
+            day.setSelection(tsuinYotei.d_index);
+            time.setSelection(tsuinYotei.time);
+            hospital.setText(tsuinYotei.hospital);
+            shinsatsu.setText(tsuinYotei.detail);
         }
     }
 
@@ -142,27 +135,27 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
     private void RegistryData() {
         if(position == -1) {//新しく追加
             //この時点で保存するデータを、spinnerでの場所の番号にしとくからややこしいことになってる
-            ty = new tsuin_yotei(null,false,hospital.getText().toString(),"",
+            tsuinYotei = new TsuinYotei(null,false,hospital.getText().toString(),"",
                     shinsatsu.getText().toString(), year.getSelectedItemPosition(), month.getSelectedItemPosition(),
                     day.getSelectedItemPosition(), time.getSelectedItemPosition());
-            ty.unixtime = ty.calc_unixtime_sec();
+            tsuinYotei.unixtime = tsuinYotei.calc_unixtime_sec();
         }else{//すでにあるデータ変更
-            ty.detail = shinsatsu.getText().toString();
-            ty.hospital = hospital.getText().toString();
-            ty.y_index = year.getSelectedItemPosition();
-            ty.m_index = month.getSelectedItemPosition();
-            ty.d_index = day.getSelectedItemPosition();
-            ty.time = time.getSelectedItemPosition();
-            ty.unixtime = ty.calc_unixtime_sec();
+            tsuinYotei.detail = shinsatsu.getText().toString();
+            tsuinYotei.hospital = hospital.getText().toString();
+            tsuinYotei.y_index = year.getSelectedItemPosition();
+            tsuinYotei.m_index = month.getSelectedItemPosition();
+            tsuinYotei.d_index = day.getSelectedItemPosition();
+            tsuinYotei.time = time.getSelectedItemPosition();
+            tsuinYotei.unixtime = tsuinYotei.calc_unixtime_sec();
             TsuinYoteiList.deleteTsuinYotei(position);
         }
         //診察内容が長ければ短くしたやつ表示しとく
         if(shinsatsu.getText().toString().length() < 5){
-            ty.s_detail = shinsatsu.getText().toString();
+            tsuinYotei.s_detail = shinsatsu.getText().toString();
         }else {
-            ty.s_detail = shinsatsu.getText().toString().substring(0, 5);
+            tsuinYotei.s_detail = shinsatsu.getText().toString().substring(0, 5);
         }
-        TsuinYoteiList.addTsuinYotei(ty);
+        TsuinYoteiList.addTsuinYotei(tsuinYotei);
         //ty.tusinData_add();created by kkarimu
         finish();
     }

@@ -1,47 +1,29 @@
 package com.frontierfield.ganreco;
 
-import android.*;
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.gesture.GestureUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickListener {
@@ -116,7 +98,7 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
             finish();
         }else if(i == R.id.fab){
             if(viewPager.getCurrentItem() == 0) {
-                startActivity(new Intent(this, e3_yotei.class));
+                startActivity(new Intent(this, E3_Input.class));
             }else if(viewPager.getCurrentItem() > 0){
                if(Build.VERSION.SDK_INT >= 23){
                    checkPermission();
@@ -225,7 +207,7 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
             if(cameraUri != null){
                 switch (viewPager.getCurrentItem()){
                     case 1:
-                        nextIntent = new Intent(this,f4_input.class);
+                        nextIntent = new Intent(this,F4_Input.class);
                         nextIntent.putExtra("filePath",filePath);
                         startActivity(nextIntent);
                         break;

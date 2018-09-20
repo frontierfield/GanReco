@@ -21,7 +21,7 @@ class HistoryOpeFuncClass extends android.support.v4.app.Fragment implements Ada
     //通院予定
     //private String[] tabTitle = {"通院予定","通院履歴","お薬履歴","検査履歴"};
     private int position;
-    List<tsuin_yotei> view_tsuin_yoteis;
+    List<TsuinYotei> view_tsuin_yoteis;
     ListViewTsuinYoteiAdapter adapter;
     ListView listdetail;
     int current_view_ty_size = 0;//up内の通院予定数が変わっていないかどうか確認するための変数
@@ -67,13 +67,13 @@ class HistoryOpeFuncClass extends android.support.v4.app.Fragment implements Ada
     }
 
     public void init_view_tsuin_yotei(Context c) {
-        view_tsuin_yoteis = new ArrayList<tsuin_yotei>(){};
+        view_tsuin_yoteis = new ArrayList<TsuinYotei>(){};
         current_view_ty_size = 0;
         UserProfile up = new UserProfile();
-        tsuin_yotei prev_ty;
+        TsuinYotei prev_ty;
 
         if(up.tsuinYoteiList != null && up.tsuinYoteiList.size() > 0) {
-            prev_ty = new tsuin_yotei(
+            prev_ty = new TsuinYotei(
                     up.tsuinYoteiList.get(0).ID,
                     false,
                     up.tsuinYoteiList.get(0).hospital,
@@ -83,7 +83,7 @@ class HistoryOpeFuncClass extends android.support.v4.app.Fragment implements Ada
                     up.tsuinYoteiList.get(0).m_index,
                     up.tsuinYoteiList.get(0).d_index,
                     up.tsuinYoteiList.get(0).time);
-            tsuin_yotei firstHeader = new tsuin_yotei(
+            TsuinYotei firstHeader = new TsuinYotei(
                     "",
                     true,
                     "",
@@ -95,7 +95,7 @@ class HistoryOpeFuncClass extends android.support.v4.app.Fragment implements Ada
                     prev_ty.time
             );
             view_tsuin_yoteis.add(firstHeader);
-            view_tsuin_yoteis.add(new tsuin_yotei(
+            view_tsuin_yoteis.add(new TsuinYotei(
                     up.tsuinYoteiList.get(0).ID,
                     false,
                     up.tsuinYoteiList.get(0).hospital,
@@ -109,7 +109,7 @@ class HistoryOpeFuncClass extends android.support.v4.app.Fragment implements Ada
 
             for (int i = 1; i < up.tsuinYoteiList.size(); i++) {
                 if (prev_ty.calc_unixtime_day() != up.tsuinYoteiList.get(i).calc_unixtime_day()) {
-                    tsuin_yotei header = new tsuin_yotei(
+                    TsuinYotei header = new TsuinYotei(
                             "",
                             true,
                             "",
@@ -123,7 +123,7 @@ class HistoryOpeFuncClass extends android.support.v4.app.Fragment implements Ada
                     view_tsuin_yoteis.add(header);
                 }
                 prev_ty = up.tsuinYoteiList.get(i);
-                view_tsuin_yoteis.add(new tsuin_yotei(
+                view_tsuin_yoteis.add(new TsuinYotei(
                         up.tsuinYoteiList.get(i).ID,
                         false,
                         up.tsuinYoteiList.get(i).hospital,
@@ -144,7 +144,7 @@ class HistoryOpeFuncClass extends android.support.v4.app.Fragment implements Ada
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(view_tsuin_yoteis.get(position).t == false){
-            Intent i = new Intent(view.getContext(), e3_yotei.class);
+            Intent i = new Intent(view.getContext(), E3_Input.class);
             i.putExtra("yotei_id",view_tsuin_yoteis.get(position).ID);
             startActivity(i);
         }
