@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,12 +23,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
+
 // エントリーポイント
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnCompleteListener {
 
     private FirebaseAnalytics firebaseAnalytics;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
+    private String uid;
     private EditText email;
     private EditText password;
     private int verification = -1;
@@ -48,11 +59,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             firebaseAnalytics = FirebaseAnalytics.getInstance(this);
             firebaseAuth = FirebaseAuth.getInstance();
             firebaseUser = firebaseAuth.getCurrentUser();
+            uid=firebaseUser.getUid().toString();
 
             Bundle analyticsData = new Bundle();
             analyticsData.putString("Event_type", "App_open");
 
             firebaseAnalytics.logEvent("CustomEvent", analyticsData);
+
 
             cache = this.getSharedPreferences("GanReco", this.MODE_PRIVATE);    // ユーザ毎のキャッシュ格納
             ///////////
@@ -60,8 +73,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //////////
             int firstInstall = cache.getInt("firstInstall", 0);        // インストール時＝０
             final String inputed_email = cache.getString("email", null);
-            final String inputed_password = cache.getString("password", null);
+            String inputed_password=null;
             verification = cache.getInt("verification", -1);
+
+            String pass = cache.getString("pass", null);
+
+            // パスワード複合化処理
+            SecretKeySpec keySpec = new SecretKeySpec(uid.getBytes(), "AES"); // キーファイル生成 暗号化で使った文字列と同様にする
+            Cipher cipher = null;
+            try {
+                cipher = Cipher.getInstance("AES");
+                cipher.init(Cipher.DECRYPT_MODE, keySpec);
+                byte[] decByte = Base64.decode(pass, Base64.DEFAULT); // byte配列にデコード
+                byte[] decrypted = cipher.doFinal(decByte); // 複合化
+                inputed_password = new String(decrypted); // Stringに変換
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (NoSuchPaddingException e) {
+                e.printStackTrace();
+            } catch (InvalidKeyException e) {
+                e.printStackTrace();
+            } catch (BadPaddingException e) {
+                e.printStackTrace();
+            } catch (IllegalBlockSizeException e) {
+                e.printStackTrace();
+            }
 
             if (firstInstall == 0) {
                 // ウォークスルー画面
@@ -70,6 +106,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(intent));
                 finish();
                 //firebaseUser.reload();
+            }
+            else if(inputed_email != null && inputed_password != null){//ログイン状態のデータがあれば
+                firebaseAuth.signInWithEmailAndPassword(inputed_email, inputed_password).addOnCompleteListener(this);
             }
             else {
                 setContentView(R.layout.a8);
@@ -127,14 +166,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         //ログイン成功時
         if (task.isSuccessful()) {
-            verification = cache.getInt("verification",-1);
-            SharedPreferences.Editor editor = cache.edit();
-            editor.putString("email",email.getText().toString());
-            editor.putString("password",password.getText().toString());
-            editor.putInt("firstInstall",1);
-            editor.putInt("verification",2);
-            editor.commit();
+            if(cache.getInt("verification",-1)!=2) {
+                verification = cache.getInt("verification", -1);
+                SharedPreferences.Editor editor = cache.edit();
+                //パスワードの暗号化一応しとく
+                SecretKeySpec keySpec=new SecretKeySpec(uid.getBytes(),"AES");
+                try {
+                    Cipher cipher=Cipher.getInstance("AES");
+                    cipher.init(Cipher.ENCRYPT_MODE,keySpec);
+                    byte[] encrypted=cipher.doFinal(password.getText().toString().getBytes());
+                    String pass= Base64.encodeToString(encrypted,Base64.DEFAULT);
+                    editor.putString("password", pass);
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (NoSuchPaddingException e) {
+                    e.printStackTrace();
+                } catch (InvalidKeyException e) {
+                    e.printStackTrace();
+                } catch (BadPaddingException e) {
+                    e.printStackTrace();
+                } catch (IllegalBlockSizeException e) {
+                    e.printStackTrace();
+                }
 
+                editor.putString("email", email.getText().toString());
+                editor.putInt("firstInstall", 1);
+                editor.putInt("verification", 2);
+                editor.commit();
+            }
             //userProfileの初期化
             UserProfileRDB upr = new UserProfileRDB();
             upr.get_user_profile_and_input_static();
