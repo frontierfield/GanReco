@@ -37,7 +37,6 @@ public class tsuin_yotei {
     String detail;  //診察内容
     String emoji_watch; //時計の絵文字(ネーミングセンス
     long unixtime;  //システム時間
-    private static List<tsuin_yotei> TsuinYoteiList= new ArrayList<tsuin_yotei>();//通院予定のリスト
 
     public tsuin_yotei(){
     }
@@ -45,7 +44,7 @@ public class tsuin_yotei {
         int unicode = 0x1F551;
         this.emoji_watch = new String(Character.toChars(unicode));
 
-        this.ID = ID;
+       this.ID = ID;
         this.t = t;
         this.y_index = y_index;
         this.m_index = m_index;
@@ -57,33 +56,6 @@ public class tsuin_yotei {
         //this.unixtime = calc_unixtime_sec();
     }
 
-    public static List<tsuin_yotei> getInstance(){
-        return TsuinYoteiList;  //singleton
-    }
-    public static void addTsuinYotei(tsuin_yotei ty){
-        TsuinYoteiList.add(ty);
-        //ソートの処理いる
-        //databaseとの連携処理
-    }
-    public static void deleteTsuinYotei(tsuin_yotei ty){
-        TsuinYoteiList.remove(TsuinYoteiList.indexOf(ty));
-        //databaseとの連携処理
-    }
-    public List<tsuin_yotei> getSavedTsuinYoteiList(){
-        List<tsuin_yotei> ty=null;
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-        FirebaseUser mAuthUser;
-        mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
-        //databaseから保存されてるリストとってくる処理？
-
-        return TsuinYoteiList;
-    }
-    public static tsuin_yotei getSavedTsuinYotei(int position){
-        tsuin_yotei ty;
-        ty=TsuinYoteiList.get(position);
-        return ty;
-    }
     public String getWeek(){
         Calendar cal = Calendar.getInstance();
         Global_Util gu = new Global_Util();
@@ -252,6 +224,83 @@ public class tsuin_yotei {
 
         return t_unixtime;
     }
+
+    public String getID() {
+        return ID;
+    }
+    public void setID(String id){
+        this.ID=id;
+    }
+
+    public Boolean getHead() {
+        return t;
+    }
+    public void setHead(Boolean t){
+        this.t=t;
+    }
+    public int getYearIndex() {
+        return y_index;
+    }
+    public void setYearIndex(int yearIndex){
+        this.y_index=yearIndex;
+    }
+
+    public int getManthIndex() {
+        return m_index;
+    }
+    public void setManthIndex(int manthIndex){
+        this.m_index=manthIndex;
+    }
+
+    public int getDayIndex() {
+        return d_index;
+    }
+    public void setDayIndex(int dayIndex){
+        this.d_index=dayIndex;
+    }
+
+    public int getTime() {
+        return time;
+    }
+    public void setTime(int time){
+        this.time=time;
+    }
+
+    public String getHospital() {
+        return hospital;
+    }
+    public void setHospital(String hospital){
+        this.hospital=hospital;
+    }
+
+    public String getSDetail() {
+        return s_detail;
+    }
+    public void setSDetail(String s_detail){
+        this.s_detail=s_detail;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+    public void setDetail(String detail){
+        this.detail=detail;
+    }
+    public String getEmojiWatch(){
+        return emoji_watch;
+    }
+    public void setEmojiWatch(String emojiwatch){
+        this.emoji_watch=emojiwatch;
+    }
+
+    public long getUnixtime() {
+        return unixtime;
+    }
+    public void setUnixtime(long unixtime){
+        this.unixtime=unixtime;
+    }
+
+
 /*
     public void tsuinData_delete(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();

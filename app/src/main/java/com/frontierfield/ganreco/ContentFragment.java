@@ -3,6 +3,7 @@ package com.frontierfield.ganreco;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.BundleCompat;
 import android.support.v4.app.Fragment;
@@ -12,12 +13,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.List;
 
 public class ContentFragment extends Fragment {
     int tab=0;
     ListView listView;
-    List<tsuin_yotei> listty=tsuin_yotei.getInstance();
+    List<tsuin_yotei> listty=TsuinYoteiList.getInstance();
     List<tsuin_rireki> viewTsuinRireki;
     List<syohou_rireki> viewSyohouRireki;
     List<kensa_rireki> viewKensaRireki;
@@ -38,27 +45,47 @@ public class ContentFragment extends Fragment {
         super.onViewCreated(view,savedInstanceState);
         //ここに、content_e_f_g_hで実行してほしい処理を入力
         listView=(ListView) view.findViewById(R.id.ListDetailEFGH_1);
+
         switch (tab){
             case 0://通院予定
-                ListViewTsuinYotei listViewTsuinYotei=ListViewTsuinYotei.getInstance();//アダプターに通院予定送る処理
-                listViewTsuinYotei.layoutInflater=getLayoutInflater();//.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                listViewTsuinYotei.ty=tsuin_yotei.getInstance();
-                listView.setAdapter(listViewTsuinYotei);
+
+                /*databaseに保存されてるデータを取ってくる
+                DatabaseReference myref= FirebaseDatabase.getInstance().getReference("TsuinYotei");
+                myref.addListenerForSingleValueEvent(new ValueEventListener() {//最初に一回だけ呼ばれるメソッド
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            tsuin_yotei ty=new tsuin_yotei(null,(Boolean)snapshot.child("head").getValue(),(String)snapshot.child("hospital").getValue(),
+                                    (String)snapshot.child("sdetail").getValue(),(String)snapshot.child("detail").getValue(),(int)snapshot.child("yearIndex").getValue(),
+                                    (int)snapshot.child("manthIndex").getValue(),(int)snapshot.child("dayIndex").getValue(),(int)snapshot.child("time").getValue());
+                            TsuinYoteiList.getInstance().add(ty);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                */
+                ListViewTsuinYoteiAdapter listViewTsuinYoteiAdapter=ListViewTsuinYoteiAdapter.getInstance();//アダプターに通院予定送る処理
+                listViewTsuinYoteiAdapter.layoutInflater=getLayoutInflater();//.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                listViewTsuinYoteiAdapter.ty=TsuinYoteiList.getInstance();
+                listView.setAdapter(listViewTsuinYoteiAdapter);
                 break;
             case 1://通院履歴
                 //***保存されてる通院履歴取得
-                ListViewTsuinRireki listViewTsuinRireki=ListViewTsuinRireki.getInstance();//アダプターに通院予定送る
-                listView.setAdapter(listViewTsuinRireki);
+                ListViewTsuinRirekiAdapter listViewTsuinRirekiAdapter=ListViewTsuinRirekiAdapter.getInstance();//アダプターに通院予定送る
+                listView.setAdapter(listViewTsuinRirekiAdapter);
                 break;
             case 2://お薬履歴
                 //***保存されてるお薬履歴取得
-                ListViewOkusuriRireki listViewOkusuriRireki=ListViewOkusuriRireki.getInstance();//アダプターに通院予定送る
-                listView.setAdapter(listViewOkusuriRireki);
+                ListViewSyohouRirekiAdapter listViewSyohouRirekiAdapter=ListViewSyohouRirekiAdapter.getInstance();//アダプターに通院予定送る
+                listView.setAdapter(listViewSyohouRirekiAdapter);
                 break;
             case 3:
                 //***保存されてる検査履歴取得
-                ListViewKensaRireki listViewKensaRireki=ListViewKensaRireki.getInstance();//アダプターに通院予定送る
-                listView.setAdapter(listViewKensaRireki);
+                ListViewKensaRirekiAdapter listViewKensaRirekiAdapter=ListViewKensaRirekiAdapter.getInstance();//アダプターに通院予定送る
+                listView.setAdapter(listViewKensaRirekiAdapter);
                 break;
         }
 

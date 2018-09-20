@@ -15,7 +15,9 @@ import android.widget.TextView;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.frontierfield.ganreco.tsuin_yotei.getInstance;
+import static com.frontierfield.ganreco.TsuinYoteiList.getInstance;
+import static com.frontierfield.ganreco.TsuinYoteiList.getSavedTsuinYotei;
+
 /**
  * Created by kkarimu on 2018/07/09.
  */
@@ -33,6 +35,8 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
     Global_Util gu;
 
     tsuin_yotei ty;
+
+    int position=-1;
 
 
     @Override
@@ -80,11 +84,11 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
         LoadYoteiData();
 
     }
-//e_mainでタップされたとき用？っぽい
+//e_mainでタップされたとき用
     private void LoadYoteiData() {
         /*upからyotei load*/
         Intent intent = getIntent();
-        int position = intent.getIntExtra("yotei_id",-1);
+        position = intent.getIntExtra("yotei_id",-1);
 
         if(position == -1){//新規追加
             year.setSelection(0);
@@ -96,16 +100,14 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
                 }
             }
 
-
-        }else{//通院予定変更したいときもともと入ってたデータ表示させる
-            ty=tsuin_yotei.getSavedTsuinYotei(position);
+        }else{//通院予定変更したいとき//もともと入ってたデータ表示させる
+            ty=TsuinYoteiList.getSavedTsuinYotei(position);
             year.setSelection(ty.y_index);
             month.setSelection(ty.m_index);
             day.setSelection(ty.d_index);
             time.setSelection(ty.time);
             hospital.setText(ty.hospital);
             shinsatsu.setText(ty.detail);
-
         }
     }
 
@@ -137,7 +139,7 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
     }
 
     private void RegistryData() {
-        if(ty == null) {
+        if(position == -1) {
             //new add
             //この時点で保存するデータを、spinnerでの場所の番号にしとくからややこしいことになってる
             ty = new tsuin_yotei(null,false,hospital.getText().toString(),"",
@@ -155,6 +157,7 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
             ty.time = time.getSelectedItemPosition();
             ty.unixtime = ty.calc_unixtime_sec();
             DateTag(ty);
+            TsuinYoteiList.deleteTsuinYotei(position);
         }
         //診察内容が長ければ短くしたやつ表示しとく
         if(shinsatsu.getText().toString().length() < 5){
@@ -162,35 +165,49 @@ public class e3_yotei extends AppCompatActivity implements AdapterView.OnItemSel
         }else {
             ty.s_detail = shinsatsu.getText().toString().substring(0, 5);
         }
-        tsuin_yotei.addTsuinYotei(ty);
-        //List<tsuin_yotei> tylist=tsuin_yotei.getInstance();//singleton
-        //tylist.add(ty);
+        TsuinYoteiList.addTsuinYotei(ty);
+        DeleteTag();
         //ty.tusinData_add();created by kkarimu
         finish();
     }
     private void EraseData(){
-        if(ty.ID != null){
-            tsuin_yotei.deleteTsuinYotei(ty);
+        if(position == -1){
+            /*新規なら特になにもなし*/
             finish();
         }else {
-            /*新規なら特になにもなし*/
+            TsuinYoteiList.deleteTsuinYotei(position);
+            //年月日で最後の一つなら、タグも消す
+            DeleteTag();
             finish();
         }
     }
+
     private void DateTag(tsuin_yotei ty){//同じ年月日のデータがないかどうかチェック
         //一番最初のタグが付かない問題
         //値渡し参照渡しの沼
-        List<tsuin_yotei> tylist=tsuin_yotei.getInstance();
+        List<tsuin_yotei> tylist=TsuinYoteiList.getInstance();
         tsuin_yotei tyTag=new tsuin_yotei(null,true,hospital.getText().toString(),"",
                 shinsatsu.getText().toString(), year.getSelectedItemPosition(), month.getSelectedItemPosition(),
                 day.getSelectedItemPosition(), time.getSelectedItemPosition());//値コピーの方法。
         if(tylist.size()==0)tylist.add(tyTag);
-        for(int i=0;i<tylist.size();i++){
-            if(tylist.get(i).y_index!=ty.y_index||tylist.get(i).m_index!=ty.m_index||tylist.get(i).d_index!=ty.d_index){
-                tylist.add(tyTag);
+        int i;
+        for(i=0;i<tylist.size();i++){
+            if(tylist.get(i).y_index==ty.y_index&&tylist.get(i).m_index==ty.m_index&&tylist.get(i).d_index==ty.d_index){
                 break;
             }
         }
+        if(tylist.size()==i)tylist.add(tyTag);
         //タグになるlistをadd<-ほんとはtrueだったらタグもつけるってしたかったけどlistviewでそれはなんかできなさそうだった
+    }
+    private void DeleteTag(){
+        //最後に残ったタグ消えない問題
+        if(TsuinYoteiList.getInstance().get(TsuinYoteiList.getInstance().size()-1).t)
+            TsuinYoteiList.deleteTsuinYotei(TsuinYoteiList.getInstance().size()-1);
+
+        for(int i=0;i<TsuinYoteiList.getInstance().size()-1;i++){
+            if(TsuinYoteiList.getSavedTsuinYotei(i).t==true&&TsuinYoteiList.getSavedTsuinYotei(i+1).t){
+                TsuinYoteiList.deleteTsuinYotei(i);
+            }
+        }
     }
 }

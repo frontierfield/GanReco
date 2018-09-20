@@ -22,7 +22,7 @@ class HistoryOpeFuncClass extends android.support.v4.app.Fragment implements Ada
     //private String[] tabTitle = {"通院予定","通院履歴","お薬履歴","検査履歴"};
     private int position;
     List<tsuin_yotei> view_tsuin_yoteis;
-    ListViewTsuinYotei adapter;
+    ListViewTsuinYoteiAdapter adapter;
     ListView listdetail;
     int current_view_ty_size = 0;//up内の通院予定数が変わっていないかどうか確認するための変数
 
