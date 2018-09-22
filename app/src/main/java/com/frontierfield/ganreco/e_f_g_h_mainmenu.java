@@ -3,6 +3,7 @@ package com.frontierfield.ganreco;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -164,7 +165,7 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
             }
         }
     }
-
+    //ストレージ権限なしカメラ呼び出し
     private void cameraIntent() {
         Global_Util gu = new Global_Util();
         gu.CreateDirectoryForPicture();
@@ -200,14 +201,13 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
         intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraUri);
         startActivityForResult(intent, RESULT_CAMERA);
     }
-
+//写真撮影後
     @Override
     protected void onActivityResult(int requestCode,
-                                    int resultCode, Intent intent) {
+                                    int resultCode, Intent data) {
         Intent nextIntent;
         if (requestCode == RESULT_CAMERA) {
-
-            if(cameraUri != null){
+            if(filePath != null){
                 switch (viewPager.getCurrentItem()){
                     case 1:
                         nextIntent = new Intent(this,F4_Input.class);
@@ -228,7 +228,7 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
                 }
             }
             else{
-                Log.d("debug","cameraUri == null");
+                Log.d("debug","data.getExtras() == null");
             }
         }
     }

@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             firebaseAnalytics = FirebaseAnalytics.getInstance(this);
             firebaseAuth = FirebaseAuth.getInstance();
             firebaseUser = firebaseAuth.getCurrentUser();
-            uid=firebaseUser.getUid().toString();
 
             Bundle analyticsData = new Bundle();
             analyticsData.putString("Event_type", "App_open");
@@ -76,28 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String inputed_password=null;
             verification = cache.getInt("verification", -1);
 
-            String pass = cache.getString("pass", null);
-
-            // パスワード複合化処理
-            SecretKeySpec keySpec = new SecretKeySpec(uid.getBytes(), "AES"); // キーファイル生成 暗号化で使った文字列と同様にする
-            Cipher cipher = null;
-            try {
-                cipher = Cipher.getInstance("AES");
-                cipher.init(Cipher.DECRYPT_MODE, keySpec);
-                byte[] decByte = Base64.decode(pass, Base64.DEFAULT); // byte配列にデコード
-                byte[] decrypted = cipher.doFinal(decByte); // 複合化
-                inputed_password = new String(decrypted); // Stringに変換
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (NoSuchPaddingException e) {
-                e.printStackTrace();
-            } catch (InvalidKeyException e) {
-                e.printStackTrace();
-            } catch (BadPaddingException e) {
-                e.printStackTrace();
-            } catch (IllegalBlockSizeException e) {
-                e.printStackTrace();
-            }
+            String pass = cache.getString("password", null);
 
             if (firstInstall == 0) {
                 // ウォークスルー画面
@@ -107,7 +85,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 //firebaseUser.reload();
             }
-            else if(inputed_email != null && inputed_password != null){//ログイン状態のデータがあれば
+            else if(inputed_email != null && pass != null){//ログイン状態のデータがあれば
+                // パスワード複合化処理
+                SecretKeySpec keySpec = new SecretKeySpec("abcdefg098765432".getBytes(), "AES"); // キーファイル生成 暗号化で使った文字列と同様にする
+                Cipher cipher = null;
+                try {
+                    cipher = Cipher.getInstance("AES");
+                    cipher.init(Cipher.DECRYPT_MODE, keySpec);
+                    byte[] decByte = Base64.decode(pass, Base64.DEFAULT); // byte配列にデコード
+                    byte[] decrypted = cipher.doFinal(decByte); // 複合化
+                    inputed_password = new String(decrypted); // Stringに変換
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (NoSuchPaddingException e) {
+                    e.printStackTrace();
+                } catch (InvalidKeyException e) {
+                    e.printStackTrace();
+                } catch (BadPaddingException e) {
+                    e.printStackTrace();
+                } catch (IllegalBlockSizeException e) {
+                    e.printStackTrace();
+                }
                 firebaseAuth.signInWithEmailAndPassword(inputed_email, inputed_password).addOnCompleteListener(this);
             }
             else {
@@ -170,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 verification = cache.getInt("verification", -1);
                 SharedPreferences.Editor editor = cache.edit();
                 //パスワードの暗号化一応しとく
-                SecretKeySpec keySpec=new SecretKeySpec(uid.getBytes(),"AES");
+                SecretKeySpec keySpec=new SecretKeySpec("abcdefg098765432".getBytes(),"AES");
                 try {
                     Cipher cipher=Cipher.getInstance("AES");
                     cipher.init(Cipher.ENCRYPT_MODE,keySpec);

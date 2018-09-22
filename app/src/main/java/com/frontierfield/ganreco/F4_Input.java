@@ -3,6 +3,10 @@ package com.frontierfield.ganreco;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,7 +21,12 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
 
 /**
@@ -43,6 +52,7 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
     String filePath;
     private Uri cameraUri;
     private File cameraFile;
+    Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +94,7 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
     private void LoadTsuinRirekiData() {
         Intent intent = getIntent();
         position = intent.getIntExtra("TsuinRirekiID",-1);
+        filePath=intent.getStringExtra("filePath");
 
         if(position == -1){//新規追加
             year.setSelection(0);
@@ -93,6 +104,16 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
                 if(nowY == i){
                     year.setSelection(i);
                 }
+            }
+            if(filePath != null){
+                // capture画像のファイルパス
+                cameraFile = new File(filePath);
+                cameraUri = FileProvider.getUriForFile(
+                        this,
+                        getApplicationContext().getPackageName() + ".fileprovider",
+                        cameraFile);
+                bitmap=gu.getBitmap(cameraFile);
+                ImageViewShinryo.setImageBitmap(bitmap);
             }
         }else{//通院予定変更したいとき//もともと入ってたデータ表示させる
             tsuinRireki=TsuinRirekiList.getSavedTsuinRireki(position);
@@ -104,20 +125,7 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         }
 
         //画像関連のところ
-        if(filePath != null){
-            // capture画像のファイルパス
-            cameraFile = new File(filePath);
-            cameraUri = FileProvider.getUriForFile(
-                this,
-                getApplicationContext().getPackageName() + ".fileprovider",
-                cameraFile);
 
-            ImageViewShinryo.setImageURI(cameraUri);
-
-            Global_Util gu = new Global_Util();
-
-            Log.d("",gu.rotationPhoto(cameraUri,this).toString());
-        }
 
     }
 
@@ -145,6 +153,8 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             tsuinRireki = new TsuinRireki(null,false,hospital.getText().toString(),
                     shinsatsu.getText().toString(), year.getSelectedItemPosition(), month.getSelectedItemPosition(),
                     day.getSelectedItemPosition());
+            TsuinRirekiFirebaseStorage.addTsuinRirekiFirebaseStorage(bitmap);
+
         }else{//すでにあるデータ変更
             tsuinRireki.detail = shinsatsu.getText().toString();
             tsuinRireki.hospital = hospital.getText().toString();

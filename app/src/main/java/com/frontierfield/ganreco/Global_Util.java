@@ -3,12 +3,18 @@ package com.frontierfield.ganreco;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.support.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -67,6 +73,29 @@ public class Global_Util {
             cameraFolder.mkdirs();
         }
         this.photoDir = cameraFolder;
+    }
+    public Bitmap getBitmap(File file){//ファイルパスを引数に向きが正しいbitmapを返す
+        ExifInterface exifInterface=null;
+        try {
+            exifInterface=new ExifInterface(String.valueOf(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int orientation=Integer.parseInt(exifInterface.getAttribute(ExifInterface.TAG_ORIENTATION));
+
+        InputStream inputStream=null;
+        Bitmap ans;
+        try {
+            inputStream=new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Bitmap bitmap= BitmapFactory.decodeStream(new BufferedInputStream(inputStream));
+        Matrix matrix=new Matrix();
+        matrix.postRotate(90);//90度回転
+        ans=Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
+        return ans;
     }
     //リモートのinputStreamではExifInterfaceは動作しない
     //Uriに対してのみ使用する
