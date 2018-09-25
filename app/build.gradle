@@ -10,11 +10,11 @@ android {
         }
     }
     compileSdkVersion 26
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.2'
     defaultConfig {
         applicationId "com.frontierfield.ganreco"
         minSdkVersion 21
-        targetSdkVersion 24
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -51,6 +51,9 @@ android {
                 outputFileName = "${android.defaultConfig.applicationId}.apk"
             }
         }
+    }
+    dexOptions {
+        javaMaxHeapSize "2g"
     }
 }
 
