@@ -39,7 +39,8 @@ public class ContentFragment extends Fragment {
                 break;
             case 1://通院履歴
                 TsuinRirekiListViewAdapter tsuinRirekiListViewAdapter = TsuinRirekiListViewAdapter.getInstance();
-                tsuinRirekiListViewAdapter.layoutInflater=getLayoutInflater();//.getSystemService(Context.LAYOUT_INFLATER_SERVICE);//アダプターに通院予定送る
+                tsuinRirekiListViewAdapter.layoutInflater=getLayoutInflater();
+                tsuinRirekiListViewAdapter.context=getContext();//.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 listView.setAdapter(tsuinRirekiListViewAdapter);
                 break;
             case 2://お薬履歴

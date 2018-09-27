@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.os.ParcelFileDescriptor;
+import android.renderscript.ScriptGroup;
 import android.support.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
@@ -13,6 +15,7 @@ import android.os.Environment;
 
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -74,64 +77,66 @@ public class Global_Util {
         }
         this.photoDir = cameraFolder;
     }
-    public Bitmap getBitmap(File file){//ファイルパスを引数に向きが正しいbitmapを返す
-        ExifInterface exifInterface=null;
+    public Bitmap getBitmap(Uri uri,Context context){//uriを引数に向きが正しいbitmapを返す
+        Bitmap bitmap=null;
+        int orientation=ExifInterface.ORIENTATION_UNDEFINED;
         try {
-            exifInterface=new ExifInterface(String.valueOf(file));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        int orientation=Integer.parseInt(exifInterface.getAttribute(ExifInterface.TAG_ORIENTATION));
+            InputStream inputStream=context.getContentResolver().openInputStream(uri);
+            //bitmap = BitmapFactory.decodeStream(new BufferedInputStream(inputStream));ここにあるうちはうまくいかない
+            ExifInterface exifInterface = new ExifInterface(inputStream);
+            orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_UNDEFINED);
 
-        InputStream inputStream=null;
-        Bitmap ans;
-        try {
-            inputStream=new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+            InputStream inputStream1=context.getContentResolver().openInputStream(uri);//これ追加しないとだめだったなぜ
+            bitmap = BitmapFactory.decodeStream(new BufferedInputStream(inputStream1));
 
-        Bitmap bitmap= BitmapFactory.decodeStream(new BufferedInputStream(inputStream));
-        Matrix matrix=new Matrix();
-        matrix.postRotate(90);//90度回転
-        ans=Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
-        return ans;
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                return rotateImage(bitmap, 90);
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                return rotateImage(bitmap, 180);
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                return rotateImage(bitmap, 270);
+            default:
+                return bitmap;
+        }
     }
-    //リモートのinputStreamではExifInterfaceは動作しない
-    //Uriに対してのみ使用する
-    public Integer rotationPhoto(Uri uri, Context c){
-        InputStream in = null;
-        int rotation = 0;
-        try {
-            in = c.getContentResolver().openInputStream(uri);
-            ExifInterface exifInterface = new ExifInterface(in);
-            // Now you can extract any Exif tag you want
-            // Assuming the image is a JPEG or supported raw format
+    private static Bitmap rotateImage(Bitmap bitmap, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        bitmap.recycle();
+        return rotatedImg;
+    }
 
-            int orientation = exifInterface.getAttributeInt(
-                    ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_NORMAL);
-            switch (orientation) {
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    rotation = 90;
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    rotation = 180;
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    rotation = 270;
-                    break;
-            }
+    public static Bitmap getPreResizedBitmap(Uri uri,Context context) throws IOException {    //bitmapをメモリ展開なしでリサイズ
+        InputStream inputStream=context.getContentResolver().openInputStream(uri);
 
-        } catch (IOException e) {
-            // Handle any errors
-        } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException ignored) {}
+        // Optionsインスタンスを取得
+        BitmapFactory.Options options = new BitmapFactory.Options();
+
+        // Bitmapを生成せずにサイズを取得する
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(inputStream,null, options);
+
+        if(options.outHeight == 0 || options.outWidth == 0) {
+            // 等倍（リサイズしない）
+            options.inSampleSize = 1;
+        }else{
+            // 設定するImageViewのサイズにあわせてリサイズ
+            int bitmapScale=Math.max(options.outHeight / 50, options.outWidth / 50);
+            for(int i=2;i<=bitmapScale;i*=2){
+                options.inSampleSize=i;
             }
         }
-        return rotation;
+        inputStream.close();
+        // 実際にBitmapを生成する
+        options.inJustDecodeBounds = false;
+        inputStream=context.getContentResolver().openInputStream(uri);
+        return BitmapFactory.decodeStream(inputStream,null, options);
     }
 }

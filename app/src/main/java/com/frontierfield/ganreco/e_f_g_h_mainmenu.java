@@ -34,6 +34,7 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
     private Uri cameraUri;
     private File cameraFile;
     private String filePath;
+    private String fileName;
 
     FloatingActionButton fab;
     ViewPager viewPager;
@@ -171,7 +172,7 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
         gu.CreateDirectoryForPicture();
 
         // 保存ファイル名
-        String fileName = new SimpleDateFormat(
+        fileName = new SimpleDateFormat(
                 "ddHHmmss", Locale.US).format(new Date());
 
         //file名作成
@@ -212,6 +213,7 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
                     case 1:
                         nextIntent = new Intent(this,F4_Input.class);
                         nextIntent.putExtra("filePath",filePath);
+                        nextIntent.putExtra("fileName",fileName);
                         startActivity(nextIntent);
                         break;
                     case 2:

@@ -31,7 +31,7 @@ public class TsuinRirekiList {
     }
     private static void SetTag(TsuinRireki tsuinRireki){//list内に年月日が一致するtrueがないときタグ付与
         TsuinRireki tsuinRirekiTag=new TsuinRireki(null,true,tsuinRireki.getHospital(),tsuinRireki.getDetail(),
-                tsuinRireki.getYearIndex(), tsuinRireki.getMonthIndex(), tsuinRireki.getDayIndex());
+                tsuinRireki.getYearIndex(), tsuinRireki.getMonthIndex(), tsuinRireki.getDayIndex(),null);
         int i;
         for(i=0;i<TsuinRirekiList.size();i++) {
             if (TsuinRirekiList.get(i).getYearIndex()==tsuinRireki.getYearIndex()&&
@@ -49,7 +49,6 @@ public class TsuinRirekiList {
         if(TsuinRirekiList.size()>0){
             if(TsuinRirekiList.get(TsuinRirekiList.size()-1).t) //①
                 TsuinRirekiList.remove(TsuinRirekiList.size()-1);
-
             for(int i=0;i<TsuinRirekiList.size()-1;i++) {//②
                 if (TsuinRirekiList.get(i).t && TsuinRirekiList.get(i + 1).t) {
                     TsuinRirekiList.remove(i);

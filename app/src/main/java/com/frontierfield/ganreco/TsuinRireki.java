@@ -1,6 +1,7 @@
 package com.frontierfield.ganreco;
 
 
+import android.net.Uri;
 import android.util.Log;
 
 import java.text.ParseException;
@@ -20,15 +21,17 @@ public class TsuinRireki {
     int y_index, m_index, d_index;    //日にち
     String hospital;    //病院名
     String detail;  //診察内容
-
-    String uripath; //写した写真のローカルpath
+    Uri uri;
+    String filepath;//実際に参照するpath
+    String localpath; //写した写真のローカルpath
     String storagepath;     //firebasestrageのpath
-    String thum_path;   //サムネイル画像のpath
-
+    String fileName;
+    //基本的にpathを持っててもらう
+    //firebasestorageにアップロードが終わったら、firabaseの方を参照する形にする
     public TsuinRireki() {
     }
 
-    public TsuinRireki(String ID, Boolean t, String hospital, String detail, int y_index, int m_index, int d_index) {
+    public TsuinRireki(String ID, Boolean t, String hospital, String detail, int y_index, int m_index, int d_index,Uri uri) {
         this.ID = ID;
         this.t = t;
         this.y_index = y_index;
@@ -36,6 +39,7 @@ public class TsuinRireki {
         this.d_index = d_index;
         this.hospital = hospital;
         this.detail = detail;
+        this.uri=uri;
     }
 
     public String getWeek() {
@@ -127,5 +131,19 @@ public class TsuinRireki {
     public void setDetail(String detail){
         this.detail=detail;
     }
+
+    public String getFilepath(){return filepath;}
+    public void setFilepath(String filePath){this.filepath=filePath;}
+
+    public String getLocalpath(){return localpath;}
+    public void setLocalpath(String localpath){this.localpath=localpath;}
+
+    public String getStoragepath(){return storagepath;}
+    public void setStoragepath(String storagepath){this.storagepath=storagepath;}
+
+    public String getFileName(){return fileName;}
+    public void setFileName(String fileName){this.fileName=fileName;}
+
+
 
 }

@@ -25,8 +25,8 @@
         android:layout_marginRight="10sp"
         android:layout_marginTop="5dp"
         android:adjustViewBounds="true"
-        android:maxHeight="100sp"
-        android:maxWidth="100sp"
+        android:maxHeight="70sp"
+        android:maxWidth="70sp"
         android:src="@mipmap/ic_launcher" />
 
     <LinearLayout
