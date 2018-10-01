@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import static com.frontierfield.ganreco.R.id.btnUserInfoRed;
+
 public class b1_2mainmenu extends AppCompatActivity implements View.OnClickListener {
     SharedPreferences cache;
     LinearLayout gotoMypage;
@@ -26,7 +28,11 @@ public class b1_2mainmenu extends AppCompatActivity implements View.OnClickListe
         LinearLayout fotterMypage = findViewById(R.id.mypagesetFotterD1_2);     // [Tab bar] マイページ ボタン
         gotoMypage = findViewById(R.id.gotomypage_b1_2);
         ImageView bell = findViewById(R.id.button_bell_ivD1_2);
-        TextView btnb1_2 = findViewById(R.id.btnUserInfoRedArrow);
+        // ユーザ情報初期登録の赤い部分
+        TextView btn0_b1to2 = findViewById(R.id.btnUserInfoRedArrow);
+        TextView btn1_b1to2 = findViewById(R.id.textView4);
+        TextView btn2_b1to2 = findViewById(R.id.textView5);
+        LinearLayout btn3_b1to2 = findViewById(btnUserInfoRed);
 
         LinearLayout schedule = findViewById(R.id.scheduleset);     // [レイアウト] 通院予定
         LinearLayout okusuri = findViewById(R.id.okusuri);          // [レイアウト] お薬履歴
@@ -43,7 +49,10 @@ public class b1_2mainmenu extends AppCompatActivity implements View.OnClickListe
         okusuri.setOnClickListener(this);
         kensaset.setOnClickListener(this);
         tsuin.setOnClickListener(this);
-        btnb1_2.setOnClickListener(this);
+        btn0_b1to2.setOnClickListener(this);
+        btn1_b1to2.setOnClickListener(this);
+        btn2_b1to2.setOnClickListener(this);
+        btn3_b1to2.setOnClickListener(this);
     }
 
     @Override
@@ -120,7 +129,7 @@ public class b1_2mainmenu extends AppCompatActivity implements View.OnClickListe
             finish();
         }
         // 「ユーザー情報が未登録です」ボタン
-        else if(i == R.id.btnUserInfoRedArrow){
+        else if(i == R.id.btnUserInfoRedArrow || i == R.id.textView4 || i == R.id.textView5 || i == btnUserInfoRed){
             startActivity(new Intent(this, C3_UserInfo.class));
         }
     }

@@ -26,8 +26,10 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
     EditText zipfront;
     EditText ziprear;
     EditText address;
+    EditText tel;
+    Spinner cancerType;    // がんの種類
     TextView btnCancel;
-    TextView btnAdd;
+    TextView btnSave;
 
     UserProfile up;
     Global_Util gu;
@@ -54,8 +56,10 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
         zipfront = findViewById(R.id.zipfrontE10N1);
         ziprear = findViewById(R.id.ziprearE10N1);
         address = findViewById(R.id.addressE10N1);
+        tel = findViewById(R.id.telE10N1);
+        cancerType = findViewById(R.id.cancerTypeE10N);
         btnCancel = findViewById(R.id.cancelE10_N1);
-        btnAdd = findViewById(R.id.addE10_N1);
+        btnSave = findViewById(R.id.saveE10_N1);
 
         ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aYear);
         ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aMonth);
@@ -69,7 +73,7 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
         backBtnHeader.setOnClickListener(this);
         helpBtn.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
-        btnAdd.setOnClickListener(this);
+        btnSave.setOnClickListener(this);
 
         year.setOnItemSelectedListener(this);
         month.setOnItemSelectedListener(this);
@@ -77,7 +81,6 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
         sex.setOnItemSelectedListener(this);
 
         LoadUserData();
-
     }
 
     private void LoadUserData() {
@@ -109,7 +112,7 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
             finish();
         }else if(i == R.id.cancelE10_N1){
             finish();
-        }else if(i == R.id.addE10_N1){
+        }else if(i == R.id.saveE10_N1){
             RegistryUserData();
             UserProfile.isSave = true;
         }
@@ -134,7 +137,8 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
         up.ziprear = ziprear.getText().toString();
         up.address = address.getText().toString();
 
-        if(up.lastName == null || up.firstName == null || y == -1 || m == -1 || d == -1 || sexid == -1){
+        //if(up.lastName == null || up.firstName == null || y == -1 || m == -1 || d == -1 || sexid == -1){
+        if(up.lastName.isEmpty() || up.firstName.isEmpty()){
             Toast.makeText(C3_UserInfo.this, "未入力の項目があります",
                     Toast.LENGTH_SHORT).show();
         }else {

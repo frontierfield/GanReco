@@ -9,20 +9,15 @@ android {
             storePassword 'frontierfield'
         }
     }
-<<<<<<< HEAD
+
     compileSdkVersion 26
-=======
+
     compileSdkVersion 27
->>>>>>> 6ce5f0116c9bb3a90fc8ff6556cafb17c74eb106
     buildToolsVersion '28.0.2'
     defaultConfig {
         applicationId "com.frontierfield.ganreco"
         minSdkVersion 21
-<<<<<<< HEAD
         targetSdkVersion 26
-=======
-        targetSdkVersion 27
->>>>>>> 6ce5f0116c9bb3a90fc8ff6556cafb17c74eb106
         versionCode 1
         versionName "1.0"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

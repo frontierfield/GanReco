@@ -18,7 +18,8 @@ public class a7_registry_comp extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        startActivity(new Intent(getApplicationContext(),b1_2mainmenu.class));
+        //startActivity(new Intent(getApplicationContext(),b1_2mainmenu.class));
+        startActivity(new Intent(getApplicationContext(),B0_CancerTypeSelect.class));
         finish();
     }
 }
