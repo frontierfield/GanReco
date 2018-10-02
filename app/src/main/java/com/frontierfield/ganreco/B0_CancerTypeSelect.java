@@ -4,36 +4,36 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class B0_CancerTypeSelect extends AppCompatActivity implements View.OnClickListener {
 
-    Spinner cancerTypeList;    // がんの種類
+    Spinner cancerSpinner;    // がんの種類
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.b0_cancertypeselect);
 
-        CsvReader parser = new CsvReader();
-        parser.reader(getApplicationContext());
-        List<ListCancerName> objects = new ArrayList<ListCancerName>();
-        cancerTypeList = findViewById(R.id.cancerTypeList);
-        cancerTypeList.setAdapter((SpinnerAdapter) objects);
+        try {
+            CsvReader parser = new CsvReader();
+            parser.reader(getApplicationContext());
+            List<ListCancerName> objects = parser.objects;
+            String strList[] = new String[objects.size()];
+            for (int i = 0; i < objects.size(); i++) {
+                ListCancerName data = objects.get(i);
+                strList[i] = data.getStrCancerName();
+            }
+            cancerSpinner = findViewById(R.id.cancerTypeList);
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, strList);
+            //ArrayAdapter<ListCancerName> arrayAdapter = new ArrayAdapter<ListCancerName>(this, R.layout.support_simple_spinner_dropdown_item, objects);
+            cancerSpinner.setAdapter(arrayAdapter);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

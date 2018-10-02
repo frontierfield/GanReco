@@ -31,7 +31,8 @@ public class CsvReader {
                 objects.add(data);
             }
             bufferReader.close();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
     }

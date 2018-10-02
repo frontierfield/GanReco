@@ -8,6 +8,6 @@ public class ListCancerName {
     }
 
     public String getStrCancerName() {
-        return strCancerName;
+        return this.strCancerName;
     }
 }
