@@ -186,8 +186,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginTop="15dp"
+            android:layout_marginRight="16dp"
 
             android:background="@drawable/rectangle_border_red"
             android:clickable="false"
@@ -195,19 +195,21 @@
 
             <LinearLayout
                 android:id="@+id/btnUserInfoRed"
-                android:layout_width="match_parent"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
+                android:clickable="true"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="15dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="8dp"
+                    android:clickable="true"
                     android:text="ユーザー情報が未登録です。"
                     android:textColor="#FFFA0E74"
                     android:textSize="16sp"
@@ -215,18 +217,19 @@
 
                 <TextView
                     android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
+                    android:layout_width="282dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="15dp"
-                    android:text="本アプリの一部の機能を除き、利用にはユーザー情報の登録が必要となります。予め登録しておくとスムーズです。"
+                    android:layout_marginBottom="20dp"
+                    android:clickable="true"
+                    android:text="本アプリの一部の機能を除き、利用には　　ユーザー情報の登録が必要となります。　　予め登録しておくとスムーズです。"
                     android:textColor="#FFFA0E74" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/btnUserInfoRedArrow"
-                android:layout_width="75dp"
+                android:layout_width="55dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1.0"
@@ -234,8 +237,7 @@
                 android:gravity="center"
                 android:text="≫"
                 android:textColor="@android:color/holo_red_dark"
-                android:textSize="36sp"
-                tools:layout_weight="@sample/tools:us_phones" />
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout

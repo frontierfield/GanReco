@@ -33,6 +33,7 @@
         <activity android:name=".a5_registry_precomp" />
         <activity android:name=".a7_registry_comp" />
         <activity android:name=".a9_forgotpassword" />
+        <activity android:name=".B0_CancerTypeSelect" />
         <activity android:name=".b1_2mainmenu" />
         <activity android:name=".b3_input"></activity>
         <activity android:name=".c1_2mypage" />
