@@ -19,14 +19,14 @@ public class B0_CancerTypeSelect extends AppCompatActivity implements View.OnCli
     ArrayAdapter<String> arrayAdapter;
     CancerType cancerType;
     String strList[];
-    CancerTypeList staticList = CancerTypeList.getInstance();
+    CancerTypeList staticList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.b0_cancertypeselect);
-        //cancerSpinner = findViewById(R.id.cancerTypeList);
         button = findViewById(R.id.buttonSetCancerType);
+        staticList = CancerTypeList.getInstance();
 
         try {
             CsvReader parser = new CsvReader();
@@ -44,7 +44,6 @@ public class B0_CancerTypeSelect extends AppCompatActivity implements View.OnCli
             arrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, strList);
             //ArrayAdapter<CancerType> arrayAdapter = new ArrayAdapter<CancerType>(this, R.layout.support_simple_spinner_dropdown_item, objects);
             cancerSpinner.setAdapter(arrayAdapter);
-            //cancerSpinner.setOnItemClickListener(this::onItemSelected);
             cancerSpinner.setOnItemSelectedListener(this);
             button.setOnClickListener(this);
         }

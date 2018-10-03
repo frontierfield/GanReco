@@ -13,10 +13,6 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
-/**
- * Created by kkarimu on 2018/07/12.
- */
-
 public class G4_Input extends AppCompatActivity implements View.OnClickListener {
     ImageView backBtnHeader , ImageViewSinryo;
     TextView helpBtn;
@@ -99,14 +95,19 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
         if(i == R.id.backG4){
             //goto efgh
             finish();
-        }else if(i == R.id.cancelG4){
+        }
+        else if(i == R.id.cancelG4){
             //goto efgh
             finish();
-        }else if(i == R.id.addG4){
+        }
+        else if(i == R.id.addG4){
             RegistryData();
-        }else if(i == R.id.eraseDataG4){
+            // OCR API実行
+        }
+        else if(i == R.id.eraseDataG4){
             EraseData();
-        }else if(i == R.id.imageViewSinryoG4){
+        }
+        else if(i == R.id.imageViewSinryoG4){
             //focus
         }
     }
