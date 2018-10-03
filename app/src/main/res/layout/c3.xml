@@ -354,7 +354,7 @@
                         android:gravity="center"
                         android:text="  キャンセル  "
                         android:textColor="#0CBBB6"
-                        android:textSize="24sp" />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/saveE10_N1"
@@ -368,7 +368,7 @@
                         android:gravity="center"
                         android:text="　　登録　　"
                         android:textColor="#FFFFFF"
-                        android:textSize="24sp" />
+                        android:textSize="18sp" />
                 </RelativeLayout>
 
             </LinearLayout>

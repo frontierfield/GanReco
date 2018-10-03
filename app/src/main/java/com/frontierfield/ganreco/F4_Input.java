@@ -56,8 +56,8 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.f4_input);
 
-        userProfile=UserProfile.getInstance();
-        globalUtil=new Global_Util();
+        userProfile = UserProfile.getInstance();
+        globalUtil = new Global_Util();
 
         backBtnHeader = findViewById(R.id.backF4);
         year = findViewById(R.id.yearF4);
