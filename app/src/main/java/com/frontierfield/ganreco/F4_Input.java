@@ -29,10 +29,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 
-/**
- * Created by kkarimu on 2018/07/12.
- */
-
 public class F4_Input extends AppCompatActivity implements  View.OnClickListener {
     ImageView backBtnHeader,ImageViewShinryo;
     TextView helpBtn;
@@ -42,14 +38,15 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
     LinearLayout eraseBtn;
     EditText shinsatsu,hospital;
 
-    UserProfile up;
-    Global_Util gu;
+    UserProfile userProfile;
+    Global_Util globalUtil;
 
     TsuinRireki tsuinRireki;
 
     int position=-1;
 
     String filePath;
+    String fileName;
     private Uri cameraUri;
     private File cameraFile;
     Bitmap bitmap;
@@ -59,8 +56,8 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.f4_input);
 
-        up=new UserProfile();
-        gu=new Global_Util();
+        userProfile=UserProfile.getInstance();
+        globalUtil=new Global_Util();
 
         backBtnHeader = findViewById(R.id.backF4);
         year = findViewById(R.id.yearF4);
@@ -74,9 +71,9 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         shinsatsu = findViewById(R.id.editTextShinsatsuF4);
         ImageViewShinryo = findViewById(R.id.imageViewSinryoF4);
 
-        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aYotei);
-        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aMonth);
-        ArrayAdapter<Integer> adapterDay = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aDay);
+        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aYotei);
+        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aMonth);
+        ArrayAdapter<Integer> adapterDay = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aDay);
 
         year.setAdapter(adapterYear);
         month.setAdapter(adapterMonth);
@@ -95,12 +92,13 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         Intent intent = getIntent();
         position = intent.getIntExtra("TsuinRirekiID",-1);
         filePath=intent.getStringExtra("filePath");
+        fileName=intent.getStringExtra("fileName");
 
         if(position == -1){//新規追加
             year.setSelection(0);
             Calendar now = Calendar.getInstance();
             int nowY = now.get(Calendar.YEAR);
-            for(int i = 0;i < gu.aYotei.size();i++){//????
+            for(int i = 0;i < globalUtil.aYotei.size();i++){//????
                 if(nowY == i){
                     year.setSelection(i);
                 }
@@ -112,7 +110,11 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
                         this,
                         getApplicationContext().getPackageName() + ".fileprovider",
                         cameraFile);
-                bitmap=gu.getBitmap(cameraFile);
+                try {
+                    bitmap=globalUtil.getPreResizedBitmap(cameraUri,this);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 ImageViewShinryo.setImageBitmap(bitmap);
             }
         }else{//通院予定変更したいとき//もともと入ってたデータ表示させる
@@ -123,10 +125,6 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             hospital.setText(tsuinRireki.hospital);
             shinsatsu.setText(tsuinRireki.detail);
         }
-
-        //画像関連のところ
-
-
     }
 
     @Override
@@ -143,7 +141,7 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         }else if(i == R.id.eraseDataF4){
             EraseData();
         }else if(i == R.id.imageViewSinryoF4){
-            //focus
+
         }
     }
 
@@ -152,8 +150,11 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             //この時点で保存するデータを、spinnerでの場所の番号にしとくからややこしいことになってる
             tsuinRireki = new TsuinRireki(null,false,hospital.getText().toString(),
                     shinsatsu.getText().toString(), year.getSelectedItemPosition(), month.getSelectedItemPosition(),
-                    day.getSelectedItemPosition());
-            TsuinRirekiFirebaseStorage.addTsuinRirekiFirebaseStorage(bitmap);
+                    day.getSelectedItemPosition(),cameraUri);
+            tsuinRireki.setFilepath(filePath);
+            tsuinRireki.setLocalpath(filePath);
+            tsuinRireki.setFileName(fileName);
+            TsuinRirekiFirebaseStorage.saveTsuinRirekiFirebaseStorage(bitmap,fileName);
 
         }else{//すでにあるデータ変更
             tsuinRireki.detail = shinsatsu.getText().toString();
@@ -175,15 +176,5 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             //年月日で最後の一つなら、タグも消す
             finish();
         }
-    }
-
-    // アンドロイドのデータベースへ登録する
-    private void registerDatabase(String file) {
-        ContentValues contentValues = new ContentValues();
-        ContentResolver contentResolver = this.getContentResolver();
-        contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-        contentValues.put("_data", file);
-        contentResolver.insert(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues);
     }
 }
