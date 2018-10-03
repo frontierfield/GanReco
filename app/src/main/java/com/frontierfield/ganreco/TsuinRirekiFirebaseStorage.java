@@ -43,8 +43,9 @@ public class TsuinRirekiFirebaseStorage {
 
         //Bitmap bitmap = BitmapFactory.decodeStream(new BufferedInputStream(inputStream));
         Bitmap bitmap = Global_Util.getPreResizedBitmap(uri,context);
+        Bitmap thumbitmap = Bitmap.createScaledBitmap(bitmap,75,75,false);//正方形にリサイズ
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        thumbitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
         UploadTask uploadTask = thumRef.putBytes(data);

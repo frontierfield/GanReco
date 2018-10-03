@@ -1,6 +1,7 @@
 package com.frontierfield.ganreco;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -35,6 +37,7 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
     private File cameraFile;
     private String filePath;
     private String fileName;
+    int kensaSyubetu=0;
 
     FloatingActionButton fab;
     ViewPager viewPager;
@@ -103,12 +106,39 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
         }else if(i == R.id.fab){
             if(viewPager.getCurrentItem() == 0) {
                 startActivity(new Intent(this, E3_Input.class));
-            }else if(viewPager.getCurrentItem() > 0){
-               if(Build.VERSION.SDK_INT >= 23){
+            }if(viewPager.getCurrentItem()==3){
+                final String[] items = {"腫瘍マーカー", "その他検診","キャンセル"};
+                new AlertDialog.Builder(this).setTitle("検査種別の選択")
+                        .setItems(items, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which){
+                                    case 0://
+                                        kensaSyubetu=1;
+                                        if(Build.VERSION.SDK_INT >= 23){
+                                            checkPermission();
+                                        }else{
+                                            cameraIntent();
+                                        }
+                                    case 1://その他検診
+                                        kensaSyubetu=2;
+                                        if(Build.VERSION.SDK_INT >= 23){
+                                            checkPermission();
+                                        }else{
+                                            cameraIntent();
+                                        }
+                                    case 2://キャンセル
+                                }
+                            }
+                        })
+                        .show();
+            }
+            else if(viewPager.getCurrentItem() > 0){
+                if(Build.VERSION.SDK_INT >= 23){
                    checkPermission();
-               }else{
+                }else{
                    cameraIntent();
-               }
+                }
             }
         }
     }
