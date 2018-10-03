@@ -10,6 +10,7 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -29,7 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 
-public class F4_Input extends AppCompatActivity implements  View.OnClickListener {
+public class F4_Input extends AppCompatActivity implements  View.OnClickListener{
     ImageView backBtnHeader,ImageViewShinryo;
     TextView helpBtn;
     Spinner year, month, day;
@@ -141,7 +142,9 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         }else if(i == R.id.eraseDataF4){
             EraseData();
         }else if(i == R.id.imageViewSinryoF4){
-
+            Intent intent=new Intent(this,F5_Enlarge.class);
+            intent.putExtra("cameraUri",cameraUri.toString());
+            startActivity(intent);
         }
     }
 
