@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentStart="true"
+    android:layout_below="@+id/header"
+    android:visibility="visible">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageViewSinryoF4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="75dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginRight="75dp"
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            app:srcCompat="@android:drawable/screen_background_dark_transparent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/imageViewSinryoF4"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="19dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/frame_border"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageViewSinryoF4"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:textColor="#666666"
+                android:textSize="18sp"
+                tools:text="病院名" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView2"
+                android:textSize="12sp"
+                tools:text="診察日時" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/textView10"
+                android:layout_alignParentTop="false"
+                android:background="#0CBBB6"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                tools:text="診察内容" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView12"
+                android:layout_alignParentStart="true"
+                tools:text="詳細\n表示" />
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/eraseDataF4"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="44dp"
+            android:layout_marginBottom="30dp">
+
+            <TextView
+                android:id="@+id/cancelF4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
+                android:layout_weight="1"
+                android:background="@drawable/button_round_white"
+                android:clickable="true"
+                android:text="  キャンセル  "
+                android:textColor="#0CBBB6"
+                android:textSize="18sp"
+                tools:name="キャンセル" />
+
+            <TextView
+                android:id="@+id/addF4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="20sp"
+                android:layout_weight="1"
+                android:background="@drawable/button_round"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="　編集　"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/eraseDataF4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/linearLayout"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentTop="false"
+            android:layout_marginLeft="105dp"
+            android:layout_marginTop="19dp"
+            android:layout_marginRight="105dp"
+            android:clickable="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/button_minus" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="このデータを削除"
+                android:textColor="#FFFA0E74" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</ScrollView>
+
