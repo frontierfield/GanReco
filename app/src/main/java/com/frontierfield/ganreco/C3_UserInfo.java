@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.List;
+
 public class C3_UserInfo extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     ImageView backBtnHeader;
     TextView helpBtn;
@@ -31,9 +33,9 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
     TextView btnCancel;
     TextView btnSave;
 
-    UserProfile up;
-    Global_Util gu;
-    int y = -1 ,m = -1, d = -1,sexid = -1;
+    UserProfile userProfile;
+    Global_Util globalUtil;
+    CancerTypeList cancerTypeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +43,9 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
 
         setContentView(R.layout.c3);
 
-        up = new UserProfile();
-        gu = new Global_Util();
+        userProfile = UserProfile.getInstance();
+        globalUtil = new Global_Util();
+        cancerTypeList = CancerTypeList.getInstance();
 
         backBtnHeader = findViewById(R.id.backE10N1);
         helpBtn = findViewById(R.id.helpE10N1);
@@ -61,10 +64,11 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
         btnCancel = findViewById(R.id.cancelE10_N1);
         btnSave = findViewById(R.id.saveE10_N1);
 
-        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aYear);
-        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aMonth);
-        ArrayAdapter<Integer> adapterDay = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aDay);
-        ArrayAdapter<String> adapterSex = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,gu.aSex);
+        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aYear);
+        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aMonth);
+        ArrayAdapter<Integer> adapterDay = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aDay);
+        ArrayAdapter<String> adapterSex = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aSex);
+        ArrayAdapter<String> adapterCancerType = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aSex);
         year.setAdapter(adapterYear);
         month.setAdapter(adapterMonth);
         day.setAdapter(adapterDay);
@@ -84,21 +88,31 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
     }
 
     private void LoadUserData() {
-        lastName.setText(up.lastName);
-        firstName.setText(up.firstName);
-        zipfront.setText(up.zipfront);
-        ziprear.setText(up.ziprear);
-        address.setText(up.address);
-        if(up.year_Index != -1 && up.month_Index != -1 && up.day_Index != -1 && up.sex_Index != -1){
-            year.setSelection(up.year_Index);
-            month.setSelection(up.month_Index);
-            day.setSelection(up.day_Index);
-            sex.setSelection(up.sex_Index);
+        lastName.setText(userProfile.getLastName());
+        firstName.setText(userProfile.getFirstName());
+        zipfront.setText(userProfile.getZipfront());
+        ziprear.setText(userProfile.getZiprear());
+        address.setText(userProfile.getAddress());
+        tel.setText(userProfile.getTel());
+
+        if(userProfile.getYear_Index() != -1 && userProfile.getMonth_Index() != -1 && userProfile.getDay_Index() != -1 && userProfile.getSex_Index() != -1){
+            year.setSelection(userProfile.getYear_Index());
+            month.setSelection(userProfile.getMonth_Index());
+            day.setSelection(userProfile.getDay_Index());
+            sex.setSelection(userProfile.getSex_Index());
         }
-        if(up.sex_Index == 0){
+
+        if(userProfile.getSex_Index() == 0){
             avater.setImageResource(R.drawable.icon_father);
-        }else{
+        }
+        else{
             avater.setImageResource(R.drawable.icon_mother);
+        }
+
+        for(int i = 0; i < cancerTypeList.getList().size(); i++) {
+            if(userProfile.getCancerType().equals(cancerTypeList.getList().get(i))) {
+                cancerType.setSelection(i);
+            }
         }
     }
 
@@ -107,77 +121,61 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
         int i = v.getId();
         if(i == R.id.backE10N1){
             finish();
-        }else if(i == R.id.helpE10N1){
+        }
+        else if(i == R.id.helpE10N1){
             startActivity(new Intent(this,d1help.class));
             finish();
-        }else if(i == R.id.cancelE10_N1){
+        }
+        else if(i == R.id.cancelE10_N1){
             finish();
-        }else if(i == R.id.saveE10_N1){
+        }
+        else if(i == R.id.saveE10_N1){
             RegistryUserData();
-            UserProfile.isSave = true;
         }
     }
 
     private void RegistryUserData() {
-        y = year.getSelectedItemPosition();
-        m = month.getSelectedItemPosition();
-        d = day.getSelectedItemPosition();
-        sexid = sex.getSelectedItemPosition();
+        int y = year.getSelectedItemPosition();
+        int m = month.getSelectedItemPosition();
+        int d = day.getSelectedItemPosition();
+        int sexId = sex.getSelectedItemPosition();
+        int cancerId = cancerType.getSelectedItemPosition();
 
-        FirebaseUser mAuthUser;
-        mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
-        up.UID = mAuthUser.getUid();
-        up.lastName = lastName.getText().toString();
-        up.firstName = firstName.getText().toString();
-        up.year_Index = y;
-        up.month_Index = m;
-        up.day_Index = d;
-        up.sex_Index = sexid;
-        up.zipfront = zipfront.getText().toString();
-        up.ziprear = ziprear.getText().toString();
-        up.address = address.getText().toString();
+        FirebaseUser firebaseUser;
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        userProfile.setUID(firebaseUser.getUid());
+        userProfile.setLastName(lastName.getText().toString());
+        userProfile.setFirstName(firstName.getText().toString());
+        userProfile.setYear_Index(y);
+        userProfile.setMonth_Index(m);
+        userProfile.setDay_Index(d);
+        userProfile.setSex_Index(sexId);
+        userProfile.setZipfront(zipfront.getText().toString());
+        userProfile.setZiprear(ziprear.getText().toString());
+        userProfile.setAddress(address.getText().toString());
+        userProfile.setTel(tel.getText().toString());
+        userProfile.setCancerType(cancerTypeList.getList().get(cancerId).getStrCancerName());
+        userProfile.setSaved(true);
 
-        //if(up.lastName == null || up.firstName == null || y == -1 || m == -1 || d == -1 || sexid == -1){
-        if(up.lastName.isEmpty() || up.firstName.isEmpty()){
+        if(userProfile.getLastName().isEmpty() || userProfile.getFirstName().isEmpty()){
             Toast.makeText(C3_UserInfo.this, "未入力の項目があります",
                     Toast.LENGTH_SHORT).show();
-        }else {
+        }
+        else {
             SharedPreferences cache = this.getSharedPreferences("GanReco",this.MODE_PRIVATE);
             SharedPreferences.Editor editor = cache.edit();
             editor.putInt("regiUser",1);
             editor.commit();
 
-            UserProfileRDB upr = new UserProfileRDB(up);
-            upr.user_profile_add();
+            UserProfileRDB userProfileRDB = new UserProfileRDB(userProfile);
+            userProfileRDB.user_profile_add();
             finish();
         }
-
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent){
-
-    }
+    public void onNothingSelected(AdapterView<?> parent){}
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        /**
-        int i = view.getId();
-        if(i == R.id.yearE10N1) {
-            y = position;
-            Log.d("year",""+gu.aYear.get(position)+"");
-        }else if(i == R.id.monthE10N1){
-            m = position;
-            Log.d("month",""+gu.aMonth[position]+"");
-        }else if(i == R.id.dayE10N1){
-            d = position;
-            Log.d("day",""+gu.aDay[position]+"");
-        }else if(i == R.id.sexE10N1){
-            sexid = position;
-            Log.d("sex",""+gu.aSex[position]+"");
-        }
-         **/
-
-
-    }
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {}
 }

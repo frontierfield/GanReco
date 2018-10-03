@@ -27,8 +27,8 @@ public class E3_Input extends AppCompatActivity implements AdapterView.OnItemSel
     LinearLayout eraseBtn;
     EditText shinsatsu,hospital;
 
-    UserProfile up;
-    Global_Util gu;
+    UserProfile userProfile;
+    Global_Util globalUtil;
 
     TsuinYotei tsuinYotei;
 
@@ -40,8 +40,8 @@ public class E3_Input extends AppCompatActivity implements AdapterView.OnItemSel
 
         setContentView(R.layout.e3_input);
 
-        up=new UserProfile();
-        gu=new Global_Util();
+        userProfile = UserProfile.getInstance();
+        globalUtil = new Global_Util();
 
         backBtnHeader = findViewById(R.id.backE3);
         year = findViewById(R.id.yearE3);
@@ -56,10 +56,10 @@ public class E3_Input extends AppCompatActivity implements AdapterView.OnItemSel
         time = findViewById(R.id.spinnerStartTimeE3);
         helpBtn = findViewById(R.id.helpE3);
 
-        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aYotei);
-        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aMonth);
-        ArrayAdapter<Integer> adapterDay = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aDay);
-        ArrayAdapter<String> adapterTime = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,gu.aStartTime);
+        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aYotei);
+        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aMonth);
+        ArrayAdapter<Integer> adapterDay = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aDay);
+        ArrayAdapter<String> adapterTime = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aStartTime);
 
         year.setAdapter(adapterYear);
         month.setAdapter(adapterMonth);
@@ -88,7 +88,7 @@ public class E3_Input extends AppCompatActivity implements AdapterView.OnItemSel
             year.setSelection(0);
             Calendar now = Calendar.getInstance();
             int nowY = now.get(Calendar.YEAR);
-            for(int i = 0;i < gu.aYotei.size();i++){
+            for(int i = 0;i < globalUtil.aYotei.size();i++){
                 if(nowY == i){
                     year.setSelection(i);
                 }

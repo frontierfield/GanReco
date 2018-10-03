@@ -13,32 +13,39 @@ import com.google.firebase.database.ValueEventListener;
 
 @IgnoreExtraProperties
 public class UserProfileRDB {
-    public String UID = null;
-    public String lastName = null;
-    public String firstName = null;
-    public String email = null;
-    public int year_Index = -1, month_Index = -1,day_Index = -1;
-    public int sex_Index = -1;
-    public String zipfront = null;
-    public String ziprear = null;
-    public String address = null;
+
+    private String UID = null;
+    private String lastName = null;
+    private String firstName = null;
+    private String email = null;
+    private int year_Index = -1, month_Index = -1,day_Index = -1;
+    private int sex_Index = -1;
+    private String zipfront = null;
+    private String ziprear = null;
+    private String address = null;
+    private String tel = null;
+    private String cancerType = null;
+    private boolean isSaved = false;
 
     public UserProfileRDB(){
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public UserProfileRDB(UserProfile up){
-        this.UID = up.UID;
-        this.lastName = up.lastName;
-        this.firstName = up.firstName;
-        this.email = up.email;
-        this.year_Index = up.year_Index;
-        this.month_Index = up.month_Index;
-        this.day_Index = up.day_Index;
-        this.sex_Index = up.sex_Index;
-        this.zipfront = up.zipfront;
-        this.ziprear = up.ziprear;
-        this.address = up.address;
+    public UserProfileRDB(UserProfile userProfile){
+        this.UID = userProfile.getUID();
+        this.lastName = userProfile.getLastName();
+        this.firstName = userProfile.getFirstName();
+        this.email = userProfile.getEmail();
+        this.year_Index = userProfile.getYear_Index();
+        this.month_Index = userProfile.getMonth_Index();
+        this.day_Index = userProfile.getDay_Index();
+        this.sex_Index = userProfile.getSex_Index();
+        this.zipfront = userProfile.getZipfront();
+        this.ziprear = userProfile.getZiprear();
+        this.address = userProfile.getAddress();
+        this.tel = userProfile.getTel();
+        this.cancerType = userProfile.getCancerType();
+        this.isSaved = userProfile.isSaved();
     }
 
     public void user_profile_add(){
@@ -58,33 +65,35 @@ public class UserProfileRDB {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 String t_y,t_m,t_d,t_s;
-                UserProfile up = new UserProfile();
-                up.UID = dataSnapshot.child("UID").getValue(String.class);
-                up.lastName = dataSnapshot.child("lastName").getValue(String.class);
-                up.firstName = dataSnapshot.child("firstName").getValue(String.class);
-                up.email = dataSnapshot.child("email").getValue(String.class);
+                UserProfile userProfile = UserProfile.getInstance();
+                userProfile.setUID(dataSnapshot.child("UID").getValue(String.class));
+                userProfile.setLastName(dataSnapshot.child("lastName").getValue(String.class));
+                userProfile.setFirstName(dataSnapshot.child("firstName").getValue(String.class));
+                userProfile.setEmail(dataSnapshot.child("email").getValue(String.class));
 
                 if(dataSnapshot.child("year_Index").getValue(Long.class) != null){
                     t_y = dataSnapshot.child("year_Index").getValue(Long.class).toString();
-                    up.year_Index = Integer.parseInt(t_y);
+                    userProfile.setYear_Index(Integer.parseInt(t_y));
                 }
                 if(dataSnapshot.child("month_Index").getValue(Long.class) != null){
                     t_m = dataSnapshot.child("month_Index").getValue(Long.class).toString();
-                    up.month_Index = Integer.parseInt(t_m);
+                    userProfile.setMonth_Index(Integer.parseInt(t_m));
                 }
                 if(dataSnapshot.child("day_Index").getValue(Long.class) != null){
                     t_d = dataSnapshot.child("day_Index").getValue(Long.class).toString();
-                    up.day_Index = Integer.parseInt(t_d);
+                    userProfile.setDay_Index(Integer.parseInt(t_d));
                 }
                 if(dataSnapshot.child("sex_Index").getValue(Long.class) != null){
                     t_s = dataSnapshot.child("sex_Index").getValue(Long.class).toString();
-                    up.sex_Index = Integer.parseInt(t_s);
+                    userProfile.setSex_Index(Integer.parseInt(t_s));
                 }
 
-
-                up.zipfront = dataSnapshot.child("zipfront").getValue(String.class);
-                up.ziprear = dataSnapshot.child("ziprear").getValue(String.class);
-                up.address = dataSnapshot.child("address").getValue(String.class);
+                userProfile.setZipfront(dataSnapshot.child("zipfront").getValue(String.class));
+                userProfile.setZiprear(dataSnapshot.child("ziprear").getValue(String.class));
+                userProfile.setAddress(dataSnapshot.child("address").getValue(String.class));
+                userProfile.setAddress(dataSnapshot.child("tel").getValue(String.class));
+                userProfile.setAddress(dataSnapshot.child("cancerType").getValue(String.class));
+                userProfile.setAddress(dataSnapshot.child("isSaved").getValue(String.class));
             }
 
             @Override

@@ -11,10 +11,6 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-/**
- * Created by kkarimu on 2018/06/14.
- */
-
 public class c1_2mypage extends AppCompatActivity implements View.OnClickListener {
     TextView username;
     TextView address;
@@ -67,24 +63,25 @@ public class c1_2mypage extends AppCompatActivity implements View.OnClickListene
     protected void onResume() {
         super.onResume();
         //User profile Update
-        UserProfile up = new UserProfile();
-        if(up.lastName != null && up.firstName != null && up.year_Index != -1 && up.month_Index != -1 && up.day_Index != -1) {
-            Global_Util gu = new Global_Util();
-            username.setText(up.lastName + " " + up.firstName);
-            address.setText(up.address);
-            birth.setText(
-                    gu.aYear.get(up.year_Index).toString() + "/" + gu.aMonth[up.month_Index] + "/" + gu.aDay[up.day_Index]
+        UserProfile userProfile = UserProfile.getInstance();
+        if(userProfile.getLastName() != null && userProfile.getFirstName() != null
+                && userProfile.getYear_Index() != -1 && userProfile.getMonth_Index() != -1 && userProfile.getDay_Index() != -1) {
+            Global_Util globalUtil = new Global_Util();
+            username.setText(userProfile.getLastName() + " " + userProfile.getFirstName());
+            address.setText(userProfile.getAddress());
+            birth.setText(globalUtil.aYear.get(userProfile.getYear_Index()).toString() + "/" + globalUtil.aMonth[userProfile.getMonth_Index()] + "/"
+                    + globalUtil.aDay[userProfile.getDay_Index()]
             );
-            if(up.sex_Index != -1){
+            if(userProfile.getSex_Index() != -1){
                 //avater 変更
-                if(up.sex_Index == 0){
+                if(userProfile.getSex_Index() == 0){
                     userAvater.setImageResource(R.drawable.icon_father);
-                }else{
+                }
+                else{
                     userAvater.setImageResource(R.drawable.icon_mother);
                 }
             }
         }
-
     }
 
     @Override

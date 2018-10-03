@@ -4,32 +4,49 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
+
 import java.util.List;
 
-public class B0_CancerTypeSelect extends AppCompatActivity implements View.OnClickListener {
+public class B0_CancerTypeSelect extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     Spinner cancerSpinner;    // がんの種類
+    TextView button;
+
+    ArrayAdapter<String> arrayAdapter;
+    CancerType cancerType;
+    String strList[];
+    CancerTypeList staticList = CancerTypeList.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.b0_cancertypeselect);
+        //cancerSpinner = findViewById(R.id.cancerTypeList);
+        button = findViewById(R.id.buttonSetCancerType);
 
         try {
             CsvReader parser = new CsvReader();
             parser.reader(getApplicationContext());
-            List<ListCancerName> objects = parser.objects;
-            String strList[] = new String[objects.size()];
-            for (int i = 0; i < objects.size(); i++) {
-                ListCancerName data = objects.get(i);
-                strList[i] = data.getStrCancerName();
+            List<CancerType> cancerTypeList = parser.objects;
+            staticList.setList(cancerTypeList);
+            strList = new String[cancerTypeList.size()];
+            for (int i = 0; i < cancerTypeList.size(); i++) {
+                cancerType = cancerTypeList.get(i);
+                cancerType.setSelectedID(i);
+                strList[i] = cancerType.getStrCancerName();
+
             }
             cancerSpinner = findViewById(R.id.cancerTypeList);
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, strList);
-            //ArrayAdapter<ListCancerName> arrayAdapter = new ArrayAdapter<ListCancerName>(this, R.layout.support_simple_spinner_dropdown_item, objects);
+            arrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, strList);
+            //ArrayAdapter<CancerType> arrayAdapter = new ArrayAdapter<CancerType>(this, R.layout.support_simple_spinner_dropdown_item, objects);
             cancerSpinner.setAdapter(arrayAdapter);
+            //cancerSpinner.setOnItemClickListener(this::onItemSelected);
+            cancerSpinner.setOnItemSelectedListener(this);
+            button.setOnClickListener(this);
         }
         catch (Exception e){
             e.printStackTrace();
@@ -40,8 +57,22 @@ public class B0_CancerTypeSelect extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         int i = v.getId();
         if(i == R.id.buttonSetCancerType) {
-            startActivity(new Intent(getApplicationContext(),b1_2mainmenu.class));
+            UserProfile userProfile = UserProfile.getInstance();
+            userProfile.setCancerType(strList[cancerType.getSelectedID()]);
+            startActivity(new Intent(getApplicationContext(), b1_2mainmenu.class));
             finish();
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent){}
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        int i = view.getId();
+        if(i == R.id.cancerTypeList) {
+            cancerType.setSelectedID(position);
+            cancerSpinner.setSelection(position);
         }
     }
 }

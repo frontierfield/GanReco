@@ -26,8 +26,8 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
     LinearLayout eraseBtn;
     EditText okusuri,drugstore;
 
-    UserProfile up;
-    Global_Util gu;
+    UserProfile userProfile;
+    Global_Util globalUtil;
 
     OkusuriRireki okusuriRireki;
     int position=-1;
@@ -37,8 +37,8 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
 
         setContentView(R.layout.g4_input);
 
-        up=new UserProfile();
-        gu=new Global_Util();
+        userProfile = UserProfile.getInstance();
+        globalUtil = new Global_Util();
 
         backBtnHeader = findViewById(R.id.backG4);
         year = findViewById(R.id.yearG4);
@@ -52,9 +52,9 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
         okusuri = findViewById(R.id.editTextSyohouG4);
         ImageViewSinryo = findViewById(R.id.imageViewSinryoG4);
 
-        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aYotei);
-        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aMonth);
-        ArrayAdapter<Integer> adapterDay = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aDay);
+        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aYotei);
+        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aMonth);
+        ArrayAdapter<Integer> adapterDay = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aDay);
 
         year.setAdapter(adapterYear);
         month.setAdapter(adapterMonth);
@@ -78,7 +78,7 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
             year.setSelection(0);
             Calendar now = Calendar.getInstance();
             int nowY = now.get(Calendar.YEAR);
-            for(int i = 0;i < gu.aYotei.size();i++){//????
+            for(int i = 0;i < globalUtil.aYotei.size();i++){//????
                 if(nowY == i){
                     year.setSelection(i);
                 }

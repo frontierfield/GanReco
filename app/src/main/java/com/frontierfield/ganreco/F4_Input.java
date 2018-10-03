@@ -29,10 +29,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 
-/**
- * Created by kkarimu on 2018/07/12.
- */
-
 public class F4_Input extends AppCompatActivity implements  View.OnClickListener {
     ImageView backBtnHeader,ImageViewShinryo;
     TextView helpBtn;
@@ -42,8 +38,8 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
     LinearLayout eraseBtn;
     EditText shinsatsu,hospital;
 
-    UserProfile up;
-    Global_Util gu;
+    UserProfile userProfile;
+    Global_Util globalUtil;
 
     TsuinRireki tsuinRireki;
 
@@ -59,8 +55,8 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.f4_input);
 
-        up=new UserProfile();
-        gu=new Global_Util();
+        userProfile = UserProfile.getInstance();
+        globalUtil = new Global_Util();
 
         backBtnHeader = findViewById(R.id.backF4);
         year = findViewById(R.id.yearF4);
@@ -74,9 +70,9 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         shinsatsu = findViewById(R.id.editTextShinsatsuF4);
         ImageViewShinryo = findViewById(R.id.imageViewSinryoF4);
 
-        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aYotei);
-        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aMonth);
-        ArrayAdapter<Integer> adapterDay = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aDay);
+        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aYotei);
+        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aMonth);
+        ArrayAdapter<Integer> adapterDay = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aDay);
 
         year.setAdapter(adapterYear);
         month.setAdapter(adapterMonth);
@@ -100,7 +96,7 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             year.setSelection(0);
             Calendar now = Calendar.getInstance();
             int nowY = now.get(Calendar.YEAR);
-            for(int i = 0;i < gu.aYotei.size();i++){//????
+            for(int i = 0;i < globalUtil.aYotei.size();i++){//????
                 if(nowY == i){
                     year.setSelection(i);
                 }
@@ -112,10 +108,11 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
                         this,
                         getApplicationContext().getPackageName() + ".fileprovider",
                         cameraFile);
-                bitmap=gu.getBitmap(cameraFile);
+                bitmap = globalUtil.getBitmap(cameraFile);
                 ImageViewShinryo.setImageBitmap(bitmap);
             }
-        }else{//通院予定変更したいとき//もともと入ってたデータ表示させる
+        }
+        else{//通院予定変更したいとき//もともと入ってたデータ表示させる
             tsuinRireki=TsuinRirekiList.getSavedTsuinRireki(position);
             year.setSelection(tsuinRireki.y_index);
             month.setSelection(tsuinRireki.m_index);
@@ -125,7 +122,6 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         }
 
         //画像関連のところ
-
 
     }
 

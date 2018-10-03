@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CsvReader {
-    List<ListCancerName> objects = new ArrayList<ListCancerName>();
+    List<CancerType> objects = new ArrayList<CancerType>();
     public void reader(Context context) {
         AssetManager assetManager = context.getResources().getAssets();
         try {
@@ -23,7 +23,7 @@ public class CsvReader {
             while ((line = bufferReader.readLine()) != null) {
 
                 //カンマ区切りで１つづつ配列に入れる
-                ListCancerName data = new ListCancerName();
+                CancerType data = new CancerType();
                 String[] RowData = line.split(",");
 
                 //CSVの左([0]番目)から順番にセット
