@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StreamDownloadTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.BufferedInputStream;
@@ -25,10 +26,12 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 //firebaseとの連携
 public class TsuinRirekiFirebaseStorage {
-    public static void addTsuinRirekiFirebaseStorage(Uri uri,Context context,String fileName) throws IOException {
+    public static void saveTsuinRirekiFirebaseStorage(Uri uri,Context context,String fileName) throws IOException {
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         StorageReference storageReference = firebaseStorage.getReference();
         FirebaseUser mAuthUser=FirebaseAuth.getInstance().getCurrentUser();
@@ -58,11 +61,11 @@ public class TsuinRirekiFirebaseStorage {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
             }
         });
         //普通サイズのデータ入力
         StorageReference imagesRef = storageReference.child(mAuthUser.getUid()).child(String.format("TsuinRireki/rireki_%s.jpg",fileName));//ここのchild内を書き換えて
+
 
         UploadTask uploadTask2 = imagesRef.putStream(inputStream);
         uploadTask2.addOnFailureListener(new OnFailureListener() {
@@ -74,6 +77,9 @@ public class TsuinRirekiFirebaseStorage {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                //storageにアップされた時点で、参照を変えたい
+                TsuinRirekiList.getInstance();
+                imagesRef.getDownloadUrl();
             }
         });
     }
@@ -83,17 +89,10 @@ public class TsuinRirekiFirebaseStorage {
         StorageReference storageReference = firebaseStorage.getReference();
         FirebaseUser mAuthUser=FirebaseAuth.getInstance().getCurrentUser();
         StorageReference thumRef= storageReference.child(mAuthUser.getUid()).child(String.format("TsuinRirekiThum/rireki_%s.jpg",fileName));
-        thumRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        thumRef.getStream().addOnSuccessListener(new OnSuccessListener<StreamDownloadTask.TaskSnapshot>() {
             @Override
-            public void onSuccess(Uri uri) {
-
-                }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
+            public void onSuccess(StreamDownloadTask.TaskSnapshot taskSnapshot) {
             }
         });
-
     }
 }

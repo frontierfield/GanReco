@@ -161,7 +161,7 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             tsuinRireki.setFilepath(filePath);
             tsuinRireki.setLocalpath(filePath);
             tsuinRireki.setFileName(fileName);
-            TsuinRirekiFirebaseStorage.addTsuinRirekiFirebaseStorage(cameraUri,this,tsuinRireki.getFileName());
+            TsuinRirekiFirebaseStorage.saveTsuinRirekiFirebaseStorage(cameraUri,this,tsuinRireki.getFileName());
         }else{//すでにあるデータ変更
             tsuinRireki.detail = shinsatsu.getText().toString();
             tsuinRireki.hospital = hospital.getText().toString();

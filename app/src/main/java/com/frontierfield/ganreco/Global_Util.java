@@ -113,9 +113,9 @@ public class Global_Util {
         return rotatedImg;
     }
 
-    public static Bitmap getPreResizedBitmap(Uri uri,Context context) throws IOException {    //bitmapをメモリ展開なしでリサイズ
+    public static Bitmap getPreResizedBitmap(Uri uri,Context context) throws IOException {//bitmapをメモリ展開なしでリサイズ
         InputStream inputStream=context.getContentResolver().openInputStream(uri);
-
+        Bitmap bitmap=null;
         // Optionsインスタンスを取得
         BitmapFactory.Options options = new BitmapFactory.Options();
 
@@ -137,6 +137,30 @@ public class Global_Util {
         // 実際にBitmapを生成する
         options.inJustDecodeBounds = false;
         inputStream=context.getContentResolver().openInputStream(uri);
-        return BitmapFactory.decodeStream(inputStream,null, options);
+
+        int orientation=ExifInterface.ORIENTATION_UNDEFINED;
+        try {
+            //bitmap = BitmapFactory.decodeStream(new BufferedInputStream(inputStream));ここにあるうちはうまくいかない
+            ExifInterface exifInterface = new ExifInterface(inputStream);
+            orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_UNDEFINED);
+
+            InputStream inputStream1=context.getContentResolver().openInputStream(uri);//これ追加しないとだめだったなぜ
+            bitmap = BitmapFactory.decodeStream(inputStream1,null, options);
+
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                return rotateImage(bitmap, 90);
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                return rotateImage(bitmap, 180);
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                return rotateImage(bitmap, 270);
+            default:
+                return bitmap;
+        }
     }
 }
