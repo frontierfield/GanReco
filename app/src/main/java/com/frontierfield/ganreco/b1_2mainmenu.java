@@ -15,6 +15,7 @@ import static com.frontierfield.ganreco.R.id.btnUserInfoRed;
 public class b1_2mainmenu extends AppCompatActivity implements View.OnClickListener {
     SharedPreferences cache;
     LinearLayout gotoMypage;
+    UserProfile userProfile = UserProfile.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +65,7 @@ public class b1_2mainmenu extends AppCompatActivity implements View.OnClickListe
         //String name = UserProfile.lastName;
 
         ViewGroup.LayoutParams gotoMypageParam = gotoMypage.getLayoutParams();
-        //もしもUserDataにデータが入っていた場合
-        //if(RegiUsrdata != -1) {
-        if (UserProfile.isSave) {
+        if (userProfile.isSaved()) {    // ユーザ情報登録済み
             gotoMypageParam.height = 0;
             gotoMypage.setLayoutParams(gotoMypageParam);
         }

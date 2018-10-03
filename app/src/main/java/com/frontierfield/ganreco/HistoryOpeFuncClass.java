@@ -20,11 +20,12 @@ import java.util.List;
 class HistoryOpeFuncClass extends android.support.v4.app.Fragment implements AdapterView.OnItemClickListener {
     //通院予定
     //private String[] tabTitle = {"通院予定","通院履歴","お薬履歴","検査履歴"};
-    private int position;
+    int position;
+    int current_view_ty_size = 0;// UserProfile内の通院予定数が変わっていないかどうか確認するための変数
     List<TsuinYotei> view_tsuin_yoteis;
     TsuinYoteiListViewAdapter adapter;
     ListView listdetail;
-    int current_view_ty_size = 0;//up内の通院予定数が変わっていないかどうか確認するための変数
+    UserProfile userProfile = UserProfile.getInstance();
 
     // メモリ不足による破棄後からの復帰時にフレームワークがリフレクションで呼びだすコンストラクタ
     public HistoryOpeFuncClass(int i)
@@ -59,80 +60,83 @@ class HistoryOpeFuncClass extends android.support.v4.app.Fragment implements Ada
     @Override
     public void onResume() {
         super.onResume();
-        UserProfile up = new UserProfile();
-        if(current_view_ty_size != up.tsuinYoteiList.size()) {
-        init_view_tsuin_yotei(this.getContext());
-        adapter.notifyDataSetChanged();
+        if(current_view_ty_size != userProfile.getTsuinYoteiList().size()) {
+            init_view_tsuin_yotei(this.getContext());
+            adapter.notifyDataSetChanged();
         }
     }
 
-    public void init_view_tsuin_yotei(Context c) {
+    public void init_view_tsuin_yotei(Context context) {
         view_tsuin_yoteis = new ArrayList<TsuinYotei>(){};
         current_view_ty_size = 0;
-        UserProfile up = new UserProfile();
-        TsuinYotei prev_ty;
+        TsuinYotei tsuinYotei = null;
+        final int INDEX = 0;
 
-        if(up.tsuinYoteiList != null && up.tsuinYoteiList.size() > 0) {
-            prev_ty = new TsuinYotei(
-                    up.tsuinYoteiList.get(0).ID,
+        //if(up.tsuinYoteiList != null && up.tsuinYoteiList.size() > 0) {
+        if(userProfile.getTsuinYoteiList().size() > 0) {
+            tsuinYotei = new TsuinYotei(
+                    userProfile.getTsuinYoteiList().get(INDEX).ID,
                     false,
-                    up.tsuinYoteiList.get(0).hospital,
-                    up.tsuinYoteiList.get(0).s_detail,
+                    userProfile.getTsuinYoteiList().get(INDEX).hospital,
+                    userProfile.getTsuinYoteiList().get(INDEX).s_detail,
                     "",
-                    up.tsuinYoteiList.get(0).y_index,
-                    up.tsuinYoteiList.get(0).m_index,
-                    up.tsuinYoteiList.get(0).d_index,
-                    up.tsuinYoteiList.get(0).time);
+                    userProfile.getTsuinYoteiList().get(INDEX).y_index,
+                    userProfile.getTsuinYoteiList().get(INDEX).m_index,
+                    userProfile.getTsuinYoteiList().get(INDEX).d_index,
+                    userProfile.getTsuinYoteiList().get(INDEX).time
+            );
             TsuinYotei firstHeader = new TsuinYotei(
                     "",
                     true,
                     "",
                     "",
                     "",
-                    prev_ty.y_index,
-                    prev_ty.m_index,
-                    prev_ty.d_index,
-                    prev_ty.time
+                    tsuinYotei.y_index,
+                    tsuinYotei.m_index,
+                    tsuinYotei.d_index,
+                    tsuinYotei.time
             );
             view_tsuin_yoteis.add(firstHeader);
             view_tsuin_yoteis.add(new TsuinYotei(
-                    up.tsuinYoteiList.get(0).ID,
+                    userProfile.getTsuinYoteiList().get(INDEX).ID,
                     false,
-                    up.tsuinYoteiList.get(0).hospital,
-                    up.tsuinYoteiList.get(0).s_detail,
+                    userProfile.getTsuinYoteiList().get(INDEX).hospital,
+                    userProfile.getTsuinYoteiList().get(INDEX).s_detail,
                     "",
-                    up.tsuinYoteiList.get(0).y_index,
-                    up.tsuinYoteiList.get(0).m_index,
-                    up.tsuinYoteiList.get(0).d_index,
-                    up.tsuinYoteiList.get(0).time));
+                    userProfile.getTsuinYoteiList().get(INDEX).y_index,
+                    userProfile.getTsuinYoteiList().get(INDEX).m_index,
+                    userProfile.getTsuinYoteiList().get(INDEX).d_index,
+                    userProfile.getTsuinYoteiList().get(INDEX).time
+            ));
             current_view_ty_size++;
 
-            for (int i = 1; i < up.tsuinYoteiList.size(); i++) {
-                if (prev_ty.calc_unixtime_day() != up.tsuinYoteiList.get(i).calc_unixtime_day()) {
+            for (int i = 1; i < userProfile.getTsuinYoteiList().size(); i++) {
+                if (tsuinYotei.calc_unixtime_day() != userProfile.getTsuinYoteiList().get(i).calc_unixtime_day()) {
                     TsuinYotei header = new TsuinYotei(
                             "",
                             true,
                             "",
                             "",
                             "",
-                            up.tsuinYoteiList.get(i).y_index,
-                            up.tsuinYoteiList.get(i).m_index,
-                            up.tsuinYoteiList.get(i).d_index,
-                            up.tsuinYoteiList.get(i).time
+                            userProfile.getTsuinYoteiList().get(i).y_index,
+                            userProfile.getTsuinYoteiList().get(i).m_index,
+                            userProfile.getTsuinYoteiList().get(i).d_index,
+                            userProfile.getTsuinYoteiList().get(i).time
                     );
                     view_tsuin_yoteis.add(header);
                 }
-                prev_ty = up.tsuinYoteiList.get(i);
+                tsuinYotei = userProfile.getTsuinYoteiList().get(i);
                 view_tsuin_yoteis.add(new TsuinYotei(
-                        up.tsuinYoteiList.get(i).ID,
+                        userProfile.getTsuinYoteiList().get(i).ID,
                         false,
-                        up.tsuinYoteiList.get(i).hospital,
-                        up.tsuinYoteiList.get(i).s_detail,
+                        userProfile.getTsuinYoteiList().get(i).hospital,
+                        userProfile.getTsuinYoteiList().get(i).s_detail,
                         "",
-                        up.tsuinYoteiList.get(i).y_index,
-                        up.tsuinYoteiList.get(i).m_index,
-                        up.tsuinYoteiList.get(i).d_index,
-                        up.tsuinYoteiList.get(i).time));
+                        userProfile.getTsuinYoteiList().get(i).y_index,
+                        userProfile.getTsuinYoteiList().get(i).m_index,
+                        userProfile.getTsuinYoteiList().get(i).d_index,
+                        userProfile.getTsuinYoteiList().get(i).time
+                ));
 
                 current_view_ty_size++;
             }

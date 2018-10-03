@@ -50,7 +50,6 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
     int position=-1;
 
     String filePath;
-    String fileName;
     private Uri cameraUri;
     private File cameraFile;
     Bitmap bitmap;
@@ -96,8 +95,6 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         Intent intent = getIntent();
         position = intent.getIntExtra("TsuinRirekiID",-1);
         filePath=intent.getStringExtra("filePath");
-        fileName=intent.getStringExtra("fileName");
-
 
         if(position == -1){//新規追加
             year.setSelection(0);
@@ -108,18 +105,14 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
                     year.setSelection(i);
                 }
             }
-            if(filePath != null){//撮影した写真を表示させる
+            if(filePath != null){
                 // capture画像のファイルパス
                 cameraFile = new File(filePath);
                 cameraUri = FileProvider.getUriForFile(
                         this,
                         getApplicationContext().getPackageName() + ".fileprovider",
                         cameraFile);
-                try {
-                    bitmap=gu.getPreResizedBitmap(cameraUri,this);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                bitmap=gu.getBitmap(cameraFile);
                 ImageViewShinryo.setImageBitmap(bitmap);
             }
         }else{//通院予定変更したいとき//もともと入ってたデータ表示させる
@@ -129,10 +122,11 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             day.setSelection(tsuinRireki.d_index);
             hospital.setText(tsuinRireki.hospital);
             shinsatsu.setText(tsuinRireki.detail);
-            //firebaseストレージに保存してあるデータを取ってきて表示させる
-            bitmap=gu.getBitmap(tsuinRireki.uri,this);
-            ImageViewShinryo.setImageBitmap(bitmap);
         }
+
+        //画像関連のところ
+
+
     }
 
     @Override
@@ -145,11 +139,7 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             //goto efgh
             finish();
         }else if(i == R.id.addF4){
-            try {
-                RegistryData();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            RegistryData();
         }else if(i == R.id.eraseDataF4){
             EraseData();
         }else if(i == R.id.imageViewSinryoF4){
@@ -157,16 +147,14 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         }
     }
 
-    private void RegistryData() throws IOException {
+    private void RegistryData() {
         if(position == -1) {//新しく追加
+            //この時点で保存するデータを、spinnerでの場所の番号にしとくからややこしいことになってる
             tsuinRireki = new TsuinRireki(null,false,hospital.getText().toString(),
                     shinsatsu.getText().toString(), year.getSelectedItemPosition(), month.getSelectedItemPosition(),
-                    day.getSelectedItemPosition(),cameraUri);
-            tsuinRireki.setFilepath(filePath);
-            tsuinRireki.setLocalpath(filePath);
-            tsuinRireki.setFileName(fileName);
+                    day.getSelectedItemPosition());
+            TsuinRirekiFirebaseStorage.addTsuinRirekiFirebaseStorage(bitmap);
 
-            TsuinRirekiFirebaseStorage.saveTsuinRirekiFirebaseStorage(bitmap,tsuinRireki.getFileName());
         }else{//すでにあるデータ変更
             tsuinRireki.detail = shinsatsu.getText().toString();
             tsuinRireki.hospital = hospital.getText().toString();
@@ -174,7 +162,6 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             tsuinRireki.m_index = month.getSelectedItemPosition();
             tsuinRireki.d_index = day.getSelectedItemPosition();
             TsuinRirekiList.deleteTsuinRireki(position);
-            //firebaseストレージの画像上書き
         }
         TsuinRirekiList.addTsuinRireki(tsuinRireki);
         finish();
@@ -185,8 +172,18 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             finish();
         }else {
             TsuinRirekiList.deleteTsuinRireki(position);
-            //firebaseストレージのデータも消す
+            //年月日で最後の一つなら、タグも消す
             finish();
         }
+    }
+
+    // アンドロイドのデータベースへ登録する
+    private void registerDatabase(String file) {
+        ContentValues contentValues = new ContentValues();
+        ContentResolver contentResolver = this.getContentResolver();
+        contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+        contentValues.put("_data", file);
+        contentResolver.insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues);
     }
 }

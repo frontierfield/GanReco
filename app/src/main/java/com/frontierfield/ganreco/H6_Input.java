@@ -13,10 +13,6 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
-/**
- * Created by kkarimu on 2018/07/12.
- */
-
 public class H6_Input extends AppCompatActivity implements View.OnClickListener {
     ImageView backBtnHeader , ImageViewKensa;
     TextView helpBtn;
@@ -26,8 +22,8 @@ public class H6_Input extends AppCompatActivity implements View.OnClickListener 
     LinearLayout eraseBtn;
     EditText kensa,hospital;
 
-    UserProfile up;
-    Global_Util gu;
+    UserProfile userProfile;
+    Global_Util globalUtil;
 
     KensaRireki kensaRireki;
     int position=-1;
@@ -36,8 +32,8 @@ public class H6_Input extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.h6_input);
 
-        up=new UserProfile();
-        gu=new Global_Util();
+        userProfile = UserProfile.getInstance();
+        globalUtil = new Global_Util();
 
         backBtnHeader = findViewById(R.id.backH6);
         year = findViewById(R.id.yearH6);
@@ -51,9 +47,9 @@ public class H6_Input extends AppCompatActivity implements View.OnClickListener 
         kensa = findViewById(R.id.editTextKensaH6);
         ImageViewKensa = findViewById(R.id.imageViewKensaH6);
 
-        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aYotei);
-        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aMonth);
-        ArrayAdapter<Integer> adapterDay = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,gu.aDay);
+        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aYotei);
+        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aMonth);
+        ArrayAdapter<Integer> adapterDay = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aDay);
 
         year.setAdapter(adapterYear);
         month.setAdapter(adapterMonth);
@@ -76,7 +72,7 @@ public class H6_Input extends AppCompatActivity implements View.OnClickListener 
             year.setSelection(0);
             Calendar now = Calendar.getInstance();
             int nowY = now.get(Calendar.YEAR);
-            for(int i = 0;i < gu.aYotei.size();i++){//????
+            for(int i = 0;i < globalUtil.aYotei.size();i++){//????
                 if(nowY == i){
                     year.setSelection(i);
                 }
