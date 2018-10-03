@@ -128,7 +128,7 @@ public class Global_Util {
             options.inSampleSize = 1;
         }else{
             // 設定するImageViewのサイズにあわせてリサイズ
-            int bitmapScale=Math.max(options.outHeight / 50, options.outWidth / 50);
+            int bitmapScale=Math.max(options.outHeight / 1000, options.outWidth / 1000);
             for(int i=2;i<=bitmapScale;i*=2){
                 options.inSampleSize=i;
             }

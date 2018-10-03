@@ -115,7 +115,11 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
                         this,
                         getApplicationContext().getPackageName() + ".fileprovider",
                         cameraFile);
-                bitmap=gu.getBitmap(cameraUri,this);
+                try {
+                    bitmap=gu.getPreResizedBitmap(cameraUri,this);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 ImageViewShinryo.setImageBitmap(bitmap);
             }
         }else{//通院予定変更したいとき//もともと入ってたデータ表示させる
@@ -161,7 +165,8 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             tsuinRireki.setFilepath(filePath);
             tsuinRireki.setLocalpath(filePath);
             tsuinRireki.setFileName(fileName);
-            TsuinRirekiFirebaseStorage.saveTsuinRirekiFirebaseStorage(cameraUri,this,tsuinRireki.getFileName());
+
+            TsuinRirekiFirebaseStorage.saveTsuinRirekiFirebaseStorage(bitmap,tsuinRireki.getFileName());
         }else{//すでにあるデータ変更
             tsuinRireki.detail = shinsatsu.getText().toString();
             tsuinRireki.hospital = hospital.getText().toString();

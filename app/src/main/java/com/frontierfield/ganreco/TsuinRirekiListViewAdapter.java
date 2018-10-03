@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
@@ -67,9 +69,9 @@ class TsuinRirekiListViewAdapter extends BaseAdapter {
             ((TextView) convertView.findViewById(R.id.shisetsuNameF_H)).setText(tsuinRireki.get(position).hospital);
             StorageReference storageReference = FirebaseStorage.getInstance().getReference();
             FirebaseUser mAuthUser=FirebaseAuth.getInstance().getCurrentUser();
-            StorageReference thumRef= storageReference.child(mAuthUser.getUid()).child(String.format("TsuinRirekiThum/rireki_%s.jpg",tsuinRireki.get(position).getFileName()));
-            //ImageView imageView=convertView.findViewById(R.id.photoImageF_H);
-            //Glide.with(context).using(new FirebaseImageLoader()).load(thumRef).into(imageView);
+            StorageReference imagesRef= storageReference.child(mAuthUser.getUid()).child(String.format("TsuinRireki/rireki_%s.jpg",tsuinRireki.get(position).getFileName()));
+            ImageView imageView=convertView.findViewById(R.id.photoImageF_H);
+            Glide.with(context).using(new FirebaseImageLoader()).load(imagesRef).into(imageView);
             //Bitmap bitmap=gu.getBitmap(TsuinRirekiFirebaseStorage.getTsuinRirekiThum(tsuinRireki.get(position).getFileName()),context);
             //((ImageView) convertView.findViewById(R.id.photoImageF_H)).setImageBitmap(bitmap);
             //サムネをどこからどう持ってくるか、確認
