@@ -116,6 +116,8 @@ public class Global_Util {
     public static Bitmap getPreResizedBitmap(Uri uri,Context context) throws IOException {//bitmapをメモリ展開なしでリサイズ
         InputStream inputStream=context.getContentResolver().openInputStream(uri);
         Bitmap bitmap=null;
+        int orientation=ExifInterface.ORIENTATION_UNDEFINED;
+        try {
         // Optionsインスタンスを取得
         BitmapFactory.Options options = new BitmapFactory.Options();
 
@@ -138,8 +140,6 @@ public class Global_Util {
         options.inJustDecodeBounds = false;
         inputStream=context.getContentResolver().openInputStream(uri);
 
-        int orientation=ExifInterface.ORIENTATION_UNDEFINED;
-        try {
             //bitmap = BitmapFactory.decodeStream(new BufferedInputStream(inputStream));ここにあるうちはうまくいかない
             ExifInterface exifInterface = new ExifInterface(inputStream);
             orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_UNDEFINED);

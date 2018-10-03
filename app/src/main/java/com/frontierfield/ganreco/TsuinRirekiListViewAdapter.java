@@ -58,25 +58,27 @@ class TsuinRirekiListViewAdapter extends BaseAdapter {
         Integer year = gu.aYotei.get(tsuinRireki.get(position).y_index);
         Integer month = gu.aMonth[tsuinRireki.get(position).m_index];
         Integer day = gu.aDay[tsuinRireki.get(position).d_index];
-
-        if(tsuinRireki.get(position).t == true) {
-            convertView = layoutInflater.inflate(R.layout.list_header_efgh, parent, false);
-            ((TextView) convertView.findViewById(R.id.textView15Listheader)).setText(
-                    year.toString() + "年" +
-                            month.toString()+"月"+day+"日"+tsuinRireki.get(position).getWeek());
-        }else {
-            convertView = layoutInflater.inflate(R.layout.listelement_f_h, parent, false);
-            ((TextView) convertView.findViewById(R.id.shisetsuNameF_H)).setText(tsuinRireki.get(position).hospital);
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-            FirebaseUser mAuthUser=FirebaseAuth.getInstance().getCurrentUser();
-            StorageReference imagesRef= storageReference.child(mAuthUser.getUid()).child(String.format("TsuinRireki/rireki_%s.jpg",tsuinRireki.get(position).getFileName()));
-            ImageView imageView=convertView.findViewById(R.id.photoImageF_H);
-            Glide.with(context).using(new FirebaseImageLoader()).load(imagesRef).into(imageView);
-            //Bitmap bitmap=gu.getBitmap(TsuinRirekiFirebaseStorage.getTsuinRirekiThum(tsuinRireki.get(position).getFileName()),context);
-            //((ImageView) convertView.findViewById(R.id.photoImageF_H)).setImageBitmap(bitmap);
-            //サムネをどこからどう持ってくるか、確認
+        try {
+            if (tsuinRireki.get(position).t == true) {
+                convertView = layoutInflater.inflate(R.layout.list_header_efgh, parent, false);
+                ((TextView) convertView.findViewById(R.id.textView15Listheader)).setText(
+                        year.toString() + "年" +
+                                month.toString() + "月" + day + "日" + tsuinRireki.get(position).getWeek());
+            } else {
+                convertView = layoutInflater.inflate(R.layout.listelement_f_h, parent, false);
+                ((TextView) convertView.findViewById(R.id.shisetsuNameF_H)).setText(tsuinRireki.get(position).hospital);
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+                FirebaseUser mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
+                StorageReference imagesRef = storageReference.child(mAuthUser.getUid()).child(String.format("TsuinRireki/rireki_%s.jpg", tsuinRireki.get(position).getFileName()));
+                ImageView imageView = convertView.findViewById(R.id.photoImageF_H);
+                Glide.with(context).using(new FirebaseImageLoader()).load(imagesRef).into(imageView);
+                //Bitmap bitmap=gu.getBitmap(TsuinRirekiFirebaseStorage.getTsuinRirekiThum(tsuinRireki.get(position).getFileName()),context);
+                //((ImageView) convertView.findViewById(R.id.photoImageF_H)).setImageBitmap(bitmap);
+                //サムネをどこからどう持ってくるか、確認
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
-
         return convertView;
     }
 }
