@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/GanReco.iml" filepath="$PROJECT_DIR$/GanReco.iml" />
-      <module fileurl="file://$PROJECT_DIR$/GanReco.iml" filepath="$PROJECT_DIR$/GanReco.iml" />
-=======
-      <module fileurl="file://$PROJECT_DIR$/.idea/GanReco.iml" filepath="$PROJECT_DIR$/.idea/GanReco.iml" />
->>>>>>> 6ce5f0116c9bb3a90fc8ff6556cafb17c74eb106
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
