@@ -10,11 +10,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-public class ContentFragment extends Fragment {
+public class E_F_G_H_ContentFragment extends Fragment {
     int tab=0;
     ListView listView;
 
-    public ContentFragment(){
+    public E_F_G_H_ContentFragment(){
     }
 
     @Nullable
@@ -71,7 +71,9 @@ public class ContentFragment extends Fragment {
                         break;
                     case 1:
                         if (TsuinRirekiList.getInstance().get(position).t == false) {
-                            Intent intent = new Intent(view.getContext(), F6_TsuinRirekiDetail.class);
+                            Intent intent = new Intent(view.getContext(), e_f_g_h_mainmenu.class);
+                            intent.putExtra("tab",tab);
+                            intent.putExtra("detailKey",tab);
                             intent.putExtra("TsuinRirekiID", position);
                             startActivity(intent);
                         }

@@ -101,14 +101,14 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             }
         }else{//通院予定変更したいとき//もともと入ってたデータ表示させる
             tsuinRireki=TsuinRirekiList.getSavedTsuinRireki(position);
-            year.setSelection(tsuinRireki.y_index);
-            month.setSelection(tsuinRireki.m_index);
-            day.setSelection(tsuinRireki.d_index);
-            hospital.setText(tsuinRireki.hospital);
-            shinsatsu.setText(tsuinRireki.detail);
-            if(filePath != null){
+            year.setSelection(tsuinRireki.getYearIndex());
+            month.setSelection(tsuinRireki.getMonthIndex());
+            day.setSelection(tsuinRireki.getDayIndex());
+            hospital.setText(tsuinRireki.getHospital());
+            shinsatsu.setText(tsuinRireki.getDetail());
+            if(tsuinRireki.getFilePath() != null){
                 // capture画像のファイルパス
-                cameraUri =Uri.parse(filePath);
+                cameraUri =Uri.parse(tsuinRireki.getFilePath());
                 try {
                     bitmap=globalUtil.getPreResizedBitmap(cameraUri,this);
                 } catch (IOException e) {
@@ -124,14 +124,26 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         int i = v.getId();
         if(i == R.id.backF4){
             //goto efgh
+            Intent intent = new Intent(this, e_f_g_h_mainmenu.class);
+            intent.putExtra("tab",1);
+            startActivity(intent);
             finish();
         }else if(i == R.id.cancelF4){
             //goto efgh
+            Intent intent = new Intent(this, e_f_g_h_mainmenu.class);
+            intent.putExtra("tab",1);
+            startActivity(intent);
             finish();
         }else if(i == R.id.addF4){
             RegistryData();
+            Intent intent = new Intent(this, e_f_g_h_mainmenu.class);
+            intent.putExtra("tab",1);
+            startActivity(intent);
         }else if(i == R.id.eraseDataF6){
             EraseData();
+            Intent intent = new Intent(this, e_f_g_h_mainmenu.class);
+            intent.putExtra("tab",1);
+            startActivity(intent);
         }else if(i == R.id.imageViewSinryoF6){
             Intent intent=new Intent(this,F5_Enlarge.class);
             intent.putExtra("cameraUri",cameraUri.toString());
@@ -145,8 +157,8 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             tsuinRireki = new TsuinRireki(null,false,hospital.getText().toString(),
                     shinsatsu.getText().toString(), year.getSelectedItemPosition(), month.getSelectedItemPosition(),
                     day.getSelectedItemPosition());
-            tsuinRireki.setFilepath(filePath);
-            tsuinRireki.setLocalpath(filePath);
+            tsuinRireki.setFilePath(filePath);
+            tsuinRireki.setLocalPath(filePath);
             tsuinRireki.setFileName(fileName);
             TsuinRirekiFirebaseStorage.saveTsuinRirekiFirebaseStorage(bitmap,fileName);
 

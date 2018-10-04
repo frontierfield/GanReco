@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             upr.get_user_profile_and_input_static();
             //保存されてるデータもってくる
             TsuinYoteiRDB.getSavedTsuinYoteiRDB();
-            TsuinRirekiRDB.getSavedTsuinRirekiRDB();
+            TsuinRirekiRDB.getSavedTsuinRirekiRDB();//releaseで落ちる原因
             OkusuriRirekiRDB.getSavedOkusuriRirekiRDB();
             KensaRirekiRDB.getSavedKensaRirekiRDB();
 

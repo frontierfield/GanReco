@@ -3,6 +3,7 @@ package com.frontierfield.ganreco;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,10 +55,10 @@ class TsuinRirekiListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Global_Util gu = new Global_Util();
-        Integer year = gu.aYotei.get(tsuinRireki.get(position).y_index);
-        Integer month = gu.aMonth[tsuinRireki.get(position).m_index];
-        Integer day = gu.aDay[tsuinRireki.get(position).d_index];
+        Global_Util globalUtil = new Global_Util();
+        Integer year = globalUtil.aYotei.get(tsuinRireki.get(position).getYearIndex());
+        Integer month = globalUtil.aMonth[tsuinRireki.get(position).getMonthIndex()];
+        Integer day = globalUtil.aDay[tsuinRireki.get(position).getDayIndex()];
         try {
             if (tsuinRireki.get(position).t == true) {
                 convertView = layoutInflater.inflate(R.layout.list_header_efgh, parent, false);
@@ -70,10 +71,10 @@ class TsuinRirekiListViewAdapter extends BaseAdapter {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
                 FirebaseUser mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
                 StorageReference imagesRef = storageReference.child(mAuthUser.getUid()).child(String.format("TsuinRireki/rireki_%s.jpg", tsuinRireki.get(position).getFileName()));
-                ImageView imageView = convertView.findViewById(R.id.photoImageF_H);
-                Glide.with(context).using(new FirebaseImageLoader()).load(imagesRef).into(imageView);
-                //Bitmap bitmap=gu.getBitmap(TsuinRirekiFirebaseStorage.getTsuinRirekiThum(tsuinRireki.get(position).getFileName()),context);
-                //((ImageView) convertView.findViewById(R.id.photoImageF_H)).setImageBitmap(bitmap);
+                //ImageView imageView = convertView.findViewById(R.id.photoImageF_H);
+                //Glide.with(context).using(new FirebaseImageLoader()).load(imagesRef).into(imageView);
+                Bitmap bitmap=globalUtil.getPreResizedBitmap(Uri.parse(tsuinRireki.get(position).getFilePath()),context);
+                ((ImageView) convertView.findViewById(R.id.photoImageF_H)).setImageBitmap(bitmap);
                 //サムネをどこからどう持ってくるか、確認
             }
         }catch (Exception e){

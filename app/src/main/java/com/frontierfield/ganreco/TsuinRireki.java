@@ -21,11 +21,11 @@ public class TsuinRireki {
     int y_index, m_index, d_index;    //日にち
     String hospital;    //病院名
     String detail;  //診察内容
-    String filepath;//実際に参照するpath
-    String localpath; //写した写真のローカルpath
-    String storagepath;     //firebasestrageのpath
+    String filePath;//実際に参照するPath
+    String localPath; //写した写真のローカルPath
+    String storagePath;     //firebasestrageのPath
     String fileName;
-    //基本的にpathを持っててもらう
+    //基本的にPathを持っててもらう
     //firebasestorageにアップロードが終わったら、firabaseの方を参照する形にする
     public TsuinRireki() {
     }
@@ -130,14 +130,14 @@ public class TsuinRireki {
         this.detail=detail;
     }
 
-    public String getFilepath(){return filepath;}
-    public void setFilepath(String filePath){this.filepath=filePath;}
+    public String getFilePath(){return filePath;}
+    public void setFilePath(String filePath){this.filePath=filePath;}
 
-    public String getLocalpath(){return localpath;}
-    public void setLocalpath(String localpath){this.localpath=localpath;}
+    public String getLocalPath(){return localPath;}
+    public void setLocalPath(String localPath){this.localPath=localPath;}
 
-    public String getStoragepath(){return storagepath;}
-    public void setStoragepath(String storagepath){this.storagepath=storagepath;}
+    public String getStoragePath(){return storagePath;}
+    public void setStoragePath(String storagePath){this.storagePath=storagePath;}
 
     public String getFileName(){return fileName;}
     public void setFileName(String fileName){this.fileName=fileName;}

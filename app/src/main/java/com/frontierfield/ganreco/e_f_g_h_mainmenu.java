@@ -19,6 +19,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,7 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickListener {
+public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickListener,ViewPager.OnPageChangeListener {
     private final static int RESULT_CAMERA = 1001;
     private final static int REQUEST_PERMISSION = 1002;
     private Uri cameraUri;
@@ -37,10 +39,11 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
     private String filePath;
     private String fileName;
     int kensaSyubetu=0;
-
+    TextView title;
     FloatingActionButton fab;
     ViewPager viewPager;
     TabLayout tabLayout;
+    int detailKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +56,7 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
         LinearLayout fotterMypage = findViewById(R.id.mypagesetFotterHIJK);
         ImageView bell = findViewById(R.id.button_SelectedUserHIJK);
         ImageView backBtn = findViewById(R.id.shape_ivHIJK);
-        TextView title=findViewById(R.id.titleH_I_J_K1_2);
+        title=findViewById(R.id.titleH_I_J_K1_2);
 
         fotterHome.setOnClickListener(this);
         fotterInput.setOnClickListener(this);
@@ -66,18 +69,26 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
         fab = (FloatingActionButton) findViewById(R.id.fab);
         viewPager = findViewById(R.id.viewpagerHIJKMain);
         tabLayout = findViewById(R.id.tabHIJKMain);
-
-        FragmentManager fm = getSupportFragmentManager();
-        E_F_G_H_ListFragmentAdapter efghListFragmentAdapter =new E_F_G_H_ListFragmentAdapter(fm);
-        viewPager.setAdapter(efghListFragmentAdapter);
-
-        Intent intent = getIntent();
-        Integer id = intent.getIntExtra("id",0);
-        //viewPager.setCurrentItem(id);
-
         tabLayout.setupWithViewPager(viewPager);//tablayoutとviewpager紐づけ
 
-        fab.setOnClickListener(this);
+        Intent intent = getIntent();
+        int tab=intent.getIntExtra("tab",0);
+        detailKey = intent.getIntExtra("detailKey",0);
+        int tsuinRirekiID=intent.getIntExtra("TsuinRirekiID",-1);
+        Bundle bundle=new Bundle();
+        bundle.putInt("detailKey",detailKey);
+        bundle.putInt("TsuinRirekiID",tsuinRirekiID);
+        E_F_G_H_ListFragmentAdapter efghListFragmentAdapter = new E_F_G_H_ListFragmentAdapter(getSupportFragmentManager(),bundle);
+        viewPager.setAdapter(efghListFragmentAdapter);
+        viewPager.addOnPageChangeListener(this);
+        viewPager.setCurrentItem(tab);
+
+        if(detailKey==0) {
+            fab.setOnClickListener(this);
+        }else{
+            ViewGroup viewGroup=(ViewGroup)fab.getParent();
+            viewGroup.removeView(fab);
+        }
     }
 
     @Override
@@ -262,5 +273,37 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
                 Log.d("debug","data.getExtras() == null");
             }
         }
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        switch(position){
+            case 0:
+                title.setText("通院予定");
+                break;
+            case 1:
+                if(detailKey==position){title.setText("診療詳細");}
+                else{ title.setText("通院履歴");}
+                break;
+            case 2:
+                if(detailKey==position){title.setText("処方詳細");}
+                else{title.setText("お薬履歴");}
+                break;
+            case 3:
+                if(detailKey==position){title.setText("検査結果詳細");}
+                else{title.setText("検査履歴");}
+                break;
+        }
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

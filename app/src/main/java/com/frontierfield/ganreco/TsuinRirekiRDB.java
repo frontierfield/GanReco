@@ -41,8 +41,8 @@ public class TsuinRirekiRDB {
                     // @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                            TsuinRireki ty=dataSnapshot.getValue(TsuinRireki.class);
-                            TsuinRirekiList.getInstance().add(ty);
+                            TsuinRireki tsuinRireki=dataSnapshot.getValue(TsuinRireki.class);
+                            TsuinRirekiList.getInstance().add(tsuinRireki);
                         }
                     }
                     @Override
