@@ -71,7 +71,7 @@ public class ContentFragment extends Fragment {
                         break;
                     case 1:
                         if (TsuinRirekiList.getInstance().get(position).t == false) {
-                            Intent intent = new Intent(view.getContext(), F4_Input.class);
+                            Intent intent = new Intent(view.getContext(), F6_TsuinRirekiDetail.class);
                             intent.putExtra("TsuinRirekiID", position);
                             startActivity(intent);
                         }

@@ -75,12 +75,12 @@
                 android:text="撮影画像" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/HospitalNameF6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/imageViewSinryoF4"
+                android:layout_below="@+id/imageViewSinryoF6"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="19dp"
                 android:text="日付"
@@ -91,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView2"
+                android:layout_below="@+id/HospitalNameF6"
                 android:orientation="horizontal">
 
                 <Spinner
@@ -122,7 +122,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/eraseDataF4"
+                android:layout_below="@+id/eraseDataF6"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_marginTop="44dp"
@@ -159,7 +159,7 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/linearLayout2"
@@ -172,7 +172,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="false"
-                android:layout_below="@+id/textView10"
+                android:layout_below="@+id/textview"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:ems="10"
@@ -203,7 +203,7 @@
                 android:lines="5" />
 
             <LinearLayout
-                android:id="@+id/eraseDataF4"
+                android:id="@+id/eraseDataF6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="false"
@@ -232,7 +232,7 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/imageViewSinryoF4"
+                android:id="@+id/imageViewSinryoF6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView14"

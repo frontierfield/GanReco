@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -69,8 +68,8 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
         tabLayout = findViewById(R.id.tabHIJKMain);
 
         FragmentManager fm = getSupportFragmentManager();
-        HistoryFragmentAdapter historyFragmentAdapter=new HistoryFragmentAdapter(fm);
-        viewPager.setAdapter(historyFragmentAdapter);
+        E_F_G_H_ListFragmentAdapter efghListFragmentAdapter =new E_F_G_H_ListFragmentAdapter(fm);
+        viewPager.setAdapter(efghListFragmentAdapter);
 
         Intent intent = getIntent();
         Integer id = intent.getIntExtra("id",0);
@@ -242,7 +241,7 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
                 switch (viewPager.getCurrentItem()){
                     case 1:
                         nextIntent = new Intent(this,F4_Input.class);
-                        nextIntent.putExtra("filePath",filePath);
+                        nextIntent.putExtra("filePath",cameraUri.toString());
                         nextIntent.putExtra("fileName",fileName);
                         startActivity(nextIntent);
                         break;

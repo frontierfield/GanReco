@@ -1,19 +1,10 @@
 package com.frontierfield.ganreco;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -22,17 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Calendar;
 
 public class F4_Input extends AppCompatActivity implements  View.OnClickListener{
     ImageView backBtnHeader,ImageViewShinryo;
-    TextView helpBtn;
     Spinner year, month, day;
     TextView btnCancel;
     TextView btnAdd;
@@ -49,7 +35,6 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
     String filePath;
     String fileName;
     private Uri cameraUri;
-    private File cameraFile;
     Bitmap bitmap;
 
     @Override
@@ -65,12 +50,12 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         month = findViewById(R.id.monthF4);
         day = findViewById(R.id.dayF4);
 
-        eraseBtn = findViewById(R.id.eraseDataF4);
+        eraseBtn = findViewById(R.id.eraseDataF6);
         btnCancel = findViewById(R.id.cancelF4);
         btnAdd = findViewById(R.id.addF4);
         hospital = findViewById(R.id.editTextHospNameF4);
         shinsatsu = findViewById(R.id.editTextShinsatsuF4);
-        ImageViewShinryo = findViewById(R.id.imageViewSinryoF4);
+        ImageViewShinryo = findViewById(R.id.imageViewSinryoF6);
 
         ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aYotei);
         ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aMonth);
@@ -106,11 +91,7 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             }
             if(filePath != null){
                 // capture画像のファイルパス
-                cameraFile = new File(filePath);
-                cameraUri = FileProvider.getUriForFile(
-                        this,
-                        getApplicationContext().getPackageName() + ".fileprovider",
-                        cameraFile);
+                cameraUri =Uri.parse(filePath);
                 try {
                     bitmap=globalUtil.getPreResizedBitmap(cameraUri,this);
                 } catch (IOException e) {
@@ -125,6 +106,16 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             day.setSelection(tsuinRireki.d_index);
             hospital.setText(tsuinRireki.hospital);
             shinsatsu.setText(tsuinRireki.detail);
+            if(filePath != null){
+                // capture画像のファイルパス
+                cameraUri =Uri.parse(filePath);
+                try {
+                    bitmap=globalUtil.getPreResizedBitmap(cameraUri,this);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ImageViewShinryo.setImageBitmap(bitmap);
+            }
         }
     }
 
@@ -139,9 +130,9 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             finish();
         }else if(i == R.id.addF4){
             RegistryData();
-        }else if(i == R.id.eraseDataF4){
+        }else if(i == R.id.eraseDataF6){
             EraseData();
-        }else if(i == R.id.imageViewSinryoF4){
+        }else if(i == R.id.imageViewSinryoF6){
             Intent intent=new Intent(this,F5_Enlarge.class);
             intent.putExtra("cameraUri",cameraUri.toString());
             startActivity(intent);
@@ -153,7 +144,7 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             //この時点で保存するデータを、spinnerでの場所の番号にしとくからややこしいことになってる
             tsuinRireki = new TsuinRireki(null,false,hospital.getText().toString(),
                     shinsatsu.getText().toString(), year.getSelectedItemPosition(), month.getSelectedItemPosition(),
-                    day.getSelectedItemPosition(),cameraUri);
+                    day.getSelectedItemPosition());
             tsuinRireki.setFilepath(filePath);
             tsuinRireki.setLocalpath(filePath);
             tsuinRireki.setFileName(fileName);
@@ -176,7 +167,6 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             finish();
         }else {
             TsuinRirekiList.deleteTsuinRireki(position);
-            //年月日で最後の一つなら、タグも消す
             finish();
         }
     }

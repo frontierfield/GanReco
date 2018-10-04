@@ -47,7 +47,7 @@
         android:padding="7dp"
         android:text="パスワード再設定メール送信"
         android:textColor="#0CBBB6"
-        android:textSize="20dp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/backForget"
@@ -62,5 +62,5 @@
         android:padding="7dp"
         android:text="ログイン画面に戻る"
         android:textColor="#0CBBB6"
-        android:textSize="20dp" />
+        android:textSize="18dp" />
 </LinearLayout>

@@ -16,8 +16,8 @@ import java.util.List;
 
 //ViewPager用のアダプター
 //これで、タブレイアウトにcontent_e_f_g_hを追加
-class HistoryFragmentAdapter extends FragmentPagerAdapter {
-    public HistoryFragmentAdapter(FragmentManager fm) {
+class E_F_G_H_ListFragmentAdapter extends FragmentPagerAdapter {
+    public E_F_G_H_ListFragmentAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -28,13 +28,6 @@ class HistoryFragmentAdapter extends FragmentPagerAdapter {
         return tabTitle[position];
     }
 
-/*
-    // 自分のコードから Fragment の初期化に使うメソッド
-    public static HistoryFragmentAdapter newInstance(FragmentManager fm) {
-        HistoryFragmentAdapter fragment = new HistoryFragmentAdapter(fm);
-        return fragment;
-    }
-*/
     @Override
     public Fragment getItem(int position) {
         //case 0://通院予定//case 1://通院履歴//case 2://お薬履歴//case 3://検査履歴
