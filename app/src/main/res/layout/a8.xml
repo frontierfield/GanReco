@@ -43,30 +43,33 @@
         android:clickable="true"
         android:id="@+id/forgotPass"
         android:layout_marginTop="20dp" />
+
     <TextView
-        android:text="ログイン"
+        android:id="@+id/buttonLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonLogin"
-        android:background="@drawable/button_round_white"
-        android:gravity="center_horizontal"
-        android:clickable="true"
-        android:textSize="20dp"
-        android:layout_marginRight="37.0dp"
         android:layout_marginLeft="37dp"
         android:layout_marginTop="20dp"
-        android:textColor="#0CBBB6" />
-    <TextView
-        android:gravity="center"
-        android:height="12pt"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:lineSpacingMultiplier="1.50"
-        android:text="新規会員登録"
-        android:width="72pt"
-        android:textColor="#FFFFFFFF"
+        android:layout_marginRight="37.0dp"
+        android:background="@drawable/button_round_white"
         android:clickable="true"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="ログイン"
+        android:textColor="#0CBBB6"
+        android:textSize="20dp" />
+
+    <TextView
         android:id="@+id/signUP"
-        android:layout_marginTop="20dp" />
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:width="72pt"
+        android:clickable="true"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.50"
+        android:padding="7dp"
+        android:text="新規会員登録"
+        android:textColor="#FFFFFFFF" />
 
 </LinearLayout>

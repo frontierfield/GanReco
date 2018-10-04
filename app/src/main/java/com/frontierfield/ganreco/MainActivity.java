@@ -17,11 +17,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -80,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (firstInstall == 0) {
                 // ウォークスルー画面
                 mGestureDetector = new GestureDetector(this, mOnGestureListener);
-                Intent intent = new Intent(MainActivity.this, a1_sokyuFragment.class);
+                Intent intent = new Intent(MainActivity.this, A1_A2_A3_Tutorial.class);
                 startActivity(new Intent(intent));
                 finish();
                 //firebaseUser.reload();

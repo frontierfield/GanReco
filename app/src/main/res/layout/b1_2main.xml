@@ -295,8 +295,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="18.76dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginBottom="18.76dp"
                     android:gravity="center"
 
                     android:text="病院検索"
