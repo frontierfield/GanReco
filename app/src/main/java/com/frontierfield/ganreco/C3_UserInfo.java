@@ -176,7 +176,8 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
             if (userProfile.getLastName().isEmpty() || userProfile.getFirstName().isEmpty()) {
                 Toast.makeText(C3_UserInfo.this, "未入力の項目があります",
                         Toast.LENGTH_SHORT).show();
-            } else {
+            }
+            else {
                 SharedPreferences cache = this.getSharedPreferences("GanReco", this.MODE_PRIVATE);
                 SharedPreferences.Editor editor = cache.edit();
                 editor.putInt("regiUser", 1);
@@ -191,6 +192,7 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
         }
         catch (Exception e){
             e.printStackTrace();
+            finish();
         }
     }
 

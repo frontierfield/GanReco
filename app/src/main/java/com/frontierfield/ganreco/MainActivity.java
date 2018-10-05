@@ -6,8 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,23 +32,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAnalytics firebaseAnalytics;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
-    private String uid;
     private EditText email;
     private EditText password;
     private int verification = -1;
     private SharedPreferences cache;
 
-    // X軸最低スワイプ距離
-    private static final int SWIPE_MIN_DISTANCE = 50;
-    // X軸最低スワイプスピード
-    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-    // タッチイベントを処理するためのインタフェース
-    private GestureDetector mGestureDetector;
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
         try {
             super.onCreate(savedInstanceState);
+
+            // Applicationライフサイクル保護対応
+            // Lifecycleを取得し、LifecycleObserverをimplementsしたクラスを渡す
+            getLifecycle().addObserver(new ObserveLifecycle());
+            Log.d("MainActivity_Lifecycle", "Activity::onCreate");
 
             firebaseAnalytics = FirebaseAnalytics.getInstance(this);
             firebaseAuth = FirebaseAuth.getInstance();
@@ -59,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             analyticsData.putString("Event_type", "App_open");
 
             firebaseAnalytics.logEvent("CustomEvent", analyticsData);
-
 
             cache = this.getSharedPreferences("GanReco", this.MODE_PRIVATE);    // ユーザ毎のキャッシュ格納
             ///////////
@@ -74,11 +69,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             if (firstInstall == 0) {
                 // ウォークスルー画面
-                mGestureDetector = new GestureDetector(this, mOnGestureListener);
                 Intent intent = new Intent(MainActivity.this, A1_A2_A3_WalkThrough.class);
                 startActivity(new Intent(intent));
                 finish();
-                //firebaseUser.reload();
             }
             else if(inputed_email != null && pass != null){//ログイン状態のデータがあれば
                 // パスワード複合化処理
@@ -197,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             KensaRirekiRDB.getSavedKensaRirekiRDB();
 
             // がんレコ　メイン画面　B1B2
-            startActivity(new Intent(this,b1_2mainmenu.class));
+            startActivity(new Intent(this,B1_2_GanrecoMain.class));
             finish();
         }
         else { // ユーザー認証失敗
@@ -208,30 +201,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    // タッチイベントのリスナー
-    private final GestureDetector.SimpleOnGestureListener mOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
-        // フリックイベント
-        @Override
-        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
-            try {
-                // 移動距離・スピードを出力
-                float distance_x = Math.abs((event1.getX() - event2.getX()));
-                float velocity_x = Math.abs(velocityX);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
-                // 開始位置から終了位置の移動距離が指定値より大きい
-                // X軸の移動速度が指定値より大きい
-                if  (event1.getX() - event2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    //textView2.setText("右から左");
-                }
-                // 終了位置から開始位置の移動距離が指定値より大きい
-                // X軸の移動速度が指定値より大きい
-                else if (event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    //textView2.setText("左から右");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return false;
-        }
-    };
+        Log.d("MainActivity_Lifecycle", "Activity::onDestroy");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Log.d("MainActivity_Lifecycle", "Activity::onPause");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Log.d("MainActivity_Lifecycle", "Activity::onResume");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.d("MainActivity_Lifecycle", "Activity::onStart");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Log.d("MainActivity_Lifecycle", "Activity::onStop");
+    }
 }

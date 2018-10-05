@@ -12,7 +12,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -20,7 +19,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -95,7 +93,7 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.homesetFotterHIJK) {
-            startActivity(new Intent(this,b1_2mainmenu.class));
+            startActivity(new Intent(this,B1_2_GanrecoMain.class));
             finish();
         }else if(i == R.id.inputsetFotterHIKJ){
             startActivity(new Intent(this,b3_input.class));
@@ -111,7 +109,7 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
         }else if(i == R.id.button_SelectedUserHIJK){
             //d3 help
         }else if(i == R.id.shape_ivHIJK){
-            startActivity(new Intent(this,b1_2mainmenu.class));
+            startActivity(new Intent(this,B1_2_GanrecoMain.class));
             finish();
         }else if(i == R.id.fab){
             if(viewPager.getCurrentItem() == 0) {

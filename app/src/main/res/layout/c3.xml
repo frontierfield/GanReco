@@ -26,6 +26,7 @@
             android:textColor="#666666"
             android:textSize="16dp"
             tools:name="ユーザー情報登録/編集" />
+
         <ImageView
             android:id="@+id/backE10N1"
             android:layout_width="wrap_content"
@@ -35,6 +36,8 @@
             android:clickable="true"
             android:scaleType="fitXY"
             android:src="@drawable/icon_close"
+            tools:layout_height="25dp"
+            tools:layout_width="25dp"
             tools:name="Combined Shape" />
         <TextView
             android:id="@+id/helpE10N1"

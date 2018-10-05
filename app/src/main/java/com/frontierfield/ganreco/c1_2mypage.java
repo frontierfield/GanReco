@@ -88,7 +88,7 @@ public class c1_2mypage extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.homesetFotterE1_2_3_4) {
-            startActivity(new Intent(this,b1_2mainmenu.class));
+            startActivity(new Intent(this,B1_2_GanrecoMain.class));
             finish();
         }else if(i == R.id.inputsetFotterE1_2_3_4){
             startActivity(new Intent(this,b3_input.class));
@@ -104,7 +104,7 @@ public class c1_2mypage extends AppCompatActivity implements View.OnClickListene
         }else if(i == R.id.button_edit_userE1_2_3_4){
             startActivity(new Intent(this,C3_UserInfo.class));
         }else if(i == R.id.shape_ivE1_2_3_4) {
-            startActivity(new Intent(this, b1_2mainmenu.class));
+            startActivity(new Intent(this, B1_2_GanrecoMain.class));
             finish();
         }else if(i == R.id.button_bell_ivD1){
                 //d3 help

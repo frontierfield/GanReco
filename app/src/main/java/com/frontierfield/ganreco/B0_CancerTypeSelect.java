@@ -9,8 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.List;
 
 public class B0_CancerTypeSelect extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -62,7 +60,7 @@ public class B0_CancerTypeSelect extends AppCompatActivity implements View.OnCli
             UserProfile userProfile = UserProfile.getInstance();
             userProfile.setCancerType(strList[cancerTypeIndex]);
             staticList.setSelectIndex(cancerTypeIndex);
-            startActivity(new Intent(getApplicationContext(), b1_2mainmenu.class));
+            startActivity(new Intent(getApplicationContext(), B1_2_GanrecoMain.class));
             finish();
         }
     }

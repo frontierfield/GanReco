@@ -9,10 +9,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-
-import org.w3c.dom.Text;
-
 /**
  * Created by kkarimu on 2018/06/23.
  */
@@ -46,7 +42,7 @@ public class d1help extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.homesetFotterD1) {
-            startActivity(new Intent(this,b1_2mainmenu.class));
+            startActivity(new Intent(this,B1_2_GanrecoMain.class));
             finish();
         }else if(i == R.id.inputsetFotterD1){
 

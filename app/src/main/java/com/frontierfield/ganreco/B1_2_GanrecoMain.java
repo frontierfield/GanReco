@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 
 import static com.frontierfield.ganreco.R.id.btnUserInfoRed;
 
-public class b1_2mainmenu extends AppCompatActivity implements View.OnClickListener {
+public class B1_2_GanrecoMain extends AppCompatActivity implements View.OnClickListener {
     SharedPreferences cache;
     LinearLayout gotoMypage;
     UserProfile userProfile = UserProfile.getInstance();
@@ -21,6 +22,11 @@ public class b1_2mainmenu extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.b1_2main);
+
+        // Applicationライフサイクル保護対応
+        // Lifecycleを取得し、LifecycleObserverをimplementsしたクラスを渡す
+        getLifecycle().addObserver(new ObserveLifecycle());
+        Log.d("GanrecoMain_Lifecycle", "Activity::onCreate");
 
         LinearLayout fotterHome = findViewById(R.id.homesetFotterD1_2);         // [Tab bar] HOME ボタン
         LinearLayout fotterInput = findViewById(R.id.inputsetFotterD1_2);       // [Tab bar] 入力　ボタン
@@ -54,21 +60,6 @@ public class b1_2mainmenu extends AppCompatActivity implements View.OnClickListe
         btn1_b1to2.setOnClickListener(this);
         btn2_b1to2.setOnClickListener(this);
         btn3_b1to2.setOnClickListener(this);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        cache = this.getSharedPreferences("GanReco",this.MODE_PRIVATE);
-        //FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        //String name = firebaseUser.getDisplayName();
-        //String name = UserProfile.lastName;
-
-        ViewGroup.LayoutParams gotoMypageParam = gotoMypage.getLayoutParams();
-        if (userProfile.isSaved()) {    // ユーザ情報登録済み
-            gotoMypageParam.height = 0;
-            gotoMypage.setLayoutParams(gotoMypageParam);
-        }
     }
 
     @Override
@@ -131,5 +122,46 @@ public class b1_2mainmenu extends AppCompatActivity implements View.OnClickListe
         else if(i == R.id.btnUserInfoRedArrow || i == R.id.textView4 || i == R.id.textView5 || i == btnUserInfoRed){
             startActivity(new Intent(this, C3_UserInfo.class));
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Log.d("GanrecoMain_Lifecycle", "Activity::onDestroy");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Log.d("GanrecoMain_Lifecycle", "Activity::onPause");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Log.d("GanrecoMain_Lifecycle", "Activity::onResume");
+        cache = this.getSharedPreferences("GanReco",this.MODE_PRIVATE);
+        ViewGroup.LayoutParams gotoMypageParam = gotoMypage.getLayoutParams();
+        if (userProfile.isSaved()) {    // ユーザ情報登録済み
+            gotoMypageParam.height = 0;
+            gotoMypage.setLayoutParams(gotoMypageParam);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.d("GanrecoMain_Lifecycle", "Activity::onStart");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Log.d("GanrecoMain_Lifecycle", "Activity::onStop");
     }
 }

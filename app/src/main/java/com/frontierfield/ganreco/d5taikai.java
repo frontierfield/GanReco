@@ -42,7 +42,7 @@ public class d5taikai extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.homesetFotterD5) {
-            startActivity(new Intent(this,b1_2mainmenu.class));
+            startActivity(new Intent(this,B1_2_GanrecoMain.class));
             finish();
         }else if(i == R.id.inputsetFotterD5){
 

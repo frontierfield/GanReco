@@ -40,7 +40,7 @@ public class b3_input extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.homesetFotterB3) {
-            startActivity(new Intent(this,b1_2mainmenu.class));
+            startActivity(new Intent(this,B1_2_GanrecoMain.class));
             finish();
         }else if(i == R.id.inputsetFotterB3){
             //startActivity(new Intent(this,b3_input.class));

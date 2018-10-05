@@ -99,7 +99,6 @@ public class F6_TsuinRirekiDetail extends Fragment implements  View.OnClickListe
             intent.putExtra("cameraUri", tsuinRireki.getFilePath());
             startActivity(intent);
         }
-
     }
 
     private void EraseData() {
