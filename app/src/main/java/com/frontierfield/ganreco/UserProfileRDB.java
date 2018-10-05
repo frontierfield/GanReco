@@ -27,11 +27,10 @@ public class UserProfileRDB {
     private String cancerType = null;
     private boolean isSaved = false;
 
-    public UserProfileRDB(){
-        // Default constructor required for calls to DataSnapshot.getValue(User.class)
-    }
+    UserProfile userProfile;
 
-    public UserProfileRDB(UserProfile userProfile){
+    public UserProfileRDB(){
+        userProfile = UserProfile.getInstance();
         this.UID = userProfile.getUID();
         this.lastName = userProfile.getLastName();
         this.firstName = userProfile.getFirstName();

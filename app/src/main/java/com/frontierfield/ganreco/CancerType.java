@@ -1,17 +1,9 @@
 package com.frontierfield.ganreco;
 
+// がん種別（今後、ステージなど項目が増えるかもしれない）
 public class CancerType {
 
-    private int selectedID;
     private String strCancerName;
-
-    public void setSelectedID(int selectedID) {
-        this.selectedID = selectedID;
-    }
-
-    public int getSelectedID() {
-        return this.selectedID;
-    }
 
     public void setStrCancerName(String str){
         this.strCancerName = str;

@@ -26,7 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".A1_A2_A3_Tutorial" />
+        <activity android:name=".A1_A2_A3_WalkThrough" />
         <activity android:name=".a4_registry_user" />
         <activity android:name=".a5_registry_precomp" />
         <activity android:name=".a7_registry_comp" />

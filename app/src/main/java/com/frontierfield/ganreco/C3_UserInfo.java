@@ -114,15 +114,12 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
 
             if (userProfile.getSex_Index() == 0) {
                 avater.setImageResource(R.drawable.icon_father);
-            } else {
+            }
+            else {
                 avater.setImageResource(R.drawable.icon_mother);
             }
 
-            for (int i = 0; i < cancerTypeList.getList().size(); i++) {
-                if (userProfile.getCancerType().equals(cancerTypeList.getList().get(i))) {
-                    cancerType.setSelection(i);
-                }
-            }
+            cancerType.setSelection(cancerTypeList.getSelectIndex());
         }
         catch (Exception e){
             e.printStackTrace();
@@ -135,12 +132,15 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
             int i = v.getId();
             if (i == R.id.backE10N1) {
                 finish();
-            } else if (i == R.id.helpE10N1) {
+            }
+            else if (i == R.id.helpE10N1) {
                 startActivity(new Intent(this, d1help.class));
                 finish();
-            } else if (i == R.id.cancelE10_N1) {
+            }
+            else if (i == R.id.cancelE10_N1) {
                 finish();
-            } else if (i == R.id.saveE10_N1) {
+            }
+            else if (i == R.id.saveE10_N1) {
                 RegistryUserData();
             }
         }
@@ -160,6 +160,7 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
             FirebaseUser firebaseUser;
             firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             userProfile.setUID(firebaseUser.getUid());
+            userProfile.setEmail(firebaseUser.getEmail());
             userProfile.setLastName(lastName.getText().toString());
             userProfile.setFirstName(firstName.getText().toString());
             userProfile.setYear_Index(y);
@@ -171,7 +172,6 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
             userProfile.setAddress(address.getText().toString());
             userProfile.setTel(tel.getText().toString());
             userProfile.setCancerType(cancerTypeList.getList().get(cancerId).getStrCancerName());
-            userProfile.setSaved(true);
 
             if (userProfile.getLastName().isEmpty() || userProfile.getFirstName().isEmpty()) {
                 Toast.makeText(C3_UserInfo.this, "未入力の項目があります",
@@ -182,7 +182,9 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
                 editor.putInt("regiUser", 1);
                 editor.commit();
 
-                UserProfileRDB userProfileRDB = new UserProfileRDB(userProfile);
+                cancerTypeList.setSelectIndex(cancerId);    // データ更新
+                userProfile.setSaved(true);
+                UserProfileRDB userProfileRDB = new UserProfileRDB();
                 userProfileRDB.user_profile_add();
                 finish();
             }

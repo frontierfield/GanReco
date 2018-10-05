@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.List;
 
 public class B0_CancerTypeSelect extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -34,13 +36,13 @@ public class B0_CancerTypeSelect extends AppCompatActivity implements View.OnCli
             List<CancerType> cancerTypeList = parser.objects;
             staticList.setList(cancerTypeList);
             strList = new String[cancerTypeList.size()];
+
             for (int i = 0; i < cancerTypeList.size(); i++) {
                 cancerType = cancerTypeList.get(i);
-                cancerType.setSelectedID(i);
                 strList[i] = cancerType.getStrCancerName();
-
             }
-            cancerSpinner = findViewById(R.id.cancerTypeList);
+
+            cancerSpinner = (Spinner)findViewById(R.id.cancerTypeList);
             arrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, strList);
             //ArrayAdapter<CancerType> arrayAdapter = new ArrayAdapter<CancerType>(this, R.layout.support_simple_spinner_dropdown_item, objects);
             cancerSpinner.setAdapter(arrayAdapter);
@@ -54,10 +56,12 @@ public class B0_CancerTypeSelect extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
+        int cancerTypeIndex = cancerSpinner.getSelectedItemPosition();
         int i = v.getId();
         if(i == R.id.buttonSetCancerType) {
             UserProfile userProfile = UserProfile.getInstance();
-            userProfile.setCancerType(strList[cancerType.getSelectedID()]);
+            userProfile.setCancerType(strList[cancerTypeIndex]);
+            staticList.setSelectIndex(cancerTypeIndex);
             startActivity(new Intent(getApplicationContext(), b1_2mainmenu.class));
             finish();
         }
@@ -67,11 +71,5 @@ public class B0_CancerTypeSelect extends AppCompatActivity implements View.OnCli
     public void onNothingSelected(AdapterView<?> parent){}
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        int i = view.getId();
-        if(i == R.id.cancerTypeList) {
-            cancerType.setSelectedID(position);
-            cancerSpinner.setSelection(position);
-        }
-    }
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {}
 }

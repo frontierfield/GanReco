@@ -6,6 +6,7 @@ public final class CancerTypeList {
 
     private static CancerTypeList cancerTypeList = null;
     private List<CancerType> list;
+    private int selectIndex;
 
     public static synchronized CancerTypeList getInstance() {
         if (cancerTypeList == null) {
@@ -20,5 +21,13 @@ public final class CancerTypeList {
 
     public void setList(List<CancerType> list) {
         this.list = list;
+    }
+
+    public int getSelectIndex() {
+        return selectIndex;
+    }
+
+    public void setSelectIndex(int selectIndex) {
+        this.selectIndex = selectIndex;
     }
 }

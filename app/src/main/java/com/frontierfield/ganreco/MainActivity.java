@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (firstInstall == 0) {
                 // ウォークスルー画面
                 mGestureDetector = new GestureDetector(this, mOnGestureListener);
-                Intent intent = new Intent(MainActivity.this, A1_A2_A3_Tutorial.class);
+                Intent intent = new Intent(MainActivity.this, A1_A2_A3_WalkThrough.class);
                 startActivity(new Intent(intent));
                 finish();
                 //firebaseUser.reload();

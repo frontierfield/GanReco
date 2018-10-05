@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class A3_TutorialFragment extends Fragment {
+public class A3_WalkThroughFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup container, Bundle savedInstanceState){
         super.onCreateView(layoutInflater,container,savedInstanceState);

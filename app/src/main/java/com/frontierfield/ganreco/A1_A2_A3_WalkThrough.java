@@ -1,26 +1,24 @@
 package com.frontierfield.ganreco;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-public class A1_A2_A3_Tutorial extends AppCompatActivity implements ViewPager.OnPageChangeListener,View.OnClickListener {
+public class A1_A2_A3_WalkThrough extends AppCompatActivity implements ViewPager.OnPageChangeListener,View.OnClickListener {
     public final static int Page_Num=3;
     private ViewPager viewPager;
     private TextView textSkip;
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.a1_a2_a3_tutorial);
+        setContentView(R.layout.a1_a2_a3_walkthrough);
 
-        viewPager=(ViewPager)findViewById(R.id.tutorialpager);
-        A1_A2_A3_TutorialAdapter tutorialAdapter= new A1_A2_A3_TutorialAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(tutorialAdapter);
+        viewPager=(ViewPager)findViewById(R.id.walkthroughpager);
+        A1_A2_A3_WalkThroughAdapter walkThroughAdapter= new A1_A2_A3_WalkThroughAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(walkThroughAdapter);
         viewPager.addOnPageChangeListener(this);
 
         TabLayout tabLayout=(TabLayout)findViewById(R.id.indicator);
