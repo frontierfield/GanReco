@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class C3_UserInfo extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class C3_UserInfo extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, EditText.OnFocusChangeListener {
     ImageView backBtnHeader;
     TextView helpBtn;
     ImageView avater;
@@ -88,6 +88,8 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
             day.setOnItemSelectedListener(this);
             sex.setOnItemSelectedListener(this);
             cancerType.setOnItemSelectedListener(this);
+
+            address.setOnFocusChangeListener(this);
 
             LoadUserData();
         }
@@ -201,4 +203,10 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {}
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if(hasFocus) {   // フォーカス受け取った時
+        }
+    }
 }

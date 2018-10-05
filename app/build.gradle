@@ -56,6 +56,7 @@ android {
     dexOptions {
         javaMaxHeapSize "2g"
     }
+    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
