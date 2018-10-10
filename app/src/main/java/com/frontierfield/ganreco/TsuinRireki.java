@@ -12,9 +12,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by kkarimu on 2018/07/12.
- */
 @Keep
 public class TsuinRireki {
     String ID; /*RDB tsuinrireki key*/

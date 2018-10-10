@@ -22,9 +22,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-/**
- * Created by kkarimu on 2018/07/07.
- */
 /*
 通院予定リストの管理
  */
