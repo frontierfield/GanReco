@@ -3,6 +3,7 @@ package com.frontierfield.ganreco;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -122,6 +123,16 @@ public class B1_2_GanrecoMain extends AppCompatActivity implements View.OnClickL
         else if(i == R.id.btnUserInfoRedArrow || i == R.id.textView4 || i == R.id.textView5 || i == btnUserInfoRed){
             startActivity(new Intent(this, C3_UserInfo.class));
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
     }
 
     @Override

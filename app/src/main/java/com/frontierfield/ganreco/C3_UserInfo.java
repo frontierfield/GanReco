@@ -120,7 +120,6 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
             else {
                 avater.setImageResource(R.drawable.icon_mother);
             }
-
             cancerType.setSelection(cancerTypeList.getSelectIndex());
         }
         catch (Exception e){
