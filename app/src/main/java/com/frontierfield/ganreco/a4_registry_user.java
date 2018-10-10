@@ -50,33 +50,36 @@ public class a4_registry_user extends AppCompatActivity implements View.OnClickL
 
     private void createAccount(String email, String password) {
 
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            //Log.d(TAG, "createUserWithEmail:success");
-                            firebaseUser = firebaseAuth.getCurrentUser();
-                            Objects.requireNonNull(firebaseUser).sendEmailVerification();
+        try {
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                //Log.d(TAG, "createUserWithEmail:success");
+                                firebaseUser = firebaseAuth.getCurrentUser();
+                                Objects.requireNonNull(firebaseUser).sendEmailVerification();
 
-                            SharedPreferences.Editor editor = cache.edit();
-                            editor.putString("email",inputEmail.getText().toString());
-                            editor.putString("password",inputPassword.getText().toString());
-                            editor.putInt("firstInstall",1);
-                            editor.commit();
+                                SharedPreferences.Editor editor = cache.edit();
+                                editor.putString("email", inputEmail.getText().toString());
+                                editor.putString("password", inputPassword.getText().toString());
+                                editor.putInt("firstInstall", 1);
+                                editor.commit();
 
-                            startActivity(new Intent(a4_registry_user.this,a5_registry_precomp.class));
-                            //firebaseUser.reload();
+                                startActivity(new Intent(a4_registry_user.this, a5_registry_precomp.class));
+                                //firebaseUser.reload();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                //Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                Toast.makeText(a4_registry_user.this, "アカウント作成に失敗しました",
+                                        Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        else {
-                            // If sign in fails, display a message to the user.
-                            //Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(a4_registry_user.this, "アカウント作成に失敗しました",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                    });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

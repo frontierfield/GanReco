@@ -1,9 +1,11 @@
 package com.frontierfield.ganreco;
 
+import android.support.annotation.Keep;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
+@Keep
 public class OkusuriRireki {
     String ID; /*RDB syohou key*/
     Boolean t; /*true head*/

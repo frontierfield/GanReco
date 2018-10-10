@@ -1,5 +1,6 @@
 package com.frontierfield.ganreco;
 
+import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -21,12 +22,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-/**
- * Created by kkarimu on 2018/07/07.
- */
 /*
 通院予定リストの管理
  */
+@Keep
 public class TsuinYotei {
     String ID; /*RDB tsuinyotei key*/
     Boolean t; /*true head*/
@@ -124,7 +123,7 @@ public class TsuinYotei {
             e.printStackTrace();
         }
         long t_unixTime = d.getTime() / 1000;
-        Log.d("unixtime",d.toString() + " " + year.toString() + " " + month.toString() + " " + day.toString());
+        //Log.d("unixtime",d.toString() + " " + year.toString() + " " + month.toString() + " " + day.toString());
 
         return t_unixTime;
     }

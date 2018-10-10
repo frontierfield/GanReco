@@ -5,8 +5,8 @@ android {
         config {
             keyAlias 'key24'
             keyPassword 'frontierfield'
-            //storeFile file('C:/Users/kato/AndroidStudioProjects/GanReco/GanReco-Release-key24.jks')
-            storeFile file('C:/Users/kfujieda/AndroidStudioProjects/GanReco/GanReco-Release-key24.jks')
+            storeFile file('C:/Users/kato/AndroidStudioProjects/GanReco/GanReco-Release-key24.jks')
+            //storeFile file('C:/Users/kfujieda/AndroidStudioProjects/GanReco/GanReco-Release-key24.jks')
             storePassword 'frontierfield'
         }
     }
@@ -76,7 +76,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-config:16.0.1'
     implementation 'com.google.firebase:firebase-invites:16.0.4'
     implementation 'com.google.firebase:firebase-storage:16.0.3'
-    implementation 'com.firebaseui:firebase-ui-storage:0.6.0'
     implementation 'com.android.support:support-v4:26.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

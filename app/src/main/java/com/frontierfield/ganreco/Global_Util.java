@@ -24,10 +24,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-/**
- * Created by kkarimu on 2018/06/18.
- */
-
 public class Global_Util {
     public static List<Integer> aYear,aYotei;
     public static final Integer[] aMonth = {1,2,3,4,5,6,7,8,9,10,11,12};
@@ -76,34 +72,6 @@ public class Global_Util {
             cameraFolder.mkdirs();
         }
         this.photoDir = cameraFolder;
-    }
-    public Bitmap getBitmap(Uri uri,Context context){//uriを引数に向きが正しいbitmapを返す
-        Bitmap bitmap=null;
-        int orientation=ExifInterface.ORIENTATION_UNDEFINED;
-        try {
-            InputStream inputStream=context.getContentResolver().openInputStream(uri);
-            //bitmap = BitmapFactory.decodeStream(new BufferedInputStream(inputStream));ここにあるうちはうまくいかない
-            ExifInterface exifInterface = new ExifInterface(inputStream);
-            orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_UNDEFINED);
-
-            InputStream inputStream1=context.getContentResolver().openInputStream(uri);//これ追加しないとだめだったなぜ
-            bitmap = BitmapFactory.decodeStream(new BufferedInputStream(inputStream1));
-
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        switch (orientation) {
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                return rotateImage(bitmap, 90);
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                return rotateImage(bitmap, 180);
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                return rotateImage(bitmap, 270);
-            default:
-                return bitmap;
-        }
     }
     private static Bitmap rotateImage(Bitmap bitmap, int degree) {
         Matrix matrix = new Matrix();
