@@ -29,6 +29,12 @@ public class TsuinRirekiList {
         tsuinRireki=TsuinRirekiList.get(position);
         return tsuinRireki;
     }
+    public List getTsuinRirekiList(){
+        return TsuinRirekiList;
+    }
+    public void setTsuinRirekiList(List tsuinRirekiList){
+        this.TsuinRirekiList=tsuinRirekiList;
+    }
     private static void SetTag(TsuinRireki tsuinRireki){//list内に年月日が一致するtrueがないときタグ付与
         TsuinRireki tsuinRirekiTag=new TsuinRireki(null,true,tsuinRireki.getHospital(),tsuinRireki.getDetail(),
                 tsuinRireki.getYearIndex(), tsuinRireki.getMonthIndex(), tsuinRireki.getDayIndex());
