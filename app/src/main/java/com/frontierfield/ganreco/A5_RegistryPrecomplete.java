@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,8 +12,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-//「メール起動」ボタンで強制的にGmailを開く処理不要のためクリックイベント削除。
-public class a5_registry_precomp extends AppCompatActivity implements View.OnClickListener {
+public class A5_RegistryPrecomplete extends AppCompatActivity implements View.OnClickListener {
 
     private SharedPreferences cache;
 
@@ -46,11 +45,11 @@ public class a5_registry_precomp extends AppCompatActivity implements View.OnCli
                     editor.putInt("firstInstall",1);
                     editor.commit();
                     // 会員登録完了 A7
-                    startActivity(new Intent(this, a7_registry_comp.class));
+                    startActivity(new Intent(this, A7_RegistryComplete.class));
                     finish();
                 }
                 else{
-                    Toast.makeText(a5_registry_precomp.this, "メールで受信したリンクをクリックしてください",
+                    Toast.makeText(A5_RegistryPrecomplete.this, "メールで受信したリンクをクリックしてください",
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -60,6 +59,19 @@ public class a5_registry_precomp extends AppCompatActivity implements View.OnCli
         }
     }
 
+    //「戻る」ボタン無効化
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction()==KeyEvent.ACTION_DOWN) {
+            switch (event.getKeyCode()) {
+                case KeyEvent.KEYCODE_BACK:
+                    // ダイアログ表示など特定の処理を行いたい場合はここに記述
+                    // 親クラスのdispatchKeyEvent()を呼び出さずにtrueを返す
+                    return true;
+            }
+        }
+        return super.dispatchKeyEvent(event);
+    }
     /*
     // タッチイベント
     @Override
@@ -72,7 +84,7 @@ public class a5_registry_precomp extends AppCompatActivity implements View.OnCli
             boolean flg = firebaseUser.isEmailVerified();
             if (firebaseUser.isEmailVerified()) {
                 // 会員登録完了 A7
-                startActivity(new Intent(this, a7_registry_comp.class));
+                startActivity(new Intent(this, A7_RegistryComplete.class));
                 finish();
             }
         }

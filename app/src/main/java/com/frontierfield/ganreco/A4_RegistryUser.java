@@ -3,10 +3,9 @@ package com.frontierfield.ganreco;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,17 +13,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.ActionCodeSettings;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthRegistrar;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
-public class a4_registry_user extends AppCompatActivity implements View.OnClickListener {
+public class A4_RegistryUser extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
@@ -42,10 +37,10 @@ public class a4_registry_user extends AppCompatActivity implements View.OnClickL
         inputEmail = findViewById(R.id.editEmailB2);
         inputPassword = findViewById(R.id.editPasswordB2);
 
-        TextView btnLogin = findViewById(R.id.btnRegNewUser_A4);
-        TextView btnb1 = findViewById(R.id.toLoginDisp_A4);
-        btnLogin.setOnClickListener(this);
-        btnb1.setOnClickListener(this);
+        TextView btnRegister = findViewById(R.id.btnRegNewUser_A4);
+        TextView btnToLogin = findViewById(R.id.btnToLoginA8);
+        btnRegister.setOnClickListener(this);
+        btnToLogin.setOnClickListener(this);
     }
 
     private void createAccount(String email, String password) {
@@ -56,8 +51,6 @@ public class a4_registry_user extends AppCompatActivity implements View.OnClickL
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                //Log.d(TAG, "createUserWithEmail:success");
                                 firebaseUser = firebaseAuth.getCurrentUser();
                                 Objects.requireNonNull(firebaseUser).sendEmailVerification();
 
@@ -67,17 +60,17 @@ public class a4_registry_user extends AppCompatActivity implements View.OnClickL
                                 editor.putInt("firstInstall", 1);
                                 editor.commit();
 
-                                startActivity(new Intent(a4_registry_user.this, a5_registry_precomp.class));
-                                //firebaseUser.reload();
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                //Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(a4_registry_user.this, "アカウント作成に失敗しました",
+                                startActivity(new Intent(A4_RegistryUser.this, A5_RegistryPrecomplete.class));
+                                finish();
+                            }
+                            else {
+                                Toast.makeText(A4_RegistryUser.this, "アカウント作成に失敗しました",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
-        }catch (Exception e){
+        }
+        catch (Exception e){
             e.printStackTrace();
         }
     }
@@ -88,13 +81,23 @@ public class a4_registry_user extends AppCompatActivity implements View.OnClickL
         if (i == R.id.btnRegNewUser_A4) {
             createAccount(inputEmail.getText().toString(), inputPassword.getText().toString());
         }
-        //else if(i == R.id.backB2){
-        else{
-            SharedPreferences.Editor editor = cache.edit();
-            editor.putInt("firstInstall",1);
-            editor.commit();
+        else if(i == R.id.btnToLoginA8){
             startActivity(new Intent(this,MainActivity.class));
             finish();
         }
+    }
+
+    //「戻る」ボタン無効化
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction()==KeyEvent.ACTION_DOWN) {
+            switch (event.getKeyCode()) {
+                case KeyEvent.KEYCODE_BACK:
+                    // ダイアログ表示など特定の処理を行いたい場合はここに記述
+                    // 親クラスのdispatchKeyEvent()を呼び出さずにtrueを返す
+                    return true;
+            }
+        }
+        return super.dispatchKeyEvent(event);
     }
 }

@@ -12,16 +12,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-/**
- * Created by kkarimu on 2018/06/12.
- */
-
-public class a9_forgotpassword extends AppCompatActivity implements View.OnClickListener, OnCompleteListener {
+public class A9_ForgotPassword extends AppCompatActivity implements View.OnClickListener, OnCompleteListener {
     FirebaseAuth mAuth;
     String inputed_email;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -39,18 +35,15 @@ public class a9_forgotpassword extends AppCompatActivity implements View.OnClick
 
         btnSendmail.setOnClickListener(this);
         btnBack.setOnClickListener(this);
+    }
 
-    }
-    private void resetPassword(){
-        mAuth.sendPasswordResetEmail(inputed_email)
-                .addOnCompleteListener(this);
-    }
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.sendmailForget) {
-            resetPassword();
-        }else if(i == R.id.backForget){
+        if (i == R.id.sendmailForget) { // パスワードリセット
+            mAuth.sendPasswordResetEmail(inputed_email).addOnCompleteListener(this);
+        }
+        else if(i == R.id.backForget){
             startActivity(new Intent(this,MainActivity.class));
             finish();
         }
@@ -60,13 +53,13 @@ public class a9_forgotpassword extends AppCompatActivity implements View.OnClick
     public void onComplete(@NonNull Task task) {
             if (task.isSuccessful()) {
                 startActivity(new Intent(this,MainActivity.class));
-                Toast.makeText(a9_forgotpassword.this, "メールを送信しました",
+                Toast.makeText(A9_ForgotPassword.this, "メールを送信しました",
                         Toast.LENGTH_SHORT).show();
                 finish();
             } else {
                 // If sign in fails, display a message to the user.
                 //Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                Toast.makeText(a9_forgotpassword.this, "メールの送信に失敗しました",
+                Toast.makeText(A9_ForgotPassword.this, "メールの送信に失敗しました",
                         Toast.LENGTH_SHORT).show();
                 //updateUI(null);
             }

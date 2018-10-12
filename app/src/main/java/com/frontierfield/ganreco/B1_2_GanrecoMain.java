@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -138,21 +139,18 @@ public class B1_2_GanrecoMain extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         Log.d("GanrecoMain_Lifecycle", "Activity::onDestroy");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
         Log.d("GanrecoMain_Lifecycle", "Activity::onPause");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         Log.d("GanrecoMain_Lifecycle", "Activity::onResume");
         cache = this.getSharedPreferences("GanReco",this.MODE_PRIVATE);
         ViewGroup.LayoutParams gotoMypageParam = gotoMypage.getLayoutParams();
@@ -165,14 +163,26 @@ public class B1_2_GanrecoMain extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onStart() {
         super.onStart();
-
         Log.d("GanrecoMain_Lifecycle", "Activity::onStart");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
         Log.d("GanrecoMain_Lifecycle", "Activity::onStop");
+    }
+
+    //「戻る」ボタン無効化
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction()==KeyEvent.ACTION_DOWN) {
+            switch (event.getKeyCode()) {
+                case KeyEvent.KEYCODE_BACK:
+                    // ダイアログ表示など特定の処理を行いたい場合はここに記述
+                    // 親クラスのdispatchKeyEvent()を呼び出さずにtrueを返す
+                    return true;
+            }
+        }
+        return super.dispatchKeyEvent(event);
     }
 }

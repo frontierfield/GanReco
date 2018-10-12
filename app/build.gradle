@@ -5,15 +5,15 @@ android {
         config {
             keyAlias 'key24'
             keyPassword 'frontierfield'
-            storeFile file('C:/Users/kato/AndroidStudioProjects/GanReco/GanReco-Release-key24.jks')
-            //storeFile file('C:/Users/kfujieda/AndroidStudioProjects/GanReco/GanReco-Release-key24.jks')
+            //storeFile file('C:/Users/kato/AndroidStudioProjects/GanReco/GanReco-Release-key24.jks')
+            storeFile file('C:/Users/kfujieda/AndroidStudioProjects/GanReco/GanReco-Release-key24.jks')
             storePassword 'frontierfield'
         }
     }
 
     compileSdkVersion 26
 
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.frontierfield.ganreco"
         minSdkVersion 21

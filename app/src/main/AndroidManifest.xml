@@ -27,10 +27,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".A1_A2_A3_WalkThrough" />
-        <activity android:name=".a4_registry_user" />
-        <activity android:name=".a5_registry_precomp" />
-        <activity android:name=".a7_registry_comp" />
-        <activity android:name=".a9_forgotpassword" />
+        <activity android:name=".A4_RegistryUser" />
+        <activity android:name=".A5_RegistryPrecomplete" />
+        <activity android:name=".A7_RegistryComplete" />
+        <activity android:name=".A9_ForgotPassword" />
         <activity android:name=".B0_CancerTypeSelect" />
         <activity android:name=".B1_2_GanrecoMain" />
         <activity android:name=".b3_input"></activity>

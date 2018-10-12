@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.List;
+
 public class C3_UserInfo extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, EditText.OnFocusChangeListener {
     ImageView backBtnHeader;
     TextView helpBtn;
@@ -43,7 +45,18 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
         try {
             userProfile = UserProfile.getInstance();
             globalUtil = new Global_Util();
+
             cancerTypeList = CancerTypeList.getInstance();
+            if(cancerTypeList == null){
+                CsvReader parser = new CsvReader();
+                parser.reader(getApplicationContext());
+                List<CancerType> list = parser.objects;
+                cancerTypeList.setList(list);
+            }
+            String strCancerTypeList[] = new String[cancerTypeList.getList().size()];
+            for (int i = 0; i < cancerTypeList.getList().size(); i++) {
+                strCancerTypeList[i] = cancerTypeList.getList().get(i).getStrCancerName();
+            }
 
             backBtnHeader = findViewById(R.id.backE10N1);
             helpBtn = findViewById(R.id.helpE10N1);
@@ -61,11 +74,6 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
             cancerType = findViewById(R.id.cancerTypeE10N);
             btnCancel = findViewById(R.id.cancelE10_N1);
             btnSave = findViewById(R.id.saveE10_N1);
-
-            String strCancerTypeList[] = new String[cancerTypeList.getList().size()];
-            for (int i = 0; i < cancerTypeList.getList().size(); i++) {
-                strCancerTypeList[i] = cancerTypeList.getList().get(i).getStrCancerName();
-            }
 
             ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this, R.layout.support_simple_spinner_dropdown_item, globalUtil.aYear);
             ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this, R.layout.support_simple_spinner_dropdown_item, globalUtil.aMonth);

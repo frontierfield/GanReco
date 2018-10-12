@@ -3,10 +3,12 @@ package com.frontierfield.ganreco;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,8 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseUser firebaseUser;
     private EditText email;
     private EditText password;
-    private int verification = -1;
     private SharedPreferences cache;
+    protected int verification = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -122,11 +124,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.signUP) { // 新規ユーザー登録 A4
-            startActivity(new Intent(this,a4_registry_user.class));
+            startActivity(new Intent(this,A4_RegistryUser.class));
             finish();
         }
         else if(i == R.id.forgotPass){  // パスワード失念時 A9
-            startActivity(new Intent(this,a9_forgotpassword.class));
+            startActivity(new Intent(this,A9_ForgotPassword.class));
             finish();
         }
         else if(i == R.id.buttonLogin){
@@ -143,7 +145,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onComplete(@NonNull Task task) {
         firebaseUser = firebaseAuth.getCurrentUser();
         firebaseUser.reload();
-        boolean b = firebaseUser.isEmailVerified();
 
         if (!firebaseUser.isEmailVerified()) {
             Toast.makeText(MainActivity.this, "ユーザー登録を行ってください", Toast.LENGTH_SHORT).show();
@@ -155,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(cache.getInt("verification",-1)!=2) {
                 verification = cache.getInt("verification", -1);
                 SharedPreferences.Editor editor = cache.edit();
+
                 //パスワードの暗号化一応しとく
                 SecretKeySpec keySpec=new SecretKeySpec("abcdefg098765432".getBytes(),"AES");
                 try {
@@ -202,37 +204,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-
         Log.d("MainActivity_Lifecycle", "Activity::onDestroy");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
         Log.d("MainActivity_Lifecycle", "Activity::onPause");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         Log.d("MainActivity_Lifecycle", "Activity::onResume");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
         Log.d("MainActivity_Lifecycle", "Activity::onStart");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
         Log.d("MainActivity_Lifecycle", "Activity::onStop");
+    }
+
+    //「戻る」ボタン無効化
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction()==KeyEvent.ACTION_DOWN) {
+            switch (event.getKeyCode()) {
+                case KeyEvent.KEYCODE_BACK:
+                    // ダイアログ表示など特定の処理を行いたい場合はここに記述
+                    // 親クラスのdispatchKeyEvent()を呼び出さずにtrueを返す
+                    return true;
+            }
+        }
+        return super.dispatchKeyEvent(event);
     }
 }
