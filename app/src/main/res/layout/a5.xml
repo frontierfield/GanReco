@@ -38,17 +38,33 @@
         android:textSize="12sp"
         android:singleLine="true"
         android:layout_marginTop="20dp" />
+
     <TextView
-        android:gravity="center"
-        android:height="72dp"
-        android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:lineSpacingMultiplier="1.50"
-        android:text="メールをご確認のうえ、認証リンクを押して本登録を完了してください。"
-        android:width="264dp"
-        android:textColor="#FFFFFFFF"
-        android:textSize="12sp"
-        android:singleLine="false"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp" />
+        android:width="264dp"
+        android:height="72dp"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.50"
+        android:singleLine="false"
+        android:text="メールをご確認のうえ、認証リンクをクリックして　　　　　「次へ」ボタンを押してください。"
+        android:textColor="#FFFFFFFF"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/buttonNext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="37dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="37.0dp"
+        android:background="@drawable/button_round_white"
+        android:clickable="true"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="次へ"
+        android:textColor="#0CBBB6"
+        android:textSize="20dp" />
 </LinearLayout>

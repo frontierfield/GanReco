@@ -19,7 +19,7 @@ public class A3_WalkThroughFragment extends Fragment {
         view.findViewById(R.id.skipA3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), a4_registry_user.class));
+                startActivity(new Intent(getContext(), A4_RegistryUser.class));
             }
         });
 
