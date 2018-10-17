@@ -5,8 +5,8 @@ android {
         config {
             keyAlias 'key24'
             keyPassword 'frontierfield'
-            //storeFile file('C:/Users/kato/AndroidStudioProjects/GanReco/GanReco-Release-key24.jks')
-            storeFile file('C:/Users/kfujieda/AndroidStudioProjects/GanReco/GanReco-Release-key24.jks')
+            storeFile file('C:/Users/kato/AndroidStudioProjects/GanReco/GanReco-Release-key24.jks')
+            //storeFile file('C:/Users/kfujieda/AndroidStudioProjects/GanReco/GanReco-Release-key24.jks')
             storePassword 'frontierfield'
         }
     }

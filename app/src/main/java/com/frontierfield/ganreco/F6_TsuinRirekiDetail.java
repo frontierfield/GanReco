@@ -6,16 +6,24 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 public class F6_TsuinRirekiDetail extends Fragment implements  View.OnClickListener {
     ImageView imageViewShinryo;
@@ -69,10 +77,14 @@ public class F6_TsuinRirekiDetail extends Fragment implements  View.OnClickListe
             hospitalName.setText(tsuinRireki.getHospital());
             date.setText(year.toString() + "/" +
                     month.toString() + "/" + day.toString());
-            detail.setText(tsuinRireki.detail);//ここにOCRの結果を突っ込む
+
+            JsonLoadTask jsonLoadTask=new JsonLoadTask(detail);
+            jsonLoadTask.execute("https://firebasestorage.googleapis.com/v0/b/ganreco-ea9fc.appspot.com/o/GeABbXGNuubgO2j7J8HCUACnGN92%2Fchozai%252Frrrrr.json?alt=media&token=0af9fad9-9206-4ab0-a65a-9a9f2c047bce");//jsonのダウンロードURIを渡す
+
             bitmap = globalUtil.getPreResizedBitmap(Uri.parse(tsuinRireki.getFilePath()), getContext());
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
         imageViewShinryo.setImageBitmap(bitmap);
     }
