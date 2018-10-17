@@ -32,6 +32,7 @@ import java.util.stream.Stream;
 //firebaseとの連携
 public class TsuinRirekiFirebaseStorage {
     public static void saveTsuinRirekiFirebaseStorage(Bitmap bitmap,String fileName){
+        //初回で向きなりサイズなりを調整して上げたいからbitmapから上げる
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         StorageReference storageReference = firebaseStorage.getReference();
         FirebaseUser mAuthUser=FirebaseAuth.getInstance().getCurrentUser();
@@ -54,6 +55,17 @@ public class TsuinRirekiFirebaseStorage {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                     // ...
+                    for(int i=0;i<TsuinRirekiList.getInstance().size();i++){
+                        if(TsuinRirekiList.getInstance().get(i).getFileName()==fileName){
+                            //pathを変更する処理
+                            break;
+                        }
+
+                    }
+                    //ローカルの画像を削除する処理
+
+                    //OCRに画像上がったよって教える処理
+
                 }
             });
         }catch(Exception e){

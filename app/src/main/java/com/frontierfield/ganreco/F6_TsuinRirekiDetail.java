@@ -78,7 +78,7 @@ public class F6_TsuinRirekiDetail extends Fragment implements  View.OnClickListe
             date.setText(year.toString() + "/" +
                     month.toString() + "/" + day.toString());
 
-            JsonLoadTask jsonLoadTask=new JsonLoadTask(detail);
+            JsonLoadTask jsonLoadTask=new JsonLoadTask(detail,position);
             jsonLoadTask.execute("https://firebasestorage.googleapis.com/v0/b/ganreco-ea9fc.appspot.com/o/GeABbXGNuubgO2j7J8HCUACnGN92%2Fchozai%252Frrrrr.json?alt=media&token=0af9fad9-9206-4ab0-a65a-9a9f2c047bce");//jsonのダウンロードURIを渡す
 
             bitmap = globalUtil.getPreResizedBitmap(Uri.parse(tsuinRireki.getFilePath()), getContext());
