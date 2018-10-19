@@ -2,6 +2,7 @@ package com.frontierfield.ganreco;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -40,9 +41,16 @@ public class F5_G5_H7_EnlargeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.f5_fragment, container, false);
+        String uriString=getArguments().getString("cameraUri",null);
+
         Bitmap bitmap=null;
         try {
-            bitmap=F6_G6_H8_Detail.bitmap;
+            if(uriString!=null){
+                Uri uri=Uri.parse(uriString);
+                bitmap=Global_Util.getPreResizedBitmap(uri,getContext());
+            }else {
+                bitmap = F6_G6_H8_Detail.bitmap;
+            }
             ((ImageView) view.findViewById(R.id.imageViewSinryoF5)).setImageBitmap(bitmap);
         } catch (Exception e) {
             e.printStackTrace();

@@ -74,7 +74,7 @@ public class H6_Input extends AppCompatActivity implements View.OnClickListener 
 
     private void LoadKensaData() {
         Intent intent = getIntent();
-        position = intent.getIntExtra("KensaRirekiID",-1);
+        position = intent.getIntExtra("position",-1);
         filePath=intent.getStringExtra("filePath");
         fileName=intent.getStringExtra("fileName");
 
@@ -105,14 +105,12 @@ public class H6_Input extends AppCompatActivity implements View.OnClickListener 
             hospital.setText(kensaRireki.hospital);
             kensa.setText(kensaRireki.detail);
             if(kensaRireki.getFilePath() != null){
-                // capture画像のファイルパス
-                cameraUri =Uri.parse(kensaRireki.getFilePath());
                 try {
-                    bitmap=globalUtil.getPreResizedBitmap(cameraUri,this);
-                } catch (IOException e) {
+                    bitmap = F6_G6_H8_Detail.bitmap;
+                    ImageViewKensa.setImageBitmap(bitmap);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-                ImageViewKensa.setImageBitmap(bitmap);
             }
         }
     }
@@ -148,7 +146,7 @@ public class H6_Input extends AppCompatActivity implements View.OnClickListener 
         }
         else if(i == R.id.imageViewKensaH6){
             Intent intent=new Intent(this,F5_G5_H7_Enlarge.class);
-            intent.putExtra("cameraUri",cameraUri.toString());
+            if(cameraUri!=null) {intent.putExtra("cameraUri",cameraUri.toString());}
             startActivity(intent);
         }
     }

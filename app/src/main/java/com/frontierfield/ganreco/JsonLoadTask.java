@@ -30,12 +30,14 @@ import java.util.concurrent.ExecutionException;
 
 
 public class JsonLoadTask extends AsyncTask<String,String,String> {
+    private int tab;
     private int position;
     private TextView textView;
-    public JsonLoadTask(TextView textView,int position){
+    public JsonLoadTask(TextView textView,int position,int tab){
         super();
         this.textView=textView;
         this.position=position;
+        this.tab=tab;
     }
     @Override
     protected void onPreExecute(){
@@ -78,7 +80,22 @@ public class JsonLoadTask extends AsyncTask<String,String,String> {
     }
     @Override
     protected void onPostExecute(String result){
-        textView.setText(result);
-        TsuinRirekiList.getSavedTsuinRireki(position).setDetail(result);
+        try {
+            textView.setText(result);
+            switch (tab) {
+                case 1:
+                    TsuinRirekiList.getSavedTsuinRireki(position).setDetail(result);
+                    break;
+                case 2:
+                    OkusuriRirekiList.getSavedOkusuriRireki(position).setDetail(result);
+                    break;
+                case 3:
+                    KensaRirekiList.getSavedKensaRireki(position).setDetail(result);
+                    break;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

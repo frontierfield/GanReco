@@ -81,7 +81,7 @@ public class F6_G6_H8_Detail extends Fragment implements  View.OnClickListener {
             date.setText(year.toString() + "/" +
                     month.toString() + "/" + day.toString());
 
-            JsonLoadTask jsonLoadTask = new JsonLoadTask(detail, position);
+            JsonLoadTask jsonLoadTask = new JsonLoadTask(detail, position,1);
             jsonLoadTask.execute("https://firebasestorage.googleapis.com/v0/b/ganreco-ea9fc.appspot.com" +
                     "/o/GeABbXGNuubgO2j7J8HCUACnGN92%2Fchozai%252Frrrrr.json?" +
                     "alt=media&token=0af9fad9-9206-4ab0-a65a-9a9f2c047bce");//jsonのダウンロードURIを渡す
@@ -109,7 +109,7 @@ public class F6_G6_H8_Detail extends Fragment implements  View.OnClickListener {
             date.setText(year.toString() + "/" +
                     month.toString() + "/" + day.toString());
 
-            JsonLoadTask jsonLoadTask = new JsonLoadTask(detail, position);
+            JsonLoadTask jsonLoadTask = new JsonLoadTask(detail, position,2);
             jsonLoadTask.execute("https://firebasestorage.googleapis.com/v0/b/ganreco-ea9fc.appspot.com" +
                     "/o/GeABbXGNuubgO2j7J8HCUACnGN92%2Fchozai%252Frrrrr.json?" +
                     "alt=media&token=0af9fad9-9206-4ab0-a65a-9a9f2c047bce");//jsonのダウンロードURIを渡す
@@ -137,7 +137,7 @@ public class F6_G6_H8_Detail extends Fragment implements  View.OnClickListener {
             date.setText(year.toString() + "/" +
                     month.toString() + "/" + day.toString());
 
-            JsonLoadTask jsonLoadTask = new JsonLoadTask(detail, position);
+            JsonLoadTask jsonLoadTask = new JsonLoadTask(detail, position,3);
             jsonLoadTask.execute("https://firebasestorage.googleapis.com/v0/b/ganreco-ea9fc.appspot.com" +
                     "/o/GeABbXGNuubgO2j7J8HCUACnGN92%2Fchozai%252Frrrrr.json?" +
                     "alt=media&token=0af9fad9-9206-4ab0-a65a-9a9f2c047bce");//jsonのダウンロードURIを渡す
@@ -197,15 +197,15 @@ public class F6_G6_H8_Detail extends Fragment implements  View.OnClickListener {
     private void EraseData() {
         switch (tab){
             case 1:
-                TsuinRirekiList.deleteTsuinRireki(tab);
+                TsuinRirekiList.deleteTsuinRireki(position);
                 TsuinRirekiFirebaseStorage.deleteTsuinRirekiFirebaseStorage(tsuinRireki.getFileName());
                 break;
             case 2:
-                OkusuriRirekiList.deleteOkusuriRireki(tab);
+                OkusuriRirekiList.deleteOkusuriRireki(position);
                 OkusuriRirekiFirebaseStorage.deleteOkusuriRirekiFirebaseStorage(okusuriRireki.getFileName());
                 break;
             case 3:
-                KensaRirekiList.deleteKensaRireki(tab);
+                KensaRirekiList.deleteKensaRireki(position);
                 KensaRirekiFirebaseStorage.deleteKensaRirekiFirebaseStorage(kensaRireki.getFileName());
                 break;
         }
