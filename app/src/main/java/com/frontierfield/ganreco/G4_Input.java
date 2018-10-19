@@ -1,6 +1,8 @@
 package com.frontierfield.ganreco;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,10 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.Calendar;
 
 public class G4_Input extends AppCompatActivity implements View.OnClickListener {
-    ImageView backBtnHeader , ImageViewSinryo;
+    ImageView backBtnHeader , ImageViewShinryo;
     TextView helpBtn;
     Spinner year, month, day;
     TextView btnCancel;
@@ -27,6 +30,12 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
 
     OkusuriRireki okusuriRireki;
     int position=-1;
+
+    String filePath;
+    String fileName;
+    private Uri cameraUri;
+    Bitmap bitmap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +55,7 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
         btnAdd = findViewById(R.id.addG4);
         drugstore = findViewById(R.id.editTextYakkyokuNameG4);
         okusuri = findViewById(R.id.editTextSyohouG4);
-        ImageViewSinryo = findViewById(R.id.imageViewSinryoG4);
+        ImageViewShinryo = findViewById(R.id.imageViewSinryoG4);
 
         ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aYotei);
         ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aMonth);
@@ -60,7 +69,7 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
         btnCancel.setOnClickListener(this);
         btnAdd.setOnClickListener(this);
         eraseBtn.setOnClickListener(this);
-        ImageViewSinryo.setOnClickListener(this);
+        ImageViewShinryo.setOnClickListener(this);
 
         LoadOkusuriData();
     }
@@ -69,6 +78,8 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
          /*upからyotei load*/
         Intent intent = getIntent();
         position = intent.getIntExtra("OkusuriRirekiID",-1);
+        filePath=intent.getStringExtra("filePath");
+        fileName=intent.getStringExtra("fileName");
 
         if(position == -1){//新規追加
             year.setSelection(0);
@@ -79,6 +90,16 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
                     year.setSelection(i);
                 }
             }
+            if(filePath != null){
+                // capture画像のファイルパス
+                cameraUri =Uri.parse(filePath);
+                try {
+                    bitmap=globalUtil.getPreResizedBitmap(cameraUri,this);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ImageViewShinryo.setImageBitmap(bitmap);
+            }
         }else{//通院予定変更したいとき//もともと入ってたデータ表示させる
             okusuriRireki=OkusuriRirekiList.getSavedOkusuriRireki(position);
             year.setSelection(okusuriRireki.y_index);
@@ -86,6 +107,16 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
             day.setSelection(okusuriRireki.d_index);
             drugstore.setText(okusuriRireki.drugstore);
             okusuri.setText(okusuriRireki.detail);
+            if(okusuriRireki.getFilePath() != null){
+                // capture画像のファイルパス
+                cameraUri =Uri.parse(okusuriRireki.getFilePath());
+                try {
+                    bitmap=globalUtil.getPreResizedBitmap(cameraUri,this);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ImageViewShinryo.setImageBitmap(bitmap);
+            }
         }
     }
 
@@ -94,21 +125,34 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
         int i = v.getId();
         if(i == R.id.backG4){
             //goto efgh
+            Intent intent = new Intent(this, e_f_g_h_mainmenu.class);
+            intent.putExtra("tab",2);
+            startActivity(intent);
             finish();
         }
         else if(i == R.id.cancelG4){
             //goto efgh
+            Intent intent = new Intent(this, e_f_g_h_mainmenu.class);
+            intent.putExtra("tab",2);
+            startActivity(intent);
             finish();
         }
         else if(i == R.id.addG4){
             RegistryData();
-            // OCR API実行
+            Intent intent = new Intent(this, e_f_g_h_mainmenu.class);
+            intent.putExtra("tab",2);
+            startActivity(intent);
         }
         else if(i == R.id.eraseDataG4){
             EraseData();
+            Intent intent = new Intent(this, e_f_g_h_mainmenu.class);
+            intent.putExtra("tab",2);
+            startActivity(intent);
         }
         else if(i == R.id.imageViewSinryoG4){
-            //focus
+            Intent intent=new Intent(this,F5_G5_H7_Enlarge.class);
+            intent.putExtra("cameraUri",cameraUri.toString());
+            startActivity(intent);
         }
     }
 
@@ -118,6 +162,10 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
             okusuriRireki = new OkusuriRireki(null,false,drugstore.getText().toString(),
                     okusuri.getText().toString(), year.getSelectedItemPosition(), month.getSelectedItemPosition(),
                     day.getSelectedItemPosition());
+            okusuriRireki.setFilePath(filePath);
+            okusuriRireki.setLocalPath(filePath);
+            okusuriRireki.setFileName(fileName);
+            OkusuriRirekiFirebaseStorage.saveOkusuriRirekiFirebaseStorage(bitmap,fileName,this);
         }else{//すでにあるデータ変更
             okusuriRireki.detail = okusuri.getText().toString();
             okusuriRireki.drugstore = drugstore.getText().toString();
@@ -135,7 +183,7 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
             finish();
         }else {
             OkusuriRirekiList.deleteOkusuriRireki(position);
-            //年月日で最後の一つなら、タグも消す
+            
             finish();
         }
     }

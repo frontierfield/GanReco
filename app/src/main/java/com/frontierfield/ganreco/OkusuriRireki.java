@@ -13,10 +13,10 @@ public class OkusuriRireki {
     String drugstore;//
     String s_detail;
     String detail;
-
-    String uripath;
-    String storagepath;
-    String thum_path;
+    String filePath;
+    String localPath;
+    String storagePath;
+    String fileName;
 
     public OkusuriRireki(){
     }
@@ -118,5 +118,24 @@ public class OkusuriRireki {
     public void setDetail(String detail){
         this.detail=detail;
     }
+
+    public String getSDetail(){
+        return s_detail;
+    }
+    public void setSDetail(String sDetail){
+        this.s_detail=sDetail;
+    }
+
+    public String getFilePath(){return filePath;}
+    public void setFilePath(String filePath){this.filePath=filePath;}
+
+    public String getLocalPath(){return localPath;}
+    public void setLocalPath(String localPath){this.localPath=localPath;}
+
+    public String getStoragePath(){return storagePath;}
+    public void setStoragePath(String storagePath){this.storagePath=storagePath;}
+
+    public String getFileName(){return fileName;}
+    public void setFileName(String fileName){this.fileName=fileName;}
 
 }

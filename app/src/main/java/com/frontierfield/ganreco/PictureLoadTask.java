@@ -4,49 +4,38 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class PictureLoadTask extends AsyncTask<String,String,Bitmap> {
-    private int position;
+public class PictureLoadTask extends AsyncTask<String,Integer,Bitmap> {
     private ImageView imageView;
-
-    public PictureLoadTask(ImageView imageView,int position){
+    private ProgressBar progressBar;
+    public PictureLoadTask(ImageView imageView, ProgressBar progressBar){
         super();
         this.imageView=imageView;
-        this.position=position;
+        this.progressBar=progressBar;
     }
 
     @Override
     protected void onPreExecute(){
-        //ダウンロード中に表示するもの
-        //imageView.setImageDrawable();
-        //ダイアログ表示なり、読み込み中表示の方法については後で検討
+        //プログレスバー表示
+        progressBar.setVisibility(ProgressBar.VISIBLE);
+        imageView.setVisibility(ImageView.INVISIBLE);
     }
     @Override
     protected Bitmap doInBackground(String... _uri) {
         return downloadImage(_uri[0]);
     }
-
     @Override
     protected void onPostExecute(Bitmap result){
         imageView.setImageBitmap(result);
-        F6_TsuinRirekiDetail.bitmap=result;
+        F6_G6_H8_Detail.bitmap=result;
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
+        imageView.setVisibility(ImageView.VISIBLE);
     }
     private Bitmap downloadImage(String address) {
         Bitmap bmp = null;

@@ -12,11 +12,10 @@ public class KensaRireki {
     int y_index, m_index, d_index;
     String hospital;
     String detail;
-
-    String uripath;
-    String storagepath;
-    String thum_path;
-    private static List<KensaRireki> kensaRirekiList = new ArrayList<KensaRireki>();
+    String filePath;
+    String localPath;
+    String storagePath;
+    String fileName;
 
     public KensaRireki() {
     }
@@ -29,10 +28,6 @@ public class KensaRireki {
         this.d_index = d_index;
         this.hospital = hospital;
         this.detail = detail;
-    }
-
-    public static List<KensaRireki> getInstance() {
-        return kensaRirekiList;  //singleton
     }
 
     public String getWeek() {
@@ -124,4 +119,16 @@ public class KensaRireki {
     public void setDetail(String detail){
         this.detail=detail;
     }
+
+    public String getFilePath(){return filePath;}
+    public void setFilePath(String filePath){this.filePath=filePath;}
+
+    public String getLocalPath(){return localPath;}
+    public void setLocalPath(String localPath){this.localPath=localPath;}
+
+    public String getStoragePath(){return storagePath;}
+    public void setStoragePath(String storagePath){this.storagePath=storagePath;}
+
+    public String getFileName(){return fileName;}
+    public void setFileName(String fileName){this.fileName=fileName;}
 }

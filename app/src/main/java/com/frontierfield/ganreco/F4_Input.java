@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 
@@ -145,7 +144,7 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             intent.putExtra("tab",1);
             startActivity(intent);
         }else if(i == R.id.imageViewSinryoF6){
-            Intent intent=new Intent(this,F5_Enlarge.class);
+            Intent intent=new Intent(this,F5_G5_H7_Enlarge.class);
             intent.putExtra("cameraUri",cameraUri.toString());
             startActivity(intent);
         }

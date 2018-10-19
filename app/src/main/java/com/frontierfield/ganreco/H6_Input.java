@@ -1,6 +1,8 @@
 package com.frontierfield.ganreco;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.Calendar;
 
 public class H6_Input extends AppCompatActivity implements View.OnClickListener {
@@ -27,6 +30,11 @@ public class H6_Input extends AppCompatActivity implements View.OnClickListener 
 
     KensaRireki kensaRireki;
     int position=-1;
+
+    String filePath;
+    String fileName;
+    private Uri cameraUri;
+    Bitmap bitmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +75,8 @@ public class H6_Input extends AppCompatActivity implements View.OnClickListener 
     private void LoadKensaData() {
         Intent intent = getIntent();
         position = intent.getIntExtra("KensaRirekiID",-1);
+        filePath=intent.getStringExtra("filePath");
+        fileName=intent.getStringExtra("fileName");
 
         if(position == -1){//新規追加
             year.setSelection(0);
@@ -77,6 +87,16 @@ public class H6_Input extends AppCompatActivity implements View.OnClickListener 
                     year.setSelection(i);
                 }
             }
+            if(filePath != null){
+                // capture画像のファイルパス
+                cameraUri =Uri.parse(filePath);
+                try {
+                    bitmap=globalUtil.getPreResizedBitmap(cameraUri,this);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ImageViewKensa.setImageBitmap(bitmap);
+            }
         }else{//通院予定変更したいとき//もともと入ってたデータ表示させる
             kensaRireki=KensaRirekiList.getSavedKensaRireki(position);
             year.setSelection(kensaRireki.y_index);
@@ -84,6 +104,16 @@ public class H6_Input extends AppCompatActivity implements View.OnClickListener 
             day.setSelection(kensaRireki.d_index);
             hospital.setText(kensaRireki.hospital);
             kensa.setText(kensaRireki.detail);
+            if(kensaRireki.getFilePath() != null){
+                // capture画像のファイルパス
+                cameraUri =Uri.parse(kensaRireki.getFilePath());
+                try {
+                    bitmap=globalUtil.getPreResizedBitmap(cameraUri,this);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ImageViewKensa.setImageBitmap(bitmap);
+            }
         }
     }
 
@@ -92,16 +122,34 @@ public class H6_Input extends AppCompatActivity implements View.OnClickListener 
         int i = v.getId();
         if(i == R.id.backH6){
             //goto efgh
+            Intent intent = new Intent(this, e_f_g_h_mainmenu.class);
+            intent.putExtra("tab",3);
+            startActivity(intent);
             finish();
-        }else if(i == R.id.cancelH6){
+        }
+        else if(i == R.id.cancelH6){
             //goto efgh
+            Intent intent = new Intent(this, e_f_g_h_mainmenu.class);
+            intent.putExtra("tab",3);
+            startActivity(intent);
             finish();
-        }else if(i == R.id.addH6){
+        }
+        else if(i == R.id.addH6){
             RegistryData();
-        }else if(i == R.id.eraseDataH6){
+            Intent intent = new Intent(this, e_f_g_h_mainmenu.class);
+            intent.putExtra("tab",3);
+            startActivity(intent);
+        }
+        else if(i == R.id.eraseDataH6){
             EraseData();
-        }else if(i == R.id.imageViewKensaH6){
-            //focus
+            Intent intent = new Intent(this, e_f_g_h_mainmenu.class);
+            intent.putExtra("tab",3);
+            startActivity(intent);
+        }
+        else if(i == R.id.imageViewKensaH6){
+            Intent intent=new Intent(this,F5_G5_H7_Enlarge.class);
+            intent.putExtra("cameraUri",cameraUri.toString());
+            startActivity(intent);
         }
     }
 
@@ -111,6 +159,10 @@ public class H6_Input extends AppCompatActivity implements View.OnClickListener 
             kensaRireki = new KensaRireki(null,false,hospital.getText().toString(),
                     kensa.getText().toString(), year.getSelectedItemPosition(), month.getSelectedItemPosition(),
                     day.getSelectedItemPosition());
+            kensaRireki.setFilePath(filePath);
+            kensaRireki.setLocalPath(filePath);
+            kensaRireki.setFileName(fileName);
+            KensaRirekiFirebaseStorage.saveKensaRirekiFirebaseStorage(bitmap,fileName,this);
         }else{//すでにあるデータ変更
             kensaRireki.detail = kensa.getText().toString();
             kensaRireki.hospital = hospital.getText().toString();
@@ -128,7 +180,6 @@ public class H6_Input extends AppCompatActivity implements View.OnClickListener 
             finish();
         }else {
             KensaRirekiList.deleteKensaRireki(position);
-            //年月日で最後の一つなら、タグも消す
             finish();
         }
     }

@@ -46,7 +46,7 @@
         <activity android:name=".F4_Input"></activity>
         <activity android:name=".G4_Input"></activity>
         <activity android:name=".H6_Input"></activity>
-        <activity android:name=".F5_Enlarge"></activity>
+        <activity android:name=".F5_G5_H7_Enlarge"></activity>
     </application>
 
 </manifest>

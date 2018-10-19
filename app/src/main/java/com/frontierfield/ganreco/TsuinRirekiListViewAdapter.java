@@ -2,22 +2,18 @@ package com.frontierfield.ganreco;
 
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
-import java.io.File;
 import java.util.List;
+
+import static com.frontierfield.ganreco.F6_G6_H8_Detail.bitmap;
 
 //通院履歴リスト表示用アダプター
 class TsuinRirekiListViewAdapter extends BaseAdapter {
@@ -66,14 +62,15 @@ class TsuinRirekiListViewAdapter extends BaseAdapter {
             } else {
                 convertView = layoutInflater.inflate(R.layout.listelement_f_h, parent, false);
                 ((TextView) convertView.findViewById(R.id.shisetsuNameF_H)).setText(tsuinRireki.get(position).hospital);
-                StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-                FirebaseUser mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
-                StorageReference imagesRef = storageReference.child(mAuthUser.getUid()).child(String.format("TsuinRireki/rireki_%s.jpg", tsuinRireki.get(position).getFileName()));
-                //ImageView imageView = convertView.findViewById(R.id.photoImageF_H);
-                //Glide.with(context).using(new FirebaseImageLoader()).load(imagesRef).into(imageView);
-                Bitmap bitmap=globalUtil.getPreResizedBitmap(Uri.parse(tsuinRireki.get(position).getFilePath()),context);
-                ((ImageView) convertView.findViewById(R.id.photoImageF_H)).setImageBitmap(bitmap);
-                //サムネをどこからどう持ってくるか、確認
+                ImageView imageView = convertView.findViewById(R.id.photoImageF_H);
+                ProgressBar progressBar=convertView.findViewById(R.id.progressBarF_H);
+                if (tsuinRireki.get(position).getStoragePath() != null) {
+                    PictureLoadTask pictureLoadTask = new PictureLoadTask(imageView,progressBar);
+                    pictureLoadTask.execute(tsuinRireki.get(position).getStoragePath());
+                } else {
+                    bitmap = globalUtil.getPreResizedBitmap(Uri.parse(tsuinRireki.get(position).getFilePath()), context);
+                    imageView.setImageBitmap(bitmap);
+                }
             }
         }catch (Exception e){
             e.printStackTrace();

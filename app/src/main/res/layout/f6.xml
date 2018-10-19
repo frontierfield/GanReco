@@ -13,18 +13,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@+id/imageViewSinryoF6"
+            android:layout_alignParentStart="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="75dp"
+            android:visibility="invisible" />
+
         <ImageView
             android:id="@+id/imageViewSinryoF6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="75dp"
             android:layout_marginTop="17dp"
             android:layout_marginRight="75dp"
             android:adjustViewBounds="true"
             android:clickable="true"
-            app:srcCompat="@android:drawable/screen_background_dark_transparent" />
+            app:srcCompat="@android:color/transparent" />
 
         <LinearLayout
             android:id="@+id/linearLayout"

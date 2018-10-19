@@ -2,7 +2,6 @@ package com.frontierfield.ganreco;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -12,9 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import java.io.IOException;
-
-public class F5_EnlargeFragment extends Fragment {
+public class F5_G5_H7_EnlargeFragment extends Fragment {
     LinearLayout backF5;
     //***フラグメントからアクティビティへのイベント
     public interface backListener {
@@ -45,7 +42,7 @@ public class F5_EnlargeFragment extends Fragment {
         View view = inflater.inflate(R.layout.f5_fragment, container, false);
         Bitmap bitmap=null;
         try {
-            bitmap=F6_TsuinRirekiDetail.bitmap;
+            bitmap=F6_G6_H8_Detail.bitmap;
             ((ImageView) view.findViewById(R.id.imageViewSinryoF5)).setImageBitmap(bitmap);
         } catch (Exception e) {
             e.printStackTrace();

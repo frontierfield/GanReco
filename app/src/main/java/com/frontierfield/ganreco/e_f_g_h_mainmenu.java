@@ -72,10 +72,11 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
         Intent intent = getIntent();
         int tab=intent.getIntExtra("tab",0);
         detailKey = intent.getIntExtra("detailKey",0);
-        int tsuinRirekiID=intent.getIntExtra("TsuinRirekiID",-1);
+        int position=intent.getIntExtra("position",-1);
         Bundle bundle=new Bundle();
         bundle.putInt("detailKey",detailKey);
-        bundle.putInt("TsuinRirekiID",tsuinRirekiID);
+        bundle.putInt("position",position);
+        bundle.putInt("tab",tab);
         E_F_G_H_ListFragmentAdapter efghListFragmentAdapter = new E_F_G_H_ListFragmentAdapter(getSupportFragmentManager(),bundle);
         viewPager.setAdapter(efghListFragmentAdapter);
         viewPager.addOnPageChangeListener(this);
@@ -256,12 +257,14 @@ public class e_f_g_h_mainmenu extends AppCompatActivity implements View.OnClickL
                         break;
                     case 2:
                         nextIntent = new Intent(this,G4_Input.class);
-                        nextIntent.putExtra("filePath",filePath);
+                        nextIntent.putExtra("filePath",cameraUri.toString());
+                        nextIntent.putExtra("fileName",fileName);
                         startActivity(nextIntent);
                         break;
                     case 3:
                         nextIntent = new Intent(this,H6_Input.class);
-                        nextIntent.putExtra("filePath",filePath);
+                        nextIntent.putExtra("filePath",cameraUri.toString());
+                        nextIntent.putExtra("fileName",fileName);
                         startActivity(nextIntent);
                         break;
                        // filePath = "kensa" + filePath;//腫瘍マーカーとその他で分けるかも

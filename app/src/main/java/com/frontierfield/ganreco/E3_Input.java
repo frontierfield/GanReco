@@ -82,7 +82,7 @@ public class E3_Input extends AppCompatActivity implements AdapterView.OnItemSel
 //e_mainでタップされたとき用
     private void LoadTsuinYoteiData() {
         Intent intent = getIntent();
-        position = intent.getIntExtra("TsuinYoteiID",-1);
+        position = intent.getIntExtra("positionID",-1);
 
         if(position == -1){//新規追加
             year.setSelection(0);

@@ -46,13 +46,15 @@ public class E_F_G_H_ContentFragment extends Fragment {
             case 2://お薬履歴
                 //***保存されてるお薬履歴取得
                 OkusuriRirekiListViewAdapter okusuriRirekiListViewAdapter = OkusuriRirekiListViewAdapter.getInstance();
-                okusuriRirekiListViewAdapter.layoutInflater=getLayoutInflater();//.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                okusuriRirekiListViewAdapter.layoutInflater=getLayoutInflater();
+                okusuriRirekiListViewAdapter.context=getContext();
                 listView.setAdapter(okusuriRirekiListViewAdapter);
                 break;
             case 3:
                 //***保存されてる検査履歴取得
                 KensaRirekiListViewAdapter kensaRirekiListViewAdapter = KensaRirekiListViewAdapter.getInstance();
-                kensaRirekiListViewAdapter.layoutInflater=getLayoutInflater();//.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                kensaRirekiListViewAdapter.layoutInflater=getLayoutInflater();
+                kensaRirekiListViewAdapter.context=getContext();
                 listView.setAdapter(kensaRirekiListViewAdapter);
                 break;
         }
@@ -65,7 +67,7 @@ public class E_F_G_H_ContentFragment extends Fragment {
                     case 0:
                         if (TsuinYoteiList.getInstance().get(position).t == false) {
                             Intent intent = new Intent(view.getContext(), E3_Input.class);
-                            intent.putExtra("TsuinYoteiID", position);
+                            intent.putExtra("positionID", position);
                             startActivity(intent);
                         }
                         break;
@@ -73,22 +75,26 @@ public class E_F_G_H_ContentFragment extends Fragment {
                         if (TsuinRirekiList.getInstance().get(position).t == false) {
                             Intent intent = new Intent(view.getContext(), e_f_g_h_mainmenu.class);
                             intent.putExtra("tab",tab);
-                            intent.putExtra("detailKey",tab);
-                            intent.putExtra("TsuinRirekiID", position);
+                            intent.putExtra("detailKey",-1);
+                            intent.putExtra("position", position);
                             startActivity(intent);
                         }
                         break;
                     case 2:
                         if (OkusuriRirekiList.getInstance().get(position).t == false) {
-                            Intent intent = new Intent(view.getContext(), G4_Input.class);
-                            intent.putExtra("OkusuriRirekiID", position);
+                            Intent intent = new Intent(view.getContext(), e_f_g_h_mainmenu.class);
+                            intent.putExtra("tab",tab);
+                            intent.putExtra("detailKey",-1);
+                            intent.putExtra("position", position);
                             startActivity(intent);
                         }
                         break;
                     case 3:
                         if (KensaRirekiList.getInstance().get(position).t == false) {
-                            Intent intent = new Intent(view.getContext(), H6_Input.class);
-                            intent.putExtra("KensaRirekiID", position);
+                            Intent intent = new Intent(view.getContext(), e_f_g_h_mainmenu.class);
+                            intent.putExtra("tab",tab);
+                            intent.putExtra("detailKey",-1);
+                            intent.putExtra("position", position);
                             startActivity(intent);
                         }
                         break;
