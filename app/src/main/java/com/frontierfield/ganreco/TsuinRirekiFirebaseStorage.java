@@ -5,10 +5,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
@@ -31,7 +35,7 @@ import java.util.stream.Stream;
 
 //firebaseとの連携
 public class TsuinRirekiFirebaseStorage {
-    public static void saveTsuinRirekiFirebaseStorage(Bitmap bitmap,String fileName){
+    public static void saveTsuinRirekiFirebaseStorage(Bitmap bitmap,String fileName,Context context){
         //初回で向きなりサイズなりを調整して上げたいからbitmapから上げる
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         StorageReference storageReference = firebaseStorage.getReference();
@@ -45,96 +49,34 @@ public class TsuinRirekiFirebaseStorage {
             byte[] data = baos.toByteArray();
 
             UploadTask uploadTask = imagesRef.putBytes(data);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
+            Task<Uri> uriTask=uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                    // ...
-                    for(int i=0;i<TsuinRirekiList.getInstance().size();i++){
-                        if(TsuinRirekiList.getInstance().get(i).getFileName()==fileName){
-                            //pathを変更する処理
-                            break;
-                        }
-
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if(!task.isSuccessful()){
+                        throw task.getException();
                     }
-                    //ローカルの画像を削除する処理
-
-                    //OCRに画像上がったよって教える処理
-
+                    return imagesRef.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if(task.isSuccessful()){
+                        for(int i=0;i<TsuinRirekiList.getInstance().size();i++){
+                            if(TsuinRirekiList.getInstance().get(i).getFileName()==fileName){
+                                //pathを変更する処理
+                                TsuinRirekiList.getInstance().get(i).setFilePath(task.getResult().toString());
+                                TsuinRirekiList.getInstance().get(i).setStoragePath(task.getResult().toString());
+                                //ローカルの画像削除
+                                context.getContentResolver().delete(Uri.parse(TsuinRirekiList.getInstance().get(i).getLocalPath()),null,null);
+                                break;
+                            }
+                        }
+                        //OCRたたく
+                    }
                 }
             });
         }catch(Exception e){
             e.printStackTrace();
         }
-
-    }
-    public static void saveTsuinRirekiFirebaseStorage(Uri uri,Context context,String fileName) throws IOException {
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        StorageReference storageReference = firebaseStorage.getReference();
-        FirebaseUser mAuthUser=FirebaseAuth.getInstance().getCurrentUser();
-        InputStream inputStream=null;
-        try {
-            inputStream=context.getContentResolver().openInputStream(uri);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        //サムネ入力
-        StorageReference thumRef= storageReference.child(mAuthUser.getUid()).child(String.format("TsuinRirekiThum/rireki_%s.jpg",fileName));
-
-        //Bitmap bitmap = BitmapFactory.decodeStream(new BufferedInputStream(inputStream));
-        Bitmap bitmap = Global_Util.getPreResizedBitmap(uri,context);
-        Bitmap thumbitmap = Bitmap.createScaledBitmap(bitmap,75,75,false);//正方形にリサイズ
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        thumbitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data = baos.toByteArray();
-
-        UploadTask uploadTask = thumRef.putBytes(data);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-            }
-        });
-        //普通サイズのデータ入力
-        StorageReference imagesRef = storageReference.child(mAuthUser.getUid()).child(String.format("TsuinRireki/rireki_%s.jpg",fileName));//ここのchild内を書き換えて
-
-
-        UploadTask uploadTask2 = imagesRef.putStream(inputStream);
-        uploadTask2.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                //storageにアップされた時点で、参照を変えたい
-                TsuinRirekiList.getInstance();
-                imagesRef.getDownloadUrl();
-            }
-        });
-    }
-
-    public static void getTsuinRirekiThum(String fileName){
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        StorageReference storageReference = firebaseStorage.getReference();
-        FirebaseUser mAuthUser=FirebaseAuth.getInstance().getCurrentUser();
-        StorageReference thumRef= storageReference.child(mAuthUser.getUid()).child(String.format("TsuinRirekiThum/rireki_%s.jpg",fileName));
-        thumRef.getStream().addOnSuccessListener(new OnSuccessListener<StreamDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(StreamDownloadTask.TaskSnapshot taskSnapshot) {
-            }
-        });
     }
 }

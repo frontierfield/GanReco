@@ -160,7 +160,7 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             tsuinRireki.setFilePath(filePath);
             tsuinRireki.setLocalPath(filePath);
             tsuinRireki.setFileName(fileName);
-            TsuinRirekiFirebaseStorage.saveTsuinRirekiFirebaseStorage(bitmap,fileName);
+            TsuinRirekiFirebaseStorage.saveTsuinRirekiFirebaseStorage(bitmap,fileName,this);
 
         }else{//すでにあるデータ変更
             tsuinRireki.detail = shinsatsu.getText().toString();
