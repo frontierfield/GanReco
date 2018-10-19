@@ -18,6 +18,12 @@ public class OkusuriRireki {
     String storagePath;
     String fileName;
 
+    String date;
+    String name;
+    String address;
+    String pharmacy;
+    String tel;
+
     public OkusuriRireki(){
     }
     public OkusuriRireki(String ID,Boolean t,String drugstore,String detail,int y_index,int m_index,int d_index) {
@@ -138,4 +144,18 @@ public class OkusuriRireki {
     public String getFileName(){return fileName;}
     public void setFileName(String fileName){this.fileName=fileName;}
 
+    public String getDate(){return date;}
+    public void setDate(String date){this.date=date;}
+
+    public String getName(){return name;}
+    public void setName(String name){this.name=name;}
+
+    public String getAddress(){return address;}
+    public void setAddress(String address){this.address=address;}
+
+    public String getPharmacy(){return pharmacy;}
+    public void setPharmacy(String pharmacy){this.pharmacy=pharmacy;}
+
+    public String getTel(){return tel;}
+    public void setTel(String tel){this.tel=tel;}
 }

@@ -75,7 +75,7 @@ public class E_F_G_H_ContentFragment extends Fragment {
                         if (TsuinRirekiList.getInstance().get(position).t == false) {
                             Intent intent = new Intent(view.getContext(), e_f_g_h_mainmenu.class);
                             intent.putExtra("tab",tab);
-                            intent.putExtra("detailKey",-1);
+                            intent.putExtra("detailKey",tab);
                             intent.putExtra("position", position);
                             startActivity(intent);
                         }
@@ -84,7 +84,7 @@ public class E_F_G_H_ContentFragment extends Fragment {
                         if (OkusuriRirekiList.getInstance().get(position).t == false) {
                             Intent intent = new Intent(view.getContext(), e_f_g_h_mainmenu.class);
                             intent.putExtra("tab",tab);
-                            intent.putExtra("detailKey",-1);
+                            intent.putExtra("detailKey",tab);
                             intent.putExtra("position", position);
                             startActivity(intent);
                         }
@@ -93,7 +93,7 @@ public class E_F_G_H_ContentFragment extends Fragment {
                         if (KensaRirekiList.getInstance().get(position).t == false) {
                             Intent intent = new Intent(view.getContext(), e_f_g_h_mainmenu.class);
                             intent.putExtra("tab",tab);
-                            intent.putExtra("detailKey",-1);
+                            intent.putExtra("detailKey",tab);
                             intent.putExtra("position", position);
                             startActivity(intent);
                         }

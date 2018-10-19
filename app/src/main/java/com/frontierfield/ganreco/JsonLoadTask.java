@@ -4,14 +4,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -57,14 +49,29 @@ public class JsonLoadTask extends AsyncTask<String,String,String> {
                 httpResponse.getEntity().writeTo(outputStream);
                 outputStream.close();
                 JSONArray jsonArray = new JSONArray(outputStream.toString());
-                for(int i=0;i<jsonArray.length()-1;i++){
-                    JSONObject jsonObject= (JSONObject) jsonArray.get(i);
-                    stringBuilder.append(jsonObject.get("matchword"));
-                    stringBuilder.append("  ");
-                    stringBuilder.append(jsonObject.get("relationWord"));
-                    stringBuilder.append("\n");
+                switch(tab){
+                    case 2:
+                        for(int i=0;i<jsonArray.length()-1;i++){
+                            JSONObject jsonObject= (JSONObject) jsonArray.get(i);
+                            stringBuilder.append(jsonObject.get("medicine"));
+                            stringBuilder.append("  ");
+                            stringBuilder.append(jsonObject.get("unit"));
+                            stringBuilder.append("\n");
+                        }
+                        JSONArray insideJsonArray=(JSONArray) jsonArray.get(jsonArray.length()-1);
+                        JSONObject jsonObject=(JSONObject) insideJsonArray.get(0);
+                        OkusuriRirekiList.getInstance().get(position).setDate((String) jsonObject.get("date"));
+                        jsonObject=(JSONObject) insideJsonArray.get(2);
+                        OkusuriRirekiList.getInstance().get(position).setName((String) jsonObject.get("name"));
+                        jsonObject=(JSONObject) insideJsonArray.get(4);
+                        OkusuriRirekiList.getInstance().get(position).setAddress((String) jsonObject.get("address"));
+                        jsonObject=(JSONObject) insideJsonArray.get(5);
+                        OkusuriRirekiList.getInstance().get(position).setPharmacy((String) jsonObject.get("pharmacy"));
+                        jsonObject=(JSONObject) insideJsonArray.get(6);
+                        OkusuriRirekiList.getInstance().get(position).setTel((String) jsonObject.get("tel"));
+                        return new String(stringBuilder);
                 }
-                return new String(stringBuilder);
+                return("未実装");
             } else {
                 httpResponse.getEntity().getContent().close();
                 throw new IOException();

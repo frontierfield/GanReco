@@ -110,9 +110,9 @@ public class F6_G6_H8_Detail extends Fragment implements  View.OnClickListener {
                     month.toString() + "/" + day.toString());
 
             JsonLoadTask jsonLoadTask = new JsonLoadTask(detail, position,2);
-            jsonLoadTask.execute("https://firebasestorage.googleapis.com/v0/b/ganreco-ea9fc.appspot.com" +
-                    "/o/GeABbXGNuubgO2j7J8HCUACnGN92%2Fchozai%252Frrrrr.json?" +
-                    "alt=media&token=0af9fad9-9206-4ab0-a65a-9a9f2c047bce");//jsonのダウンロードURIを渡す
+            jsonLoadTask.execute("https://firebasestorage.googleapis.com/v0/b/ganreco-ea9fc.appspot.com/o/" +
+                    "json_result_chozai_Chouzai20181019%5B1%5D.json" +
+                    "?alt=media&token=e4187194-f11a-4a1b-94df-e4630b717f0f");//jsonのダウンロードURIを渡す
 
             if (okusuriRireki.getStoragePath() != null) {
                 PictureLoadTask pictureLoadTask = new PictureLoadTask(imageViewShinryo,progressBar);

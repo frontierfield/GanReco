@@ -29,7 +29,7 @@ class E_F_G_H_ListFragmentAdapter extends FragmentPagerAdapter {
         detail=fragmentBundle.getInt("detailKey",0);
         //position=fragmentBundle.getInt("positionID",-1);
 
-        if(detail!=0){//詳細表示
+        if(detail!=0&&detail==tab){//詳細表示
             F6_G6_H8_Detail f6TsuinRirekiDetail=new F6_G6_H8_Detail();
             f6TsuinRirekiDetail.setArguments(this.fragmentBundle);
             return f6TsuinRirekiDetail;
