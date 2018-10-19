@@ -14,13 +14,7 @@ public class F5_Enlarge extends AppCompatActivity implements  F5_EnlargeFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.f5);
 
-        Intent intent = getIntent();
-        String uriString=intent.getStringExtra("cameraUri");
-
-        Bundle bundle=new Bundle();
-        bundle.putString("cameraUri",uriString);
         F5_EnlargeFragment f5EnlargeFragment=new F5_EnlargeFragment();
-        f5EnlargeFragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.container,f5EnlargeFragment);
         fragmentTransaction.commit();

@@ -43,16 +43,13 @@ public class F5_EnlargeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.f5_fragment, container, false);
-
-        String uriString=getArguments().getString("cameraUri",null);
-        Uri uri=Uri.parse(uriString);
-        Bitmap bitmap= null;
+        Bitmap bitmap=null;
         try {
-            bitmap = Global_Util.getPreResizedBitmap(uri,getContext());
-        } catch (IOException e) {
+            bitmap=F6_TsuinRirekiDetail.bitmap;
+            ((ImageView) view.findViewById(R.id.imageViewSinryoF5)).setImageBitmap(bitmap);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        ((ImageView) view.findViewById(R.id.imageViewSinryoF5)).setImageBitmap(bitmap);
         return view;
     }
     @Override

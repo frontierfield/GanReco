@@ -35,13 +35,13 @@ import java.util.stream.Stream;
 
 //firebaseとの連携
 public class TsuinRirekiFirebaseStorage {
-    public static void saveTsuinRirekiFirebaseStorage(Bitmap bitmap,String fileName,Context context){
+    public static void saveTsuinRirekiFirebaseStorage(Bitmap bitmap, String fileName, Context context) {
         //初回で向きなりサイズなりを調整して上げたいからbitmapから上げる
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         StorageReference storageReference = firebaseStorage.getReference();
-        FirebaseUser mAuthUser=FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        StorageReference imagesRef = storageReference.child(mAuthUser.getUid()).child(String.format("TsuinRireki/rireki_%s.jpg",fileName));
+        StorageReference imagesRef = storageReference.child(mAuthUser.getUid()).child(String.format("TsuinRireki/rireki_%s.jpg", fileName));
 
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -49,10 +49,10 @@ public class TsuinRirekiFirebaseStorage {
             byte[] data = baos.toByteArray();
 
             UploadTask uploadTask = imagesRef.putBytes(data);
-            Task<Uri> uriTask=uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if(!task.isSuccessful()){
+                    if (!task.isSuccessful()) {
                         throw task.getException();
                     }
                     return imagesRef.getDownloadUrl();
@@ -60,14 +60,15 @@ public class TsuinRirekiFirebaseStorage {
             }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
-                    if(task.isSuccessful()){
-                        for(int i=0;i<TsuinRirekiList.getInstance().size();i++){
-                            if(TsuinRirekiList.getInstance().get(i).getFileName()==fileName){
+                    if (task.isSuccessful()) {
+                        for (int i = 0; i < TsuinRirekiList.getInstance().size(); i++) {
+                            if (TsuinRirekiList.getInstance().get(i).getFileName() == fileName) {
                                 //pathを変更する処理
                                 TsuinRirekiList.getInstance().get(i).setFilePath(task.getResult().toString());
                                 TsuinRirekiList.getInstance().get(i).setStoragePath(task.getResult().toString());
+                                TsuinRirekiRDB.saveTsuinRirekiRDB();
                                 //ローカルの画像削除
-                                context.getContentResolver().delete(Uri.parse(TsuinRirekiList.getInstance().get(i).getLocalPath()),null,null);
+                                context.getContentResolver().delete(Uri.parse(TsuinRirekiList.getInstance().get(i).getLocalPath()), null, null);
                                 break;
                             }
                         }
@@ -75,7 +76,19 @@ public class TsuinRirekiFirebaseStorage {
                     }
                 }
             });
-        }catch(Exception e){
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteTsuinRirekiFirebaseStorage(String fileName) {
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        StorageReference storageReference = firebaseStorage.getReference();
+        FirebaseUser mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
+        StorageReference imagesRef = storageReference.child(mAuthUser.getUid()).child(String.format("TsuinRireki/rireki_%s.jpg", fileName));
+        try {
+            imagesRef.delete();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

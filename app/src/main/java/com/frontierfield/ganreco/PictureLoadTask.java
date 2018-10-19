@@ -26,10 +26,10 @@ public class PictureLoadTask extends AsyncTask<String,String,Bitmap> {
     private int position;
     private ImageView imageView;
 
-    public PictureLoadTask(int position,ImageView imageView){
+    public PictureLoadTask(ImageView imageView,int position){
         super();
-        this.position=position;
         this.imageView=imageView;
+        this.position=position;
     }
 
     @Override
@@ -46,6 +46,7 @@ public class PictureLoadTask extends AsyncTask<String,String,Bitmap> {
     @Override
     protected void onPostExecute(Bitmap result){
         imageView.setImageBitmap(result);
+        F6_TsuinRirekiDetail.bitmap=result;
     }
     private Bitmap downloadImage(String address) {
         Bitmap bmp = null;

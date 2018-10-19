@@ -35,7 +35,7 @@ public class F6_TsuinRirekiDetail extends Fragment implements  View.OnClickListe
     int position = -1;
     TsuinRireki tsuinRireki;
     Global_Util globalUtil;
-    Bitmap bitmap;
+    static Bitmap bitmap;
 
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class F6_TsuinRirekiDetail extends Fragment implements  View.OnClickListe
                     "alt=media&token=0af9fad9-9206-4ab0-a65a-9a9f2c047bce");//jsonのダウンロードURIを渡す
 
             if (tsuinRireki.getStoragePath() != null) {
-                PictureLoadTask pictureLoadTask = new PictureLoadTask(position, imageViewShinryo);
+                PictureLoadTask pictureLoadTask = new PictureLoadTask(imageViewShinryo,position);
                 pictureLoadTask.execute(tsuinRireki.getStoragePath());
             } else {
                 bitmap = globalUtil.getPreResizedBitmap(Uri.parse(tsuinRireki.getFilePath()), getContext());
@@ -115,13 +115,13 @@ public class F6_TsuinRirekiDetail extends Fragment implements  View.OnClickListe
             startActivity(intent);
         } else if (i == R.id.imageViewSinryoF6) {
             Intent intent = new Intent(getContext(), F5_Enlarge.class);
-            intent.putExtra("cameraUri", tsuinRireki.getFilePath());
             startActivity(intent);
         }
     }
 
     private void EraseData() {
         TsuinRirekiList.deleteTsuinRireki(position);
+        TsuinRirekiFirebaseStorage.deleteTsuinRirekiFirebaseStorage(tsuinRireki.getFileName());
     }
 }
 
