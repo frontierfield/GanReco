@@ -153,7 +153,7 @@ public class H6_Input extends AppCompatActivity implements View.OnClickListener 
             kensaRireki.year = datePicker.getYear();
             kensaRireki.month = datePicker.getMonth();
             kensaRireki.day = datePicker.getDayOfMonth();
-            KensaRirekiList.deleteKensaRireki(position);
+            KensaRirekiList.deleteKensaRireki(position,this);
         }
         KensaRirekiList.addKensaRireki(kensaRireki);
         finish();
@@ -163,7 +163,7 @@ public class H6_Input extends AppCompatActivity implements View.OnClickListener 
             /*新規なら特になにもなし*/
             finish();
         }else {
-            KensaRirekiList.deleteKensaRireki(position);
+            KensaRirekiList.deleteKensaRireki(position,this);
             finish();
         }
     }

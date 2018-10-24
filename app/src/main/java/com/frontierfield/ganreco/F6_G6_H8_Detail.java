@@ -198,15 +198,15 @@ public class F6_G6_H8_Detail extends Fragment implements  View.OnClickListener {
     private void EraseData() {
         switch (tab){
             case 1:
-                TsuinRirekiList.deleteTsuinRireki(position);
+                TsuinRirekiList.deleteTsuinRireki(position,getContext());
                 TsuinRirekiFirebaseStorage.deleteTsuinRirekiFirebaseStorage(tsuinRireki.getFileName());
                 break;
             case 2:
-                OkusuriRirekiList.deleteOkusuriRireki(position);
+                OkusuriRirekiList.deleteOkusuriRireki(position,getContext());
                 OkusuriRirekiFirebaseStorage.deleteOkusuriRirekiFirebaseStorage(okusuriRireki.getFileName());
                 break;
             case 3:
-                KensaRirekiList.deleteKensaRireki(position);
+                KensaRirekiList.deleteKensaRireki(position,getContext());
                 KensaRirekiFirebaseStorage.deleteKensaRirekiFirebaseStorage(kensaRireki.getFileName());
                 break;
         }

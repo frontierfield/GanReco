@@ -1,5 +1,9 @@
 package com.frontierfield.ganreco;
 
+import android.app.Application;
+import android.content.Context;
+import android.net.Uri;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,7 +22,10 @@ public class KensaRirekiList {
         //databaseとの連携処理
         KensaRirekiRDB.saveKensaRirekiRDB();
     }
-    public static void deleteKensaRireki(int position){
+    public static void deleteKensaRireki(int position,Context context){
+        if(KensaRirekiList.get(position).getLocalPath()==KensaRirekiList.get(position).getFilePath()) {
+            context.getContentResolver().delete(Uri.parse(KensaRirekiList.get(position).getLocalPath()), null, null);
+        }
         KensaRirekiList.remove(position);
         DeleteTag();
         //databaseとの連携処理

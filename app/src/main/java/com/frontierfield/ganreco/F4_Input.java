@@ -151,7 +151,7 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             tsuinRireki.year = datePicker.getYear();
             tsuinRireki.month = datePicker.getMonth();
             tsuinRireki.day = datePicker.getDayOfMonth();
-            TsuinRirekiList.deleteTsuinRireki(position);
+            TsuinRirekiList.deleteTsuinRireki(position,this);
         }
         TsuinRirekiList.addTsuinRireki(tsuinRireki);
         finish();
@@ -161,7 +161,7 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             /*新規なら特になにもなし*/
             finish();
         }else {
-            TsuinRirekiList.deleteTsuinRireki(position);
+            TsuinRirekiList.deleteTsuinRireki(position,this);
             finish();
         }
     }

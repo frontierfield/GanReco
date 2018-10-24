@@ -156,7 +156,7 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
             okusuriRireki.year = datePicker.getYear();
             okusuriRireki.month = datePicker.getMonth();
             okusuriRireki.day = datePicker.getDayOfMonth();
-            OkusuriRirekiList.deleteOkusuriRireki(position);
+            OkusuriRirekiList.deleteOkusuriRireki(position,this);
         }
         OkusuriRirekiList.addOkusuriRireki(okusuriRireki);
         finish();
@@ -166,7 +166,7 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
             /*新規なら特になにもなし*/
             finish();
         }else {
-            OkusuriRirekiList.deleteOkusuriRireki(position);
+            OkusuriRirekiList.deleteOkusuriRireki(position,this);
             finish();
         }
     }
