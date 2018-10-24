@@ -61,7 +61,7 @@ class OkusuriRirekiListViewAdapter extends BaseAdapter {
                             month.toString() + "月" + day + "日" + okusuriRireki.get(position).getWeek());
         } else {
             convertView = layoutInflater.inflate(R.layout.listelement_g, parent, false);
-            ((TextView) convertView.findViewById(R.id.shisetsuNameG)).setText(okusuriRireki.get(position).getDrugstore());
+            ((TextView) convertView.findViewById(R.id.shisetsuNameG)).setText(okusuriRireki.get(position).getPharmacy());
             ((TextView) convertView.findViewById(R.id.textViewTouyakuG)).setText(okusuriRireki.get(position).getSDetail());
             ImageView imageView = convertView.findViewById(R.id.photoImageG);
             ProgressBar progressBar = convertView.findViewById(R.id.progressBarG);

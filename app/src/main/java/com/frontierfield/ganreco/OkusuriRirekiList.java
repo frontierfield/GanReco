@@ -30,7 +30,7 @@ public class OkusuriRirekiList {
         return okusuriRireki;
     }
     private static void SetTag(OkusuriRireki okusuriRireki){//list内に年月日が一致するtrueがないときタグ付与
-        OkusuriRireki okusuriRirekiTag=new OkusuriRireki(null,true,okusuriRireki.getDrugstore(),okusuriRireki.getDetail(),
+        OkusuriRireki okusuriRirekiTag=new OkusuriRireki(null,true,okusuriRireki.getPharmacy(),okusuriRireki.getDetail(),
                 okusuriRireki.getYearIndex(), okusuriRireki.getMonthIndex(), okusuriRireki.getDayIndex());
         int i;
         for(i=0;i<OkusuriRirekiList.size();i++) {

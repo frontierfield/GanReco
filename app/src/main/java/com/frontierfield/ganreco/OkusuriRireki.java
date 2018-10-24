@@ -10,7 +10,6 @@ public class OkusuriRireki {
     String ID; /*RDB syohou key*/
     Boolean t; /*true head*/
     int y_index,m_index,d_index;//
-    String drugstore;//
     String s_detail;
     String detail;
     String filePath;
@@ -26,13 +25,13 @@ public class OkusuriRireki {
 
     public OkusuriRireki(){
     }
-    public OkusuriRireki(String ID,Boolean t,String drugstore,String detail,int y_index,int m_index,int d_index) {
+    public OkusuriRireki(String ID,Boolean t,String pharmacy,String detail,int y_index,int m_index,int d_index) {
         this.ID = ID;
         this.t = t;
         this.y_index = y_index;
         this.m_index = m_index;
         this.d_index = d_index;
-        this.drugstore = drugstore;
+        this.pharmacy=pharmacy;
         this.detail = detail;
     }
     public String getWeek() {
@@ -109,13 +108,6 @@ public class OkusuriRireki {
     }
     public void setDayIndex(int dayIndex){
         this.d_index=dayIndex;
-    }
-
-    public String getDrugstore() {
-        return drugstore;
-    }
-    public void setDrugstore(String drugstore){
-        this.drugstore=drugstore;
     }
 
     public String getDetail(){

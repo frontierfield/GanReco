@@ -105,7 +105,7 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
             year.setSelection(okusuriRireki.y_index);
             month.setSelection(okusuriRireki.m_index);
             day.setSelection(okusuriRireki.d_index);
-            drugstore.setText(okusuriRireki.drugstore);
+            drugstore.setText(okusuriRireki.pharmacy);
             okusuri.setText(okusuriRireki.detail);
             if(okusuriRireki.getFilePath() != null){
                 try {
@@ -166,7 +166,7 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
             OkusuriRirekiFirebaseStorage.saveOkusuriRirekiFirebaseStorage(bitmap,fileName,this);
         }else{//すでにあるデータ変更
             okusuriRireki.detail = okusuri.getText().toString();
-            okusuriRireki.drugstore = drugstore.getText().toString();
+            okusuriRireki.pharmacy = drugstore.getText().toString();
             okusuriRireki.y_index = year.getSelectedItemPosition();
             okusuriRireki.m_index = month.getSelectedItemPosition();
             okusuriRireki.d_index = day.getSelectedItemPosition();
