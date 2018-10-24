@@ -47,7 +47,7 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
             globalUtil = new Global_Util();
 
             cancerTypeList = CancerTypeList.getInstance();
-            if(cancerTypeList == null){
+            if(cancerTypeList.getList() == null){
                 CsvReader parser = new CsvReader();
                 parser.reader(getApplicationContext());
                 List<CancerType> list = parser.objects;
@@ -103,7 +103,7 @@ public class C3_UserInfo extends AppCompatActivity implements View.OnClickListen
         }
         catch (Exception e){
             e.printStackTrace();
-        }
+    }
     }
 
     private void LoadUserData() {

@@ -194,6 +194,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             TsuinRirekiRDB.getSavedTsuinRirekiRDB();
             OkusuriRirekiRDB.getSavedOkusuriRirekiRDB();
             KensaRirekiRDB.getSavedKensaRirekiRDB();
+            //この処理が終わるまで待機入れたい
 
             // がんレコ　メイン画面　B1B2
             startActivity(new Intent(this,B1_2_GanrecoMain.class));

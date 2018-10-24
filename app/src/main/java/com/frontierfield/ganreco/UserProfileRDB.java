@@ -25,7 +25,7 @@ public class UserProfileRDB {
     private String address = null;
     private String tel = null;
     private String cancerType = null;
-    private boolean isSaved = false;
+    private boolean Saved = false;
 
     UserProfile userProfile;
 
@@ -44,13 +44,13 @@ public class UserProfileRDB {
         this.address = userProfile.getAddress();
         this.tel = userProfile.getTel();
         this.cancerType = userProfile.getCancerType();
-        this.isSaved = userProfile.isSaved();
+        this.Saved = userProfile.isSaved();
     }
 
     public void user_profile_add(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
-        myRef.child("users").child(this.UID).setValue(this);
+        myRef.child("users").child(this.UID).child("UserProfile").setValue(UserProfile.getInstance());
     }
 
     public void get_user_profile_and_input_static(){
@@ -59,47 +59,54 @@ public class UserProfileRDB {
         FirebaseUser mAuthUser;
         mAuthUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        myRef.child("users").child(mAuthUser.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        try {
+            myRef.child("users").child(mAuthUser.getUid()).child("UserProfile").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String t_y,t_m,t_d,t_s;
-                UserProfile userProfile = UserProfile.getInstance();
-                userProfile.setUID(dataSnapshot.child("UID").getValue(String.class));
-                userProfile.setLastName(dataSnapshot.child("lastName").getValue(String.class));
-                userProfile.setFirstName(dataSnapshot.child("firstName").getValue(String.class));
-                userProfile.setEmail(dataSnapshot.child("email").getValue(String.class));
+                    String t_y, t_m, t_d, t_s;
+                    UserProfile userProfile = UserProfile.getInstance();
+                    userProfile.setUID(dataSnapshot.child("UID").getValue(String.class));
+                    userProfile.setLastName(dataSnapshot.child("lastName").getValue(String.class));
+                    userProfile.setFirstName(dataSnapshot.child("firstName").getValue(String.class));
+                    userProfile.setEmail(dataSnapshot.child("email").getValue(String.class));
 
-                if(dataSnapshot.child("year_Index").getValue(Long.class) != null){
-                    t_y = dataSnapshot.child("year_Index").getValue(Long.class).toString();
-                    userProfile.setYear_Index(Integer.parseInt(t_y));
-                }
-                if(dataSnapshot.child("month_Index").getValue(Long.class) != null){
-                    t_m = dataSnapshot.child("month_Index").getValue(Long.class).toString();
-                    userProfile.setMonth_Index(Integer.parseInt(t_m));
-                }
-                if(dataSnapshot.child("day_Index").getValue(Long.class) != null){
-                    t_d = dataSnapshot.child("day_Index").getValue(Long.class).toString();
-                    userProfile.setDay_Index(Integer.parseInt(t_d));
-                }
-                if(dataSnapshot.child("sex_Index").getValue(Long.class) != null){
-                    t_s = dataSnapshot.child("sex_Index").getValue(Long.class).toString();
-                    userProfile.setSex_Index(Integer.parseInt(t_s));
+                    if (dataSnapshot.child("year_Index").getValue(Long.class) != null) {
+                        t_y = dataSnapshot.child("year_Index").getValue(Long.class).toString();
+                        userProfile.setYear_Index(Integer.parseInt(t_y));
+                    }
+                    if (dataSnapshot.child("month_Index").getValue(Long.class) != null) {
+                        t_m = dataSnapshot.child("month_Index").getValue(Long.class).toString();
+                        userProfile.setMonth_Index(Integer.parseInt(t_m));
+                    }
+                    if (dataSnapshot.child("day_Index").getValue(Long.class) != null) {
+                        t_d = dataSnapshot.child("day_Index").getValue(Long.class).toString();
+                        userProfile.setDay_Index(Integer.parseInt(t_d));
+                    }
+                    if (dataSnapshot.child("sex_Index").getValue(Long.class) != null) {
+                        t_s = dataSnapshot.child("sex_Index").getValue(Long.class).toString();
+                        userProfile.setSex_Index(Integer.parseInt(t_s));
+                    }
+
+                    userProfile.setZipfront(dataSnapshot.child("zipfront").getValue(String.class));
+                    userProfile.setZiprear(dataSnapshot.child("ziprear").getValue(String.class));
+                    userProfile.setAddress(dataSnapshot.child("address").getValue(String.class));
+                    userProfile.setTel(dataSnapshot.child("tel").getValue(String.class));
+                    userProfile.setCancerType(dataSnapshot.child("cancerType").getValue(String.class));
+                    if (dataSnapshot.child("saved").getValue(boolean.class) != null) {
+                        userProfile.setSaved(dataSnapshot.child("saved").getValue(boolean.class));
+                    }
+
                 }
 
-                userProfile.setZipfront(dataSnapshot.child("zipfront").getValue(String.class));
-                userProfile.setZiprear(dataSnapshot.child("ziprear").getValue(String.class));
-                userProfile.setAddress(dataSnapshot.child("address").getValue(String.class));
-                userProfile.setAddress(dataSnapshot.child("tel").getValue(String.class));
-                userProfile.setAddress(dataSnapshot.child("cancerType").getValue(String.class));
-                userProfile.setAddress(dataSnapshot.child("isSaved").getValue(String.class));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Failed to read value
-                Log.w("RDB error", "Failed to read value.");
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Failed to read value
+                    Log.w("RDB error", "Failed to read value.");
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

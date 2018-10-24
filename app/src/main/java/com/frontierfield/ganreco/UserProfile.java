@@ -1,7 +1,9 @@
 package com.frontierfield.ganreco;
 
-import java.util.List;
+import android.support.annotation.Keep;
 
+import java.util.List;
+@Keep
 public class UserProfile {
 
     private static UserProfile userProfile = null;
@@ -19,7 +21,7 @@ public class UserProfile {
     private String cancerType = null;
 
     // 登録ボタン押下状況
-    private boolean isSaved = false;
+    private boolean Saved = false;
 
     private List<TsuinYotei> tsuinYoteiList;
 
@@ -129,12 +131,10 @@ public class UserProfile {
     }
 
     public void setSaved(boolean saved) {
-        isSaved = saved;
+        Saved = saved;
     }
 
-    public boolean isSaved() {
-        return isSaved;
-    }
+    public boolean isSaved(){return Saved;}
 
     public void setCancerType(String cancerType) {
         this.cancerType = cancerType;
