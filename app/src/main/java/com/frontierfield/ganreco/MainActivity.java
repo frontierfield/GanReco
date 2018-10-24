@@ -68,14 +68,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             verification = cache.getInt("verification", -1);
 
             String pass = cache.getString("password", null);
-
+            int logout = cache.getInt("logout", 0);
             if (firstInstall == 0) {
                 // ウォークスルー画面
                 Intent intent = new Intent(MainActivity.this, A1_A2_A3_WalkThrough.class);
                 startActivity(new Intent(intent));
+                SharedPreferences.Editor editor = cache.edit();
+                editor.putInt("firstInstall", 1);
+                editor.commit();
                 finish();
             }
-            else if(inputed_email != null && pass != null){//ログイン状態のデータがあれば
+            else if(inputed_email != null && pass != null && logout==0){//ログイン状態のデータがあれば
                 // パスワード複合化処理
                 SecretKeySpec keySpec = new SecretKeySpec("abcdefg098765432".getBytes(), "AES"); // キーファイル生成 暗号化で使った文字列と同様にする
                 Cipher cipher = null;
@@ -153,9 +156,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         //ログイン成功時
         if (task.isSuccessful()) {
+            SharedPreferences.Editor editor = cache.edit();
             if(cache.getInt("verification",-1)!=2) {
                 verification = cache.getInt("verification", -1);
-                SharedPreferences.Editor editor = cache.edit();
 
                 //パスワードの暗号化一応しとく
                 SecretKeySpec keySpec=new SecretKeySpec("abcdefg098765432".getBytes(),"AES");
@@ -180,14 +183,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 editor.putString("email", email.getText().toString());
                 editor.putInt("firstInstall", 1);
                 editor.putInt("verification", 2);
-                editor.commit();
             }
+            editor.putInt("logout",0);
+            editor.commit();
             //userProfileの初期化
             UserProfileRDB upr = new UserProfileRDB();
             upr.get_user_profile_and_input_static();
             //保存されてるデータもってくる
             TsuinYoteiRDB.getSavedTsuinYoteiRDB();
-            TsuinRirekiRDB.getSavedTsuinRirekiRDB();//releaseで落ちる原因
+            TsuinRirekiRDB.getSavedTsuinRirekiRDB();
             OkusuriRirekiRDB.getSavedOkusuriRirekiRDB();
             KensaRirekiRDB.getSavedKensaRirekiRDB();
 

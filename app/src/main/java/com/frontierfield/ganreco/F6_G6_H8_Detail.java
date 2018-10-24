@@ -19,6 +19,7 @@ public class F6_G6_H8_Detail extends Fragment implements  View.OnClickListener {
     TextView hospitalName, date, detail;
     TextView btnCancel;
     TextView btnEdit;
+    TextView contentF6;
     LinearLayout eraseBtn;
     ProgressBar progressBar;
     int position=-1;
@@ -40,6 +41,7 @@ public class F6_G6_H8_Detail extends Fragment implements  View.OnClickListener {
 
         globalUtil = new Global_Util();
 
+        contentF6=view.findViewById(R.id.ContentF6);
         eraseBtn = view.findViewById(R.id.eraseDataF6);
         btnCancel = view.findViewById(R.id.cancelF6);
         btnEdit = view.findViewById(R.id.editF6);
@@ -59,12 +61,15 @@ public class F6_G6_H8_Detail extends Fragment implements  View.OnClickListener {
         position = bundle.getInt("position", -1);
         switch (tab){
             case 1:
+                contentF6.setText("診療内容");
                 LoadTsuinRirekiData();
                 break;
             case 2:
+                contentF6.setText("処方内容");
                 LoadOkusuriRirekiData();
                 break;
             case 3:
+                contentF6.setText("検査結果");
                 LoadKensaRirekiData();
                 break;
         }

@@ -1,6 +1,7 @@
 package com.frontierfield.ganreco;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -115,6 +116,10 @@ public class c1_2mypage extends AppCompatActivity implements View.OnClickListene
 
         }else if(i == R.id.logoutC1_2){
             FirebaseAuth.getInstance().signOut();
+            SharedPreferences cache = this.getSharedPreferences("GanReco", this.MODE_PRIVATE);
+            SharedPreferences.Editor editor = cache.edit();
+            editor.putInt("logout", 1);
+            editor.commit();
             startActivity(new Intent(this,MainActivity.class));
             finish();
         }else if(i == R.id.toiawaseC1_2){

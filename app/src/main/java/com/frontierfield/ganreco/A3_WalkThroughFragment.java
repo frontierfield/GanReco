@@ -20,6 +20,7 @@ public class A3_WalkThroughFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), A4_RegistryUser.class));
+                getActivity().finish();
             }
         });
 
