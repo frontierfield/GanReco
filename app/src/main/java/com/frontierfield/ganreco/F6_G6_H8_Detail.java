@@ -78,9 +78,9 @@ public class F6_G6_H8_Detail extends Fragment implements  View.OnClickListener {
     private void LoadTsuinRirekiData() {
         try {
             tsuinRireki = TsuinRirekiList.getSavedTsuinRireki(position);
-            Integer year = globalUtil.aYotei.get(tsuinRireki.getYearIndex());
-            Integer month = globalUtil.aMonth[tsuinRireki.getMonthIndex()];
-            Integer day = globalUtil.aDay[tsuinRireki.getDayIndex()];
+            Integer year = globalUtil.aYotei.get(tsuinRireki.getYear());
+            Integer month = globalUtil.aMonth[tsuinRireki.getMonth()];
+            Integer day = globalUtil.aDay[tsuinRireki.getDay()];
 
             hospitalName.setText(tsuinRireki.getHospital());
             date.setText(year.toString() + "/" +
@@ -106,13 +106,9 @@ public class F6_G6_H8_Detail extends Fragment implements  View.OnClickListener {
     private void LoadOkusuriRirekiData() {
         try {
             okusuriRireki = OkusuriRirekiList.getSavedOkusuriRireki(position);
-            Integer year = globalUtil.aYotei.get(okusuriRireki.getYearIndex());
-            Integer month = globalUtil.aMonth[okusuriRireki.getMonthIndex()];
-            Integer day = globalUtil.aDay[okusuriRireki.getDayIndex()];
-
             hospitalName.setText(okusuriRireki.getPharmacy());
-            date.setText(year.toString() + "/" +
-                    month.toString() + "/" + day.toString());
+            date.setText(okusuriRireki.getYear() + "/" +
+                    (okusuriRireki.getMonth()+1) + "/" + okusuriRireki.getDay());
 
             JsonLoadTask jsonLoadTask = new JsonLoadTask(detail,hospitalName,date, position,2);
             jsonLoadTask.execute("https://firebasestorage.googleapis.com/v0/b/ganreco-ea9fc.appspot.com/o/" +
@@ -134,9 +130,9 @@ public class F6_G6_H8_Detail extends Fragment implements  View.OnClickListener {
     private void LoadKensaRirekiData() {
         try {
             kensaRireki = KensaRirekiList.getSavedKensaRireki(position);
-            Integer year = globalUtil.aYotei.get(kensaRireki.getYearIndex());
-            Integer month = globalUtil.aMonth[kensaRireki.getMonthIndex()];
-            Integer day = globalUtil.aDay[kensaRireki.getDayIndex()];
+            Integer year = globalUtil.aYotei.get(kensaRireki.getYear());
+            Integer month = globalUtil.aMonth[kensaRireki.getMonth()];
+            Integer day = globalUtil.aDay[kensaRireki.getDay()];
 
             hospitalName.setText(kensaRireki.getHospital());
             date.setText(year.toString() + "/" +

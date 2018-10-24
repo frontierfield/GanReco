@@ -42,15 +42,12 @@ class TsuinYoteiListViewAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Global_Util gu = new Global_Util();
-        Integer year = gu.aYotei.get(tsuinYotei.get(position).y_index);
-        Integer month = gu.aMonth[tsuinYotei.get(position).m_index];
-        Integer day = gu.aDay[tsuinYotei.get(position).d_index];
 
         if(tsuinYotei.get(position).t == true) {
             convertView = layoutInflater.inflate(R.layout.list_header_efgh, parent, false);
             ((TextView) convertView.findViewById(R.id.textView15Listheader)).setText(
-                    year.toString() + "年" +
-                            month.toString()+"月"+day.toString()+"日"+tsuinYotei.get(position).getWeek());
+                    tsuinYotei.get(position).getYear() + "年" +
+                            (tsuinYotei.get(position).getMonth()+1) + "月" + tsuinYotei.get(position).getDay() + "日" + tsuinYotei.get(position).getWeek());
         }else {
             String start_t = gu.aStartTime[tsuinYotei.get(position).time];
 

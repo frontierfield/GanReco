@@ -80,9 +80,9 @@ class HistoryOpeFuncClass extends android.support.v4.app.Fragment implements Ada
                     userProfile.getTsuinYoteiList().get(INDEX).hospital,
                     userProfile.getTsuinYoteiList().get(INDEX).s_detail,
                     "",
-                    userProfile.getTsuinYoteiList().get(INDEX).y_index,
-                    userProfile.getTsuinYoteiList().get(INDEX).m_index,
-                    userProfile.getTsuinYoteiList().get(INDEX).d_index,
+                    userProfile.getTsuinYoteiList().get(INDEX).year,
+                    userProfile.getTsuinYoteiList().get(INDEX).month,
+                    userProfile.getTsuinYoteiList().get(INDEX).day,
                     userProfile.getTsuinYoteiList().get(INDEX).time
             );
             TsuinYotei firstHeader = new TsuinYotei(
@@ -91,9 +91,9 @@ class HistoryOpeFuncClass extends android.support.v4.app.Fragment implements Ada
                     "",
                     "",
                     "",
-                    tsuinYotei.y_index,
-                    tsuinYotei.m_index,
-                    tsuinYotei.d_index,
+                    tsuinYotei.year,
+                    tsuinYotei.month,
+                    tsuinYotei.day,
                     tsuinYotei.time
             );
             view_tsuin_yoteis.add(firstHeader);
@@ -103,9 +103,9 @@ class HistoryOpeFuncClass extends android.support.v4.app.Fragment implements Ada
                     userProfile.getTsuinYoteiList().get(INDEX).hospital,
                     userProfile.getTsuinYoteiList().get(INDEX).s_detail,
                     "",
-                    userProfile.getTsuinYoteiList().get(INDEX).y_index,
-                    userProfile.getTsuinYoteiList().get(INDEX).m_index,
-                    userProfile.getTsuinYoteiList().get(INDEX).d_index,
+                    userProfile.getTsuinYoteiList().get(INDEX).year,
+                    userProfile.getTsuinYoteiList().get(INDEX).month,
+                    userProfile.getTsuinYoteiList().get(INDEX).day,
                     userProfile.getTsuinYoteiList().get(INDEX).time
             ));
             current_view_ty_size++;
@@ -118,9 +118,9 @@ class HistoryOpeFuncClass extends android.support.v4.app.Fragment implements Ada
                             "",
                             "",
                             "",
-                            userProfile.getTsuinYoteiList().get(i).y_index,
-                            userProfile.getTsuinYoteiList().get(i).m_index,
-                            userProfile.getTsuinYoteiList().get(i).d_index,
+                            userProfile.getTsuinYoteiList().get(i).year,
+                            userProfile.getTsuinYoteiList().get(i).month,
+                            userProfile.getTsuinYoteiList().get(i).day,
                             userProfile.getTsuinYoteiList().get(i).time
                     );
                     view_tsuin_yoteis.add(header);
@@ -132,9 +132,9 @@ class HistoryOpeFuncClass extends android.support.v4.app.Fragment implements Ada
                         userProfile.getTsuinYoteiList().get(i).hospital,
                         userProfile.getTsuinYoteiList().get(i).s_detail,
                         "",
-                        userProfile.getTsuinYoteiList().get(i).y_index,
-                        userProfile.getTsuinYoteiList().get(i).m_index,
-                        userProfile.getTsuinYoteiList().get(i).d_index,
+                        userProfile.getTsuinYoteiList().get(i).year,
+                        userProfile.getTsuinYoteiList().get(i).month,
+                        userProfile.getTsuinYoteiList().get(i).day,
                         userProfile.getTsuinYoteiList().get(i).time
                 ));
 

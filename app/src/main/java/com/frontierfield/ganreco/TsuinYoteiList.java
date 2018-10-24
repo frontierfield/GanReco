@@ -35,12 +35,12 @@ public class TsuinYoteiList {
     }
     private static void SetTag(TsuinYotei ty){//list内に年月日が一致するtrueがないとき
         TsuinYotei tyTag=new TsuinYotei(null,true,ty.getHospital(),ty.getSDetail(),
-                ty.getDetail(), ty.getYearIndex(), ty.getMonthIndex(), ty.getDayIndex(), ty.getTime());
+                ty.getDetail(), ty.getYear(), ty.getMonth(), ty.getDay(), ty.getTime());
         int i;
         for(i=0;i<TsuinYoteiList.size();i++) {
-            if (TsuinYoteiList.get(i).getYearIndex()==ty.getYearIndex()&&
-                    TsuinYoteiList.get(i).getMonthIndex()==ty.getMonthIndex()&&
-                    TsuinYoteiList.get(i).getDayIndex()==ty.getDayIndex()&&
+            if (TsuinYoteiList.get(i).getYear()==ty.getYear()&&
+                    TsuinYoteiList.get(i).getMonth()==ty.getMonth()&&
+                    TsuinYoteiList.get(i).getDay()==ty.getDay()&&
                     TsuinYoteiList.get(i).getHead()){
                 break;
             }

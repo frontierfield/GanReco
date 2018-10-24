@@ -50,15 +50,12 @@ class OkusuriRirekiListViewAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Global_Util globalUtil = new Global_Util();
-        Integer year = globalUtil.aYotei.get(okusuriRireki.get(position).y_index);
-        Integer month = globalUtil.aMonth[okusuriRireki.get(position).m_index];
-        Integer day = globalUtil.aDay[okusuriRireki.get(position).d_index];
     try {
         if (okusuriRireki.get(position).t == true) {
             convertView = layoutInflater.inflate(R.layout.list_header_efgh, parent, false);
             ((TextView) convertView.findViewById(R.id.textView15Listheader)).setText(
-                    year.toString() + "年" +
-                            month.toString() + "月" + day + "日" + okusuriRireki.get(position).getWeek());
+                    okusuriRireki.get(position).getYear() + "年" +
+                            (okusuriRireki.get(position).getMonth()+1) + "月" + okusuriRireki.get(position).getDay() + "日" + okusuriRireki.get(position).getWeek());
         } else {
             convertView = layoutInflater.inflate(R.layout.listelement_g, parent, false);
             ((TextView) convertView.findViewById(R.id.shisetsuNameG)).setText(okusuriRireki.get(position).getPharmacy());

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,11 +22,12 @@ import java.util.Calendar;
 public class E3_Input extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     ImageView backBtnHeader;
     TextView helpBtn;
-    Spinner year, month, day, time;
+    Spinner time;
     TextView btnCancel;
     TextView btnAdd;
     LinearLayout eraseBtn;
     EditText shinsatsu,hospital;
+    DatePicker datePicker;
 
     UserProfile userProfile;
     Global_Util globalUtil;
@@ -44,9 +46,7 @@ public class E3_Input extends AppCompatActivity implements AdapterView.OnItemSel
         globalUtil = new Global_Util();
 
         backBtnHeader = findViewById(R.id.backE3);
-        year = findViewById(R.id.yearE3);
-        month = findViewById(R.id.monthE3);
-        day = findViewById(R.id.dayE3);
+        datePicker=findViewById(R.id.date_pickerE3);
 
         eraseBtn = findViewById(R.id.eraseDataE3);
         btnCancel = findViewById(R.id.cancelE3);
@@ -56,14 +56,8 @@ public class E3_Input extends AppCompatActivity implements AdapterView.OnItemSel
         time = findViewById(R.id.spinnerStartTimeE3);
         helpBtn = findViewById(R.id.helpE3);
 
-        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aYotei);
-        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aMonth);
-        ArrayAdapter<Integer> adapterDay = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aDay);
         ArrayAdapter<String> adapterTime = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aStartTime);
 
-        year.setAdapter(adapterYear);
-        month.setAdapter(adapterMonth);
-        day.setAdapter(adapterDay);
         time.setAdapter(adapterTime);
 
         backBtnHeader.setOnClickListener(this);
@@ -71,10 +65,6 @@ public class E3_Input extends AppCompatActivity implements AdapterView.OnItemSel
         btnAdd.setOnClickListener(this);
         eraseBtn.setOnClickListener(this);
         helpBtn.setOnClickListener(this);
-
-        year.setOnItemSelectedListener(this);
-        month.setOnItemSelectedListener(this);
-        day.setOnItemSelectedListener(this);
 
         LoadTsuinYoteiData();
 
@@ -85,20 +75,15 @@ public class E3_Input extends AppCompatActivity implements AdapterView.OnItemSel
         position = intent.getIntExtra("positionID",-1);
 
         if(position == -1){//新規追加
-            year.setSelection(0);
-            Calendar now = Calendar.getInstance();
-            int nowY = now.get(Calendar.YEAR);
-            for(int i = 0;i < globalUtil.aYotei.size();i++){
-                if(nowY == i){
-                    year.setSelection(i);
-                }
-            }
 
         }else{//通院予定変更したいとき//もともと入ってたデータ表示させる
             tsuinYotei=TsuinYoteiList.getSavedTsuinYotei(position);
-            year.setSelection(tsuinYotei.y_index);
-            month.setSelection(tsuinYotei.m_index);
-            day.setSelection(tsuinYotei.d_index);
+            datePicker.init(tsuinYotei.getYear(), tsuinYotei.getMonth(), tsuinYotei.getDay(), new DatePicker.OnDateChangedListener() {
+                @Override
+                public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
+
+                }
+            });
             time.setSelection(tsuinYotei.time);
             hospital.setText(tsuinYotei.hospital);
             shinsatsu.setText(tsuinYotei.detail);
@@ -136,15 +121,15 @@ public class E3_Input extends AppCompatActivity implements AdapterView.OnItemSel
         if(position == -1) {//新しく追加
             //この時点で保存するデータを、spinnerでの場所の番号にしとくからややこしいことになってる
             tsuinYotei = new TsuinYotei(null,false,hospital.getText().toString(),"",
-                    shinsatsu.getText().toString(), year.getSelectedItemPosition(), month.getSelectedItemPosition(),
-                    day.getSelectedItemPosition(), time.getSelectedItemPosition());
+                    shinsatsu.getText().toString(),datePicker.getYear(), datePicker.getMonth(),
+                    datePicker.getDayOfMonth(), time.getSelectedItemPosition());
             tsuinYotei.unixtime = tsuinYotei.calc_unixtime_sec();
         }else{//すでにあるデータ変更
             tsuinYotei.detail = shinsatsu.getText().toString();
             tsuinYotei.hospital = hospital.getText().toString();
-            tsuinYotei.y_index = year.getSelectedItemPosition();
-            tsuinYotei.m_index = month.getSelectedItemPosition();
-            tsuinYotei.d_index = day.getSelectedItemPosition();
+            tsuinYotei.year = datePicker.getYear();
+            tsuinYotei.month = datePicker.getMonth();
+            tsuinYotei.day = datePicker.getDayOfMonth();
             tsuinYotei.time = time.getSelectedItemPosition();
             tsuinYotei.unixtime = tsuinYotei.calc_unixtime_sec();
             TsuinYoteiList.deleteTsuinYotei(position);

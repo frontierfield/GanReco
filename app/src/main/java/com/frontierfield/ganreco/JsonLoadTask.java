@@ -104,6 +104,8 @@ public class JsonLoadTask extends AsyncTask<String,String,Map<String,String>> {
             detail.setText(result.get("Detail"));
             facility.setText(result.get("Pharmacy"));
             date.setText(result.get("Date"));
+            String date=result.get("Date");
+
             switch (tab) {
                 case 1:
                     TsuinRirekiList.getSavedTsuinRireki(position).setDetail(result.get(0));
@@ -112,6 +114,9 @@ public class JsonLoadTask extends AsyncTask<String,String,Map<String,String>> {
                     OkusuriRirekiList.getSavedOkusuriRireki(position).setDetail(result.get("Detail"));
                     OkusuriRirekiList.getSavedOkusuriRireki(position).setSDetail(result.get("SDetail"));
                     OkusuriRirekiList.getSavedOkusuriRireki(position).setDate(result.get("Date"));
+                    OkusuriRirekiList.getSavedOkusuriRireki(position).setYear(Integer.parseInt(extractYear(date)));
+                    OkusuriRirekiList.getSavedOkusuriRireki(position).setMonth(Integer.parseInt(extractManth(date))-1);
+                    OkusuriRirekiList.getSavedOkusuriRireki(position).setDay(Integer.parseInt(extractDay(date)));
                     OkusuriRirekiList.getSavedOkusuriRireki(position).setName(result.get("Name"));
                     OkusuriRirekiList.getSavedOkusuriRireki(position).setAddress(result.get("Address"));
                     OkusuriRirekiList.getSavedOkusuriRireki(position).setPharmacy(result.get("Pharmacy"));
@@ -126,5 +131,21 @@ public class JsonLoadTask extends AsyncTask<String,String,Map<String,String>> {
             e.printStackTrace();
         }
 
+    }
+    protected String extractYear(String date){
+        int beginindex=date.indexOf("平成")+2;//「平成」の次から
+        int endindex=date.indexOf("年");
+        int year=Integer.parseInt(date.substring(beginindex,endindex))+1988;//平成を西暦に
+        return String.valueOf(year);
+    }
+    protected String extractManth(String date){
+        int beginindex=date.indexOf("年")+1;//「年」の次から
+        int endindex=date.indexOf("月");
+        return date.substring(beginindex,endindex);
+    }
+    protected String extractDay(String date){
+        int beginindex=date.indexOf("月")+1;//「月」の次から
+        int endindex=date.indexOf("日");
+        return date.substring(beginindex,endindex);
     }
 }

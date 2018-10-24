@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,11 +19,11 @@ import java.util.Calendar;
 
 public class F4_Input extends AppCompatActivity implements  View.OnClickListener{
     ImageView backBtnHeader,ImageViewShinryo;
-    Spinner year, month, day;
     TextView btnCancel;
     TextView btnAdd;
     LinearLayout eraseBtn;
     EditText shinsatsu,hospital;
+    DatePicker datePicker;
 
     UserProfile userProfile;
     Global_Util globalUtil;
@@ -45,9 +46,7 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         globalUtil = new Global_Util();
 
         backBtnHeader = findViewById(R.id.backF4);
-        year = findViewById(R.id.yearF4);
-        month = findViewById(R.id.monthF4);
-        day = findViewById(R.id.dayF4);
+        datePicker=findViewById(R.id.date_pickerF4);
 
         eraseBtn = findViewById(R.id.eraseDataF6);
         btnCancel = findViewById(R.id.cancelF4);
@@ -55,14 +54,6 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         hospital = findViewById(R.id.editTextHospNameF4);
         shinsatsu = findViewById(R.id.editTextShinsatsuF4);
         ImageViewShinryo = findViewById(R.id.imageViewSinryoF6);
-
-        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aYotei);
-        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aMonth);
-        ArrayAdapter<Integer> adapterDay = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aDay);
-
-        year.setAdapter(adapterYear);
-        month.setAdapter(adapterMonth);
-        day.setAdapter(adapterDay);
 
         backBtnHeader.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
@@ -80,14 +71,6 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         fileName=intent.getStringExtra("fileName");
 
         if(position == -1){//新規追加
-            year.setSelection(0);
-            Calendar now = Calendar.getInstance();
-            int nowY = now.get(Calendar.YEAR);
-            for(int i = 0;i < globalUtil.aYotei.size();i++){//????
-                if(nowY == i){
-                    year.setSelection(i);
-                }
-            }
             if(filePath != null){
                 // capture画像のファイルパス
                 cameraUri =Uri.parse(filePath);
@@ -100,9 +83,12 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
             }
         }else{//通院予定変更したいとき//もともと入ってたデータ表示させる
             tsuinRireki=TsuinRirekiList.getSavedTsuinRireki(position);
-            year.setSelection(tsuinRireki.getYearIndex());
-            month.setSelection(tsuinRireki.getMonthIndex());
-            day.setSelection(tsuinRireki.getDayIndex());
+            datePicker.init(tsuinRireki.getYear(), tsuinRireki.getMonth(), tsuinRireki.getDay(), new DatePicker.OnDateChangedListener() {
+                @Override
+                public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
+
+                }
+            });
             hospital.setText(tsuinRireki.getHospital());
             shinsatsu.setText(tsuinRireki.getDetail());
             if(tsuinRireki.getFilePath() != null){
@@ -152,8 +138,8 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         if(position == -1) {//新しく追加
             //この時点で保存するデータを、spinnerでの場所の番号にしとくからややこしいことになってる
             tsuinRireki = new TsuinRireki(null,false,hospital.getText().toString(),
-                    shinsatsu.getText().toString(), year.getSelectedItemPosition(), month.getSelectedItemPosition(),
-                    day.getSelectedItemPosition());
+                    shinsatsu.getText().toString(),datePicker.getYear(), datePicker.getMonth(),
+                    datePicker.getDayOfMonth());
             tsuinRireki.setFilePath(filePath);
             tsuinRireki.setLocalPath(filePath);
             tsuinRireki.setFileName(fileName);
@@ -162,9 +148,9 @@ public class F4_Input extends AppCompatActivity implements  View.OnClickListener
         }else{//すでにあるデータ変更
             tsuinRireki.detail = shinsatsu.getText().toString();
             tsuinRireki.hospital = hospital.getText().toString();
-            tsuinRireki.y_index = year.getSelectedItemPosition();
-            tsuinRireki.m_index = month.getSelectedItemPosition();
-            tsuinRireki.d_index = day.getSelectedItemPosition();
+            tsuinRireki.year = datePicker.getYear();
+            tsuinRireki.month = datePicker.getMonth();
+            tsuinRireki.day = datePicker.getDayOfMonth();
             TsuinRirekiList.deleteTsuinRireki(position);
         }
         TsuinRirekiList.addTsuinRireki(tsuinRireki);

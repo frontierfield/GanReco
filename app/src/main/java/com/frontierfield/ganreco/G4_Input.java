@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,11 +20,11 @@ import java.util.Calendar;
 public class G4_Input extends AppCompatActivity implements View.OnClickListener {
     ImageView backBtnHeader , ImageViewShinryo;
     TextView helpBtn;
-    Spinner year, month, day;
     TextView btnCancel;
     TextView btnAdd;
     LinearLayout eraseBtn;
     EditText okusuri,drugstore;
+    DatePicker datePicker;
 
     UserProfile userProfile;
     Global_Util globalUtil;
@@ -46,9 +47,7 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
         globalUtil = new Global_Util();
 
         backBtnHeader = findViewById(R.id.backG4);
-        year = findViewById(R.id.yearG4);
-        month = findViewById(R.id.monthG4);
-        day = findViewById(R.id.dayG4);
+        datePicker=findViewById(R.id.date_pickerG4);
 
         eraseBtn = findViewById(R.id.eraseDataG4);
         btnCancel = findViewById(R.id.cancelG4);
@@ -56,14 +55,6 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
         drugstore = findViewById(R.id.editTextYakkyokuNameG4);
         okusuri = findViewById(R.id.editTextSyohouG4);
         ImageViewShinryo = findViewById(R.id.imageViewSinryoG4);
-
-        ArrayAdapter<Integer> adapterYear = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aYotei);
-        ArrayAdapter<Integer> adapterMonth = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aMonth);
-        ArrayAdapter<Integer> adapterDay = new ArrayAdapter<Integer>(this,R.layout.support_simple_spinner_dropdown_item,globalUtil.aDay);
-
-        year.setAdapter(adapterYear);
-        month.setAdapter(adapterMonth);
-        day.setAdapter(adapterDay);
 
         backBtnHeader.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
@@ -82,14 +73,6 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
         fileName=intent.getStringExtra("fileName");
 
         if(position == -1){//新規追加
-            year.setSelection(0);
-            Calendar now = Calendar.getInstance();
-            int nowY = now.get(Calendar.YEAR);
-            for(int i = 0;i < globalUtil.aYotei.size();i++){//????
-                if(nowY == i){
-                    year.setSelection(i);
-                }
-            }
             if(filePath != null){
                 // capture画像のファイルパス
                 cameraUri =Uri.parse(filePath);
@@ -102,9 +85,12 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
             }
         }else{//通院予定変更したいとき//もともと入ってたデータ表示させる
             okusuriRireki=OkusuriRirekiList.getSavedOkusuriRireki(position);
-            year.setSelection(okusuriRireki.y_index);
-            month.setSelection(okusuriRireki.m_index);
-            day.setSelection(okusuriRireki.d_index);
+            datePicker.init(okusuriRireki.getYear(), okusuriRireki.getMonth(), okusuriRireki.getDay(), new DatePicker.OnDateChangedListener() {
+                @Override
+                public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
+
+                }
+            });
             drugstore.setText(okusuriRireki.pharmacy);
             okusuri.setText(okusuriRireki.detail);
             if(okusuriRireki.getFilePath() != null){
@@ -158,8 +144,8 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
         if(position == -1) {//新しく追加
             //この時点で保存するデータを、spinnerでの場所の番号にしとくからややこしいことになってる
             okusuriRireki = new OkusuriRireki(null,false,drugstore.getText().toString(),
-                    okusuri.getText().toString(), year.getSelectedItemPosition(), month.getSelectedItemPosition(),
-                    day.getSelectedItemPosition());
+                    okusuri.getText().toString(), datePicker.getYear(), datePicker.getMonth(),
+                    datePicker.getDayOfMonth());
             okusuriRireki.setFilePath(filePath);
             okusuriRireki.setLocalPath(filePath);
             okusuriRireki.setFileName(fileName);
@@ -167,9 +153,9 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
         }else{//すでにあるデータ変更
             okusuriRireki.detail = okusuri.getText().toString();
             okusuriRireki.pharmacy = drugstore.getText().toString();
-            okusuriRireki.y_index = year.getSelectedItemPosition();
-            okusuriRireki.m_index = month.getSelectedItemPosition();
-            okusuriRireki.d_index = day.getSelectedItemPosition();
+            okusuriRireki.year = datePicker.getYear();
+            okusuriRireki.month = datePicker.getMonth();
+            okusuriRireki.day = datePicker.getDayOfMonth();
             OkusuriRirekiList.deleteOkusuriRireki(position);
         }
         OkusuriRirekiList.addOkusuriRireki(okusuriRireki);
@@ -181,7 +167,6 @@ public class G4_Input extends AppCompatActivity implements View.OnClickListener 
             finish();
         }else {
             OkusuriRirekiList.deleteOkusuriRireki(position);
-            
             finish();
         }
     }

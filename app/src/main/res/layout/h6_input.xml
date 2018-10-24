@@ -88,38 +88,17 @@
                 android:text="日付"
                 android:textColor="#666666" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
+            <DatePicker
+                android:id="@+id/date_pickerH6"
+                android:layout_width="wrap_content"
+                android:layout_height="140dp"
                 android:layout_below="@+id/HospitalNameF6"
-                android:orientation="horizontal">
-
-                <Spinner
-                    android:id="@+id/yearH6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10sp"
-                    android:layout_marginRight="5sp"
-                    android:layout_weight="1" />
-
-                <Spinner
-                    android:id="@+id/monthH6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5sp"
-                    android:layout_marginRight="5sp"
-                    android:layout_weight="1" />
-
-                <Spinner
-                    android:id="@+id/dayH6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5sp"
-                    android:layout_marginRight="10sp"
-                    android:layout_weight="1" />
-            </LinearLayout>
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="false"
+                android:layout_marginTop="0dp"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                android:orientation="horizontal" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -164,7 +143,7 @@
                 android:id="@+id/textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/linearLayout2"
+                android:layout_below="@+id/date_pickerH6"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="19dp"
                 android:text="検査機関" />

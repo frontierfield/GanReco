@@ -50,15 +50,12 @@ class TsuinRirekiListViewAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Global_Util globalUtil = new Global_Util();
-        Integer year = globalUtil.aYotei.get(tsuinRireki.get(position).getYearIndex());
-        Integer month = globalUtil.aMonth[tsuinRireki.get(position).getMonthIndex()];
-        Integer day = globalUtil.aDay[tsuinRireki.get(position).getDayIndex()];
         try {
             if (tsuinRireki.get(position).t == true) {
                 convertView = layoutInflater.inflate(R.layout.list_header_efgh, parent, false);
                 ((TextView) convertView.findViewById(R.id.textView15Listheader)).setText(
-                        year.toString() + "年" +
-                                month.toString() + "月" + day + "日" + tsuinRireki.get(position).getWeek());
+                        tsuinRireki.get(position).getYear() + "年" +
+                                (tsuinRireki.get(position).getMonth()+1) + "月" + tsuinRireki.get(position).getDay() + "日" + tsuinRireki.get(position).getWeek());
             } else {
                 convertView = layoutInflater.inflate(R.layout.listelement_f_h, parent, false);
                 ((TextView) convertView.findViewById(R.id.shisetsuNameF_H)).setText(tsuinRireki.get(position).hospital);

@@ -51,16 +51,12 @@ class KensaRirekiListViewAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Global_Util globalUtil = new Global_Util();
-        Integer year = globalUtil.aYotei.get(kensaRireki.get(position).y_index);
-        Integer month = globalUtil.aMonth[kensaRireki.get(position).m_index];
-        Integer day = globalUtil.aDay[kensaRireki.get(position).d_index];
-
         try {
             if (kensaRireki.get(position).t == true) {
                 convertView = layoutInflater.inflate(R.layout.list_header_efgh, parent, false);
                 ((TextView) convertView.findViewById(R.id.textView15Listheader)).setText(
-                        year.toString() + "年" +
-                                month.toString() + "月" + day + "日" + kensaRireki.get(position).getWeek());
+                        kensaRireki.get(position).getYear() + "年" +
+                                (kensaRireki.get(position).getMonth()+1) + "月" + kensaRireki.get(position).getDay() + "日" + kensaRireki.get(position).getWeek());
             } else {
                 convertView = layoutInflater.inflate(R.layout.listelement_f_h, parent, false);
                 ((TextView) convertView.findViewById(R.id.shisetsuNameF_H)).setText(kensaRireki.get(position).hospital);

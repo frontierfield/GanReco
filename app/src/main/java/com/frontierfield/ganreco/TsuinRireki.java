@@ -16,7 +16,7 @@ import java.util.List;
 public class TsuinRireki {
     String ID; /*RDB tsuinrireki key*/
     Boolean t; /*true head*/
-    int y_index, m_index, d_index;    //日にち
+    int year, month, day;    //日にち
     String hospital;    //病院名
     String detail;  //診察内容
     String filePath;//実際に参照するPath
@@ -28,22 +28,21 @@ public class TsuinRireki {
     public TsuinRireki() {
     }
 
-    public TsuinRireki(String ID, Boolean t, String hospital, String detail, int y_index, int m_index, int d_index) {
+    public TsuinRireki(String ID, Boolean t, String hospital, String detail, int year, int month, int day) {
         this.ID = ID;
         this.t = t;
-        this.y_index = y_index;
-        this.m_index = m_index;
-        this.d_index = d_index;
+        this.year = year;
+        this.month = month;
+        this.day = day;
         this.hospital = hospital;
         this.detail = detail;
     }
 
     public String getWeek() {
         Calendar cal = Calendar.getInstance();
-        Global_Util gu = new Global_Util();
-        Integer year = gu.aYotei.get(y_index);
-        Integer month = gu.aMonth[m_index] - 1;
-        Integer day = gu.aDay[d_index];
+        Integer year = this.year;
+        Integer month = this.month;
+        Integer day = this.day;
         cal.set(year, month, day);
         String r = "";
         switch (cal.get(Calendar.DAY_OF_WEEK)) {
@@ -93,25 +92,25 @@ public class TsuinRireki {
         this.t=t;
     }
 
-    public int getYearIndex() {
-        return y_index;
+    public int getYear() {
+        return year;
     }
-    public void setYearIndex(int yearIndex){
-        this.y_index=yearIndex;
-    }
-
-    public int getMonthIndex() {
-        return m_index;
-    }
-    public void setMonthIndex(int monthIndex){
-        this.m_index=monthIndex;
+    public void setYear(int year){
+        this.year=year;
     }
 
-    public int getDayIndex() {
-        return d_index;
+    public int getMonth() {
+        return month;
     }
-    public void setDayIndex(int dayIndex){
-        this.d_index=dayIndex;
+    public void setMonth(int month){
+        this.month=month;
+    }
+
+    public int getDay() {
+        return day;
+    }
+    public void setDay(int day){
+        this.day=day;
     }
 
     public String getHospital() {

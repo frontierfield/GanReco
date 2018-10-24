@@ -31,12 +31,12 @@ public class OkusuriRirekiList {
     }
     private static void SetTag(OkusuriRireki okusuriRireki){//list内に年月日が一致するtrueがないときタグ付与
         OkusuriRireki okusuriRirekiTag=new OkusuriRireki(null,true,okusuriRireki.getPharmacy(),okusuriRireki.getDetail(),
-                okusuriRireki.getYearIndex(), okusuriRireki.getMonthIndex(), okusuriRireki.getDayIndex());
+                okusuriRireki.getYear(), okusuriRireki.getMonth(), okusuriRireki.getDay());
         int i;
         for(i=0;i<OkusuriRirekiList.size();i++) {
-            if (OkusuriRirekiList.get(i).getYearIndex()==okusuriRireki.getYearIndex()&&
-                    OkusuriRirekiList.get(i).getMonthIndex()==okusuriRireki.getMonthIndex()&&
-                    OkusuriRirekiList.get(i).getDayIndex()==okusuriRireki.getDayIndex()&&
+            if (OkusuriRirekiList.get(i).getYear()==okusuriRireki.getYear()&&
+                    OkusuriRirekiList.get(i).getMonth()==okusuriRireki.getMonth()&&
+                    OkusuriRirekiList.get(i).getDay()==okusuriRireki.getDay()&&
                     OkusuriRirekiList.get(i).getHead()){
                 break;
             }

@@ -31,12 +31,12 @@ public class KensaRirekiList {
     }
     private static void SetTag(KensaRireki kensaRireki){//list内に年月日が一致するtrueがないときタグ付与
         KensaRireki kensaRirekiTag=new KensaRireki(null,true,kensaRireki.getHospital(),kensaRireki.getDetail(),
-                kensaRireki.getYearIndex(), kensaRireki.getMonthIndex(), kensaRireki.getDayIndex());
+                kensaRireki.getYear(), kensaRireki.getMonth(), kensaRireki.getDay());
         int i;
         for(i=0;i<KensaRirekiList.size();i++) {
-            if (KensaRirekiList.get(i).getYearIndex()==kensaRireki.getYearIndex()&&
-                    KensaRirekiList.get(i).getMonthIndex()==kensaRireki.getMonthIndex()&&
-                    KensaRirekiList.get(i).getDayIndex()==kensaRireki.getDayIndex()&&
+            if (KensaRirekiList.get(i).getYear()==kensaRireki.getYear()&&
+                    KensaRirekiList.get(i).getMonth()==kensaRireki.getMonth()&&
+                    KensaRirekiList.get(i).getDay()==kensaRireki.getDay()&&
                     KensaRirekiList.get(i).getHead()){
                 break;
             }
