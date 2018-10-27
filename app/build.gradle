@@ -10,9 +10,7 @@ android {
             storePassword 'frontierfield'
         }
     }
-
     compileSdkVersion 26
-
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.frontierfield.ganreco"
