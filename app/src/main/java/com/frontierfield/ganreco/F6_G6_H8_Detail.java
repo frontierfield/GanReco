@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.net.URL;
+
 public class F6_G6_H8_Detail extends Fragment implements  View.OnClickListener {
     ImageView imageViewShinryo;
     TextView hospitalName, date, detail;
@@ -111,9 +113,10 @@ public class F6_G6_H8_Detail extends Fragment implements  View.OnClickListener {
                     (okusuriRireki.getMonth()+1) + "/" + okusuriRireki.getDay());
 
             JsonLoadTask jsonLoadTask = new JsonLoadTask(detail,hospitalName,date, position,2);
-            jsonLoadTask.execute("https://firebasestorage.googleapis.com/v0/b/ganreco-ea9fc.appspot.com/o/" +
+            /*jsonLoadTask.execute("https://firebasestorage.googleapis.com/v0/b/ganreco-ea9fc.appspot.com/o/" +
                     "json_result_chozai_Chouzai20181019%5B1%5D.json" +
-                    "?alt=media&token=e4187194-f11a-4a1b-94df-e4630b717f0f");//jsonのダウンロードURIを渡す
+                    "?alt=media&token=e4187194-f11a-4a1b-94df-e4630b717f0f");//jsonのダウンロードURIを渡す*/
+            jsonLoadTask.execute("http://35.221.123.237:3180/?f?f=IMG_0075_.jpg&u=aaa/IMG_0075_.jpg");
 
             if (okusuriRireki.getStoragePath() != null) {
                 PictureLoadTask pictureLoadTask = new PictureLoadTask(imageViewShinryo,progressBar);
