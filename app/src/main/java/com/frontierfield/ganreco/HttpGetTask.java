@@ -1,69 +1,105 @@
 package com.frontierfield.ganreco;
 
 import android.os.AsyncTask;
-import android.os.Bundle;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-class HttpGetTask extends AsyncTask<URL, Void, String> {
+class HttpGetTask extends AsyncTask<URL, Integer, JSONArray> {
+
+    private AsyncCallback asyncCallback = null;
+
+    public HttpGetTask(AsyncCallback _asyncCallback) {
+        asyncCallback = _asyncCallback;
+    }
+
+    public interface AsyncCallback {
+        void preExecute();
+        void postExecute(JSONArray result);
+        void progressUpdate(int progress);
+        void cancel();
+    }
+
     @Override
-    protected String doInBackground(URL... url) {
-        String result = "";
-        HttpURLConnection conn = null;
+    protected void onPreExecute() {
+        super.onPreExecute();
+        asyncCallback.preExecute();
+    }
+
+    @Override
+    protected void onProgressUpdate(Integer... _progress) {
+        super.onProgressUpdate(_progress);
+        asyncCallback.progressUpdate(_progress[0]);
+    }
+
+    @Override
+    protected void onPostExecute(JSONArray _result) {
+        super.onPostExecute(_result);
+        asyncCallback.postExecute(_result);
+    }
+
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
+        asyncCallback.cancel();
+    }
+
+    @Override
+    protected JSONArray doInBackground(URL... url) {
+        HttpURLConnection httpURLConnection = null;
         try {
-            conn = (HttpURLConnection) url[0].openConnection();
-            conn.setReadTimeout(10000);
-            conn.setConnectTimeout(15000);
-            conn.setRequestMethod("GET");
-            conn.setDoInput(true);
-            conn.connect();
-            int resp = conn.getResponseCode();
-            // respを使っていろいろ
-            result = readIt(conn.getInputStream());
-        } catch(IOException e) {
-            e.printStackTrace();
-        } finally {
-            if(conn != null) {
-                conn.disconnect();
+            httpURLConnection = (HttpURLConnection) url[0].openConnection();
+            httpURLConnection.setReadTimeout(100000);
+            httpURLConnection.setConnectTimeout(600000);
+            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setDoInput(true);
+            httpURLConnection.connect();
+
+            if(httpURLConnection.getResponseCode() == 200) {
+                // リクエスト成功
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                StringBuffer stringBuffer = new StringBuffer();
+                String line;
+                while((line = br.readLine()) != null){
+                    stringBuffer.append(line);
+                }
+                try {
+                    inputStream.close();
+                }
+                catch(Exception e) {
+                    e.printStackTrace();
+                }
+                JSONArray jsonArray = new JSONArray(stringBuffer.toString());
+                return jsonArray;
+            }
+            else{   // リクエスト失敗
+                return null;
             }
         }
-        return result;
-    }
-
-    public String readIt(InputStream stream) throws IOException, UnsupportedEncodingException {
-        StringBuffer sb = new StringBuffer();
-        String line = "";
-        BufferedReader br = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-        while((line = br.readLine()) != null){
-            sb.append(line);
-        }
-        try {
-            stream.close();
-        } catch(Exception e) {
+        catch(IOException e) {
             e.printStackTrace();
+            return null;
         }
-        return sb.toString();
+        catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+        finally {
+            if(httpURLConnection != null) {
+                httpURLConnection.disconnect();
+            }
+        }
     }
 
-/*
-    @Override
-    protected void onPostExecute(String resp){
-        // onCreateとほぼ同じこと（Fragmentにデータを送る
-        Bundle arguments = new Bundle();
-        arguments.putString(ItemDetailFragment.ARG_ITEM_ID,
-                getIntent().getStringExtra(ItemDetailFragment.ARG_ITEM_ID));
-        arguments.putString("responseText", resp);
-        ItemDetailFragment fragment = new ItemDetailFragment();
-        fragment.setArguments(arguments);
-        getFragmentManager().beginTransaction()
-                .add(R.id.item_detail_container, fragment)
-                .commit();
+    public void setOnCallBack(AsyncCallback _cbj) {
+        asyncCallback = _cbj;
     }
-    */
 }
