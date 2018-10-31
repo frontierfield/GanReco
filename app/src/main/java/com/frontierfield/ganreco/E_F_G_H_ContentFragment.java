@@ -67,7 +67,7 @@ public class E_F_G_H_ContentFragment extends Fragment {
                     case 0:
                         if (TsuinYoteiList.getInstance().get(position).t == false) {
                             Intent intent = new Intent(view.getContext(), E3_Input.class);
-                            intent.putExtra("positionID", position);
+                            intent.putExtra("position", position);
                             startActivity(intent);
                         }
                         break;

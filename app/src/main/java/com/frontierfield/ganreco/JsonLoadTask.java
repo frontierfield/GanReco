@@ -1,38 +1,17 @@
 package com.frontierfield.ganreco;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-
-import static java.security.AccessController.getContext;
-
 
 public class JsonLoadTask extends AsyncTask<URL,String,Map<String,String>> {
     private int tab;
@@ -54,7 +33,7 @@ public class JsonLoadTask extends AsyncTask<URL,String,Map<String,String>> {
         StringBuilder stringBuilder=new StringBuilder();
         try {
             httpURLConnection = (HttpURLConnection) url[0].openConnection();
-            httpURLConnection.setReadTimeout(600000);
+            httpURLConnection.setReadTimeout(100000);
             httpURLConnection.setConnectTimeout(600000);
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.setDoInput(true);
@@ -75,50 +54,55 @@ public class JsonLoadTask extends AsyncTask<URL,String,Map<String,String>> {
                     e.printStackTrace();
                 }
                 JSONArray jsonArray = new JSONArray(stringBuffer.toString());
-                JSONObject jsonObject = (JSONObject)jsonArray.toJSONObject(jsonArray);
                 Map<String,String> result=new HashMap<String,String>();
                 switch(tab){
                     case 2:
                         int loop = 0;
-                        while (loop < jsonObject.length()){
+                        while (loop < jsonArray.length()){
                             JSONObject object= (JSONObject)jsonArray.get(loop);
                             if(!object.has("medicine")){
                                 result.put("Medicine",new String(stringBuilder));
+                                if(!result.containsKey("SDetail")){
+                                    result.put("SDetail",new String(stringBuilder));
+                                }
                                 break;
                             }
                             stringBuilder.append(object.get("medicine"));
                             stringBuilder.append("  ");
                             stringBuilder.append(object.get("unit"));
                             stringBuilder.append("\n");
+                            if(loop==2){
+                                result.put("SDetail",new String(stringBuilder));
+                            }
                             loop++;
                         }
-                        for(int i=loop;i<jsonObject.length();i++){
+                        for(int i=loop;i<jsonArray.length();i++){
                             JSONObject object = (JSONObject)jsonArray.get(i);
-                            if(object.has("date")){
+                            if(object.has("date")&&!result.containsKey("Date")){
                                 result.put("Date", (String)object.get("date"));
                                 continue;
                             }
-                            if(object.has("pharmacy")){
+                            if(object.has("pharmacy")&&!result.containsKey("Pharmacy")){
                                 result.put("Pharmacy", (String)object.get("pharmacy"));
                                 continue;
                             }
-                            if(object.has("name")){
+                            if(object.has("name")&&!result.containsKey("Name")){
                                 result.put("Name", (String)object.get("name"));
                                 continue;
                             }
-                            if(object.has("bun")){
+                            if(object.has("bun")&&!result.containsKey("Bun")){
                                 result.put("Bun", (String)object.get("bun"));
                                 continue;
                             }
-                            if(object.has("address")){
+                            if(object.has("address")&&!result.containsKey("Address")){
                                 result.put("Address", (String)object.get("address"));
                                 continue;
                             }
-                            if(object.has("tel")){
+                            if(object.has("tel")&&!result.containsKey("Tel")){
                                 result.put("Tel", (String)object.get("tel"));
                                 continue;
                             }
-                            if(object.has("fax")){
+                            if(object.has("fax")&&!result.containsKey("Fax")){
                                 result.put("Fax", (String)object.get("fax"));
                                 continue;
                             }
@@ -145,40 +129,56 @@ public class JsonLoadTask extends AsyncTask<URL,String,Map<String,String>> {
     }
     @Override
     protected void onPostExecute(Map<String,String> result){
-        try {
-            String date=result.get("Date");
-            switch (tab) {
-                case 1:
-                    TsuinRirekiList.getSavedTsuinRireki(position).setDetail(result.get(0));
-                    break;
-                case 2:
-                    if(result.get("Medicine")!=null) {
-                        OkusuriRirekiList.getSavedOkusuriRireki(position).setDetail(result.get("Medicine"));
-                    }if(result.get("Date")!=null) {
-                        OkusuriRirekiList.getSavedOkusuriRireki(position).setDate(result.get("Date"));
-                        OkusuriRirekiList.getSavedOkusuriRireki(position).setYear(Integer.parseInt(extractYear(date)));
-                        OkusuriRirekiList.getSavedOkusuriRireki(position).setMonth(Integer.parseInt(extractManth(date))-1);
-                        OkusuriRirekiList.getSavedOkusuriRireki(position).setDay(Integer.parseInt(extractDay(date)));
-                    }if(result.get("Name")!=null) {
-                        OkusuriRirekiList.getSavedOkusuriRireki(position).setName(result.get("Name"));
-                    }if(result.get("Address")!=null) {
-                        OkusuriRirekiList.getSavedOkusuriRireki(position).setAddress(result.get("Address"));
-                    }if(result.get("Phamacy")!=null) {
-                        OkusuriRirekiList.getSavedOkusuriRireki(position).setPharmacy(result.get("Pharmacy"));
-                    }if(result.get("Tel")!=null) {
-                        OkusuriRirekiList.getSavedOkusuriRireki(position).setTel(result.get("Tel"));
-                    }
-                    OkusuriRirekiList.getSavedOkusuriRireki(position).setIsOCRComplete(true);
-                    OkusuriRirekiRDB.saveOkusuriRirekiRDB();
-                    break;
-                case 3:
-                    KensaRirekiList.getSavedKensaRireki(position).setDetail(result.get(0));
-                    break;
+        if(result!=null) {
+            try {
+                String date = result.get("Date");
+                switch (tab) {
+                    case 1:
+                        TsuinRirekiList.getSavedTsuinRireki(position).setDetail(result.get(0));
+                        break;
+                    case 2:
+                        if (result.get("Medicine") != null) {
+                            OkusuriRirekiList.getSavedOkusuriRireki(position).setDetail(result.get("Medicine"));
+                            OkusuriRirekiList.getSavedOkusuriRireki(position).setSDetail(result.get("SDetail"));
+                        }
+                        if (result.get("Date") != null) {
+                            OkusuriRirekiList.getSavedOkusuriRireki(position).setDate(result.get("Date"));
+                            /*
+                            if (date.contains("平成") & date.contains("年")) {
+                                OkusuriRirekiList.getSavedOkusuriRireki(position).setYear(Integer.parseInt(extractYear(date)));
+                            }
+                            if (date.contains("年") & date.contains("月")) {
+                                OkusuriRirekiList.getSavedOkusuriRireki(position).setMonth(Integer.parseInt(extractManth(date)) - 1);
+                            }
+                            if (date.contains("月") & date.contains("日")) {
+                                OkusuriRirekiList.getSavedOkusuriRireki(position).setDay(Integer.parseInt(extractDay(date)));
+                            }*/
+                        }
+                        if (result.get("Name") != null) {
+                            OkusuriRirekiList.getSavedOkusuriRireki(position).setName(result.get("Name"));
+                        }
+                        if (result.get("Address") != null) {
+                            OkusuriRirekiList.getSavedOkusuriRireki(position).setAddress(result.get("Address"));
+                        }
+                        if (result.get("Pharmacy") != null) {
+                            OkusuriRirekiList.getSavedOkusuriRireki(position).setPharmacy(result.get("Pharmacy"));
+                        }
+                        if (result.get("Tel") != null) {
+                            OkusuriRirekiList.getSavedOkusuriRireki(position).setTel(result.get("Tel"));
+                        }
+                        OkusuriRirekiList.getSavedOkusuriRireki(position).setIsOCRComplete(true);
+                        OkusuriRirekiRDB.saveOkusuriRirekiRDB();
+                        break;
+                    case 3:
+                        KensaRirekiList.getSavedKensaRireki(position).setDetail(result.get(0));
+                        break;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        }else{
 
+        }
     }
     protected String extractYear(String date){
         int beginindex=date.indexOf("平成")+2;//「平成」の次から

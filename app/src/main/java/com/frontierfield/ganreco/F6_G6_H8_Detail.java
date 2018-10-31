@@ -1,11 +1,14 @@
 package com.frontierfield.ganreco;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +27,7 @@ public class F6_G6_H8_Detail extends Fragment implements  View.OnClickListener {
     TextView contentF6;
     LinearLayout eraseBtn;
     ProgressBar progressBar;
+    ProgressDialog progressDialog;
     int position=-1;
     int tab = -1;
     TsuinRireki tsuinRireki;
@@ -54,8 +58,6 @@ public class F6_G6_H8_Detail extends Fragment implements  View.OnClickListener {
         progressBar=view.findViewById(R.id.progressBar);
 
         btnCancel.setOnClickListener(this);
-        btnEdit.setOnClickListener(this);
-        eraseBtn.setOnClickListener(this);
         imageViewShinryo.setOnClickListener(this);
 
         Bundle bundle = getArguments();
@@ -103,16 +105,26 @@ public class F6_G6_H8_Detail extends Fragment implements  View.OnClickListener {
     private void LoadOkusuriRirekiData() {
         try {
             okusuriRireki = OkusuriRirekiList.getSavedOkusuriRireki(position);
-            hospitalName.setText(okusuriRireki.getPharmacy());
-            date.setText(okusuriRireki.getYear() + "/" +
-                    (okusuriRireki.getMonth()+1) + "/" + okusuriRireki.getDay());
+            if(!okusuriRireki.isOCRComplete){
+                progressDialog = new ProgressDialog(getContext());
+                progressDialog.setIndeterminate(true);
+                progressDialog.setTitle("撮影画像読み込み中...");
+                progressDialog.show();
+            }else {
+                hospitalName.setText(okusuriRireki.getPharmacy());
+                detail.setText(okusuriRireki.getDetail());
+                date.setText(okusuriRireki.getYear() + "/" +
+                        (okusuriRireki.getMonth() + 1) + "/" + okusuriRireki.getDay());
 
-            if (okusuriRireki.getStoragePath() != null) {
-                PictureLoadTask pictureLoadTask = new PictureLoadTask(imageViewShinryo,progressBar);
-                pictureLoadTask.execute(okusuriRireki.getStoragePath());
-            } else {
-                bitmap = globalUtil.getPreResizedBitmap(Uri.parse(okusuriRireki.getFilePath()), getContext());
-                imageViewShinryo.setImageBitmap(bitmap);
+                if (okusuriRireki.getStoragePath() != null) {
+                    PictureLoadTask pictureLoadTask = new PictureLoadTask(imageViewShinryo, progressBar);
+                    pictureLoadTask.execute(okusuriRireki.getStoragePath());
+                } else {
+                    bitmap = globalUtil.getPreResizedBitmap(Uri.parse(okusuriRireki.getFilePath()), getContext());
+                    imageViewShinryo.setImageBitmap(bitmap);
+                }
+                btnEdit.setOnClickListener(this);
+                eraseBtn.setOnClickListener(this);
             }
         }catch (Exception e){
             e.printStackTrace();

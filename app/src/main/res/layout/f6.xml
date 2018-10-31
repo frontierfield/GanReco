@@ -75,8 +75,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/textview"
-                    android:text="TextView"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:text="TextView" />
             </RelativeLayout>
 
             <TextView
