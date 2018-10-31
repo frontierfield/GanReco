@@ -75,7 +75,7 @@ public class B1_2_GanrecoMain extends AppCompatActivity implements View.OnClickL
             finish();
         }else if (i == R.id.yoyakusetFotterD1_2){
             Intent intent = new Intent(this,e_f_g_h_mainmenu.class);
-            intent.putExtra("id",0);
+            intent.putExtra("tab",0);
             startActivity(intent);
             finish();
         }else if(i == R.id.hospitalSetFotterD1_2){
@@ -92,7 +92,7 @@ public class B1_2_GanrecoMain extends AppCompatActivity implements View.OnClickL
         else if(i == R.id.scheduleset){
             //efgh
             Intent intent = new Intent(this,e_f_g_h_mainmenu.class);
-            intent.putExtra("id",0);
+            intent.putExtra("tab",0);
             startActivity(intent);
             finish();
         }
@@ -100,7 +100,7 @@ public class B1_2_GanrecoMain extends AppCompatActivity implements View.OnClickL
         else if(i == R.id.okusuri){
             //efgh
             Intent intent = new Intent(this,e_f_g_h_mainmenu.class);
-            intent.putExtra("id",2);
+            intent.putExtra("tab",2);
             startActivity(intent);
             finish();
         }
@@ -108,7 +108,7 @@ public class B1_2_GanrecoMain extends AppCompatActivity implements View.OnClickL
         else if(i == R.id.kensaset){
             //efgh
             Intent intent = new Intent(this,e_f_g_h_mainmenu.class);
-            intent.putExtra("id",3);
+            intent.putExtra("tab",3);
             startActivity(intent);
             finish();
         }
@@ -116,7 +116,7 @@ public class B1_2_GanrecoMain extends AppCompatActivity implements View.OnClickL
         else if(i == R.id.tsuinset){
             //efgh
             Intent intent = new Intent(this,e_f_g_h_mainmenu.class);
-            intent.putExtra("id",1);
+            intent.putExtra("tab",1);
             startActivity(intent);
             finish();
         }
