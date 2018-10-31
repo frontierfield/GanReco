@@ -111,6 +111,7 @@ public class F6_G6_H8_Detail extends Fragment implements  View.OnClickListener {
                 progressDialog.setTitle("撮影画像読み込み中...");
                 progressDialog.show();
             }else {
+                progressDialog.dismiss();
                 hospitalName.setText(okusuriRireki.getPharmacy());
                 detail.setText(okusuriRireki.getDetail());
                 date.setText(okusuriRireki.getYear() + "/" +
