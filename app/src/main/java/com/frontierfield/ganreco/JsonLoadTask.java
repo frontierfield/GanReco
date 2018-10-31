@@ -1,8 +1,11 @@
 package com.frontierfield.ganreco;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -18,109 +21,154 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import static java.security.AccessController.getContext;
 
-public class JsonLoadTask extends AsyncTask<String,String,Map<String,String>> {
+
+public class JsonLoadTask extends AsyncTask<URL,String,Map<String,String>> {
     private int tab;
     private int position;
-    private TextView detail;
-    private TextView facility;
-    private TextView date;
-    public JsonLoadTask(TextView detail,TextView facility,TextView date,int position,int tab){
+    public JsonLoadTask(int position,int tab){
         super();
-        this.detail=detail;
-        this.facility=facility;
-        this.date=date;
         this.position=position;
         this.tab=tab;
     }
     @Override
     protected void onPreExecute(){
-        detail.setText("読み込み中・・・");
         //ダイアログ表示なり、読み込み中表示の方法については後で検討
+        // プログレスダイアログを表示する
     }
 
     @Override
-    protected Map<String,String> doInBackground(String... _uri) {
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet(_uri[0]);
+    protected Map<String,String> doInBackground(URL... url) {
+        HttpURLConnection httpURLConnection = null;
         StringBuilder stringBuilder=new StringBuilder();
         try {
-            HttpResponse httpResponse = httpClient.execute(httpGet);
-            if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                httpResponse.getEntity().writeTo(outputStream);
-                outputStream.close();
-                JSONArray jsonArray = new JSONArray(outputStream.toString());
+            httpURLConnection = (HttpURLConnection) url[0].openConnection();
+            httpURLConnection.setReadTimeout(600000);
+            httpURLConnection.setConnectTimeout(600000);
+            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setDoInput(true);
+            httpURLConnection.connect();
+            if (httpURLConnection.getResponseCode() == 200) {
+                // リクエスト成功
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                StringBuffer stringBuffer = new StringBuffer();
+                String line;
+                while((line = br.readLine()) != null){
+                    stringBuffer.append(line);
+                }
+                try {
+                    inputStream.close();
+                }
+                catch(Exception e) {
+                    e.printStackTrace();
+                }
+                JSONArray jsonArray = new JSONArray(stringBuffer.toString());
+                JSONObject jsonObject = (JSONObject)jsonArray.toJSONObject(jsonArray);
                 Map<String,String> result=new HashMap<String,String>();
                 switch(tab){
                     case 2:
-                        for(int i=0;i<jsonArray.length()-1;i++){
-                            JSONObject jsonObject= (JSONObject) jsonArray.get(i);
-                            stringBuilder.append(jsonObject.get("medicine"));
+                        int loop = 0;
+                        while (loop < jsonObject.length()){
+                            JSONObject object= (JSONObject)jsonArray.get(loop);
+                            if(!object.has("medicine")){
+                                result.put("Medicine",new String(stringBuilder));
+                                break;
+                            }
+                            stringBuilder.append(object.get("medicine"));
                             stringBuilder.append("  ");
-                            stringBuilder.append(jsonObject.get("unit"));
+                            stringBuilder.append(object.get("unit"));
                             stringBuilder.append("\n");
-                            if(i==2){
-                                result.put("SDetail",new String(stringBuilder));
+                            loop++;
+                        }
+                        for(int i=loop;i<jsonObject.length();i++){
+                            JSONObject object = (JSONObject)jsonArray.get(i);
+                            if(object.has("date")){
+                                result.put("Date", (String)object.get("date"));
+                                continue;
+                            }
+                            if(object.has("pharmacy")){
+                                result.put("Pharmacy", (String)object.get("pharmacy"));
+                                continue;
+                            }
+                            if(object.has("name")){
+                                result.put("Name", (String)object.get("name"));
+                                continue;
+                            }
+                            if(object.has("bun")){
+                                result.put("Bun", (String)object.get("bun"));
+                                continue;
+                            }
+                            if(object.has("address")){
+                                result.put("Address", (String)object.get("address"));
+                                continue;
+                            }
+                            if(object.has("tel")){
+                                result.put("Tel", (String)object.get("tel"));
+                                continue;
+                            }
+                            if(object.has("fax")){
+                                result.put("Fax", (String)object.get("fax"));
+                                continue;
                             }
                         }
-                        JSONArray insideJsonArray=(JSONArray) jsonArray.get(jsonArray.length()-1);
-                        JSONObject jsonObject=(JSONObject) insideJsonArray.get(0);
-                        result.put("Date",(String) jsonObject.get("date"));
-                        jsonObject=(JSONObject) insideJsonArray.get(2);
-                        result.put("Name",(String) jsonObject.get("name"));
-                        jsonObject=(JSONObject) insideJsonArray.get(4);
-                        result.put("Address",(String) jsonObject.get("address"));
-                        jsonObject=(JSONObject) insideJsonArray.get(5);
-                        result.put("Pharmacy",(String) jsonObject.get("pharmacy"));
-                        jsonObject=(JSONObject) insideJsonArray.get(6);
-                        result.put("Tel",(String) jsonObject.get("tel"));
-                        result.put("Detail",new String(stringBuilder));
                         return result;
                 }
                 return(result);
             } else {
-                httpResponse.getEntity().getContent().close();
-                throw new IOException();
+                return null;
             }
         }
         catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
         catch (JSONException e) {
             e.printStackTrace();
+            return null;
+        }finally {
+            if(httpURLConnection != null) {
+                httpURLConnection.disconnect();
+            }
         }
-        return null;
     }
     @Override
     protected void onPostExecute(Map<String,String> result){
         try {
-            detail.setText(result.get("Detail"));
-            facility.setText(result.get("Pharmacy"));
-            date.setText(result.get("Date"));
             String date=result.get("Date");
-
             switch (tab) {
                 case 1:
                     TsuinRirekiList.getSavedTsuinRireki(position).setDetail(result.get(0));
                     break;
                 case 2:
-                    OkusuriRirekiList.getSavedOkusuriRireki(position).setDetail(result.get("Detail"));
-                    OkusuriRirekiList.getSavedOkusuriRireki(position).setSDetail(result.get("SDetail"));
-                    OkusuriRirekiList.getSavedOkusuriRireki(position).setDate(result.get("Date"));
-                    OkusuriRirekiList.getSavedOkusuriRireki(position).setYear(Integer.parseInt(extractYear(date)));
-                    OkusuriRirekiList.getSavedOkusuriRireki(position).setMonth(Integer.parseInt(extractManth(date))-1);
-                    OkusuriRirekiList.getSavedOkusuriRireki(position).setDay(Integer.parseInt(extractDay(date)));
-                    OkusuriRirekiList.getSavedOkusuriRireki(position).setName(result.get("Name"));
-                    OkusuriRirekiList.getSavedOkusuriRireki(position).setAddress(result.get("Address"));
-                    OkusuriRirekiList.getSavedOkusuriRireki(position).setPharmacy(result.get("Pharmacy"));
-                    OkusuriRirekiList.getSavedOkusuriRireki(position).setTel(result.get("Tel"));
+                    if(result.get("Medicine")!=null) {
+                        OkusuriRirekiList.getSavedOkusuriRireki(position).setDetail(result.get("Medicine"));
+                    }if(result.get("Date")!=null) {
+                        OkusuriRirekiList.getSavedOkusuriRireki(position).setDate(result.get("Date"));
+                        OkusuriRirekiList.getSavedOkusuriRireki(position).setYear(Integer.parseInt(extractYear(date)));
+                        OkusuriRirekiList.getSavedOkusuriRireki(position).setMonth(Integer.parseInt(extractManth(date))-1);
+                        OkusuriRirekiList.getSavedOkusuriRireki(position).setDay(Integer.parseInt(extractDay(date)));
+                    }if(result.get("Name")!=null) {
+                        OkusuriRirekiList.getSavedOkusuriRireki(position).setName(result.get("Name"));
+                    }if(result.get("Address")!=null) {
+                        OkusuriRirekiList.getSavedOkusuriRireki(position).setAddress(result.get("Address"));
+                    }if(result.get("Phamacy")!=null) {
+                        OkusuriRirekiList.getSavedOkusuriRireki(position).setPharmacy(result.get("Pharmacy"));
+                    }if(result.get("Tel")!=null) {
+                        OkusuriRirekiList.getSavedOkusuriRireki(position).setTel(result.get("Tel"));
+                    }
+                    OkusuriRirekiList.getSavedOkusuriRireki(position).setIsOCRComplete(true);
                     OkusuriRirekiRDB.saveOkusuriRirekiRDB();
                     break;
                 case 3:

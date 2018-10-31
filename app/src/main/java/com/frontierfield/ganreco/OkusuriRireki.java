@@ -23,6 +23,8 @@ public class OkusuriRireki {
     String pharmacy;
     String tel;
 
+    Boolean isOCRComplete=false;
+
     public OkusuriRireki(){
     }
     public OkusuriRireki(String ID,Boolean t,String pharmacy,String detail,int year,int month,int day) {
@@ -150,4 +152,11 @@ public class OkusuriRireki {
 
     public String getTel(){return tel;}
     public void setTel(String tel){this.tel=tel;}
+
+    public Boolean getIsOCRComplete(){
+        return isOCRComplete;
+    }
+    public void setIsOCRComplete(Boolean isOCRComplete){
+        this.isOCRComplete=isOCRComplete;
+    }
 }

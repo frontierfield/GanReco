@@ -15,6 +15,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.net.URL;
 
 public class OkusuriRirekiFirebaseStorage {
     public static void saveOkusuriRirekiFirebaseStorage(Bitmap bitmap, String fileName, Context context) {
@@ -45,16 +46,26 @@ public class OkusuriRirekiFirebaseStorage {
                     if (task.isSuccessful()) {
                         for (int i = 0; i < OkusuriRirekiList.getInstance().size(); i++) {
                             if (OkusuriRirekiList.getInstance().get(i).getFileName() == fileName) {
-                                //pathを変更する処理
-                                OkusuriRirekiList.getInstance().get(i).setFilePath(task.getResult().toString());
-                                OkusuriRirekiList.getInstance().get(i).setStoragePath(task.getResult().toString());
-                                OkusuriRirekiRDB.saveOkusuriRirekiRDB();
-                                //ローカルの画像削除
-                                context.getContentResolver().delete(Uri.parse(OkusuriRirekiList.getInstance().get(i).getLocalPath()), null, null);
-                                break;
+                                try {
+                                    //pathを変更する処理
+                                    OkusuriRirekiList.getInstance().get(i).setFilePath(task.getResult().toString());
+                                    OkusuriRirekiList.getInstance().get(i).setStoragePath(task.getResult().toString());
+                                    OkusuriRirekiRDB.saveOkusuriRirekiRDB();
+                                    //ローカルの画像削除
+                                    context.getContentResolver().delete(Uri.parse(OkusuriRirekiList.getInstance().get(i).getLocalPath()), null, null);
+                                    //OCRたたく
+                                    String urlStr=null;
+                                    urlStr="http://35.221.123.237:3180/?f?f=rireki_"+fileName+".jpg&u="
+                                            +mAuthUser.getUid()+"/OkusuriRireki/rireki_"+fileName+".jpg";
+                                    URL url=new URL(urlStr);
+                                    JsonLoadTask jsonLoadTask = new JsonLoadTask(i,2);
+                                    jsonLoadTask.execute(url);
+                                    break;
+                                }catch(Exception e){
+                                    e.printStackTrace();
+                                }
                             }
                         }
-                        //OCRたたく
                     }
                 }
             });
